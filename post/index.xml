@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on My Nook</title>
+    <link>https://FelicxFoster.github.io/post/</link>
+    <description>Recent content in Posts on My Nook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 22 Sep 2020 20:09:39 +0800</lastBuildDate><atom:link href="https://FelicxFoster.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43;学习笔记</title>
+      <link>https://FelicxFoster.github.io/post/c&#43;&#43;%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Tue, 22 Sep 2020 20:09:39 +0800</pubDate>
+      
+      <guid>https://FelicxFoster.github.io/post/c&#43;&#43;%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>★ std::pair 与 std::make_pair std::pair主要的作用是将两个数据组合成一个数据，两个数据可以是同一类型或者不同类型 1 2 3 using namespace std; pair &amp;lt;string,double&amp;gt; product1 (&amp;#34;tomatoes&amp;#34;,3.25); pair &amp;lt;string,double&amp;gt; product2; pair实质上是</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;滤波算法</title>
+      <link>https://FelicxFoster.github.io/post/c&#43;&#43;%E6%BB%A4%E6%B3%A2%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Tue, 22 Sep 2020 17:47:57 +0800</pubDate>
+      
+      <guid>https://FelicxFoster.github.io/post/c&#43;&#43;%E6%BB%A4%E6%B3%A2%E7%AE%97%E6%B3%95/</guid>
+      <description>★ 限幅滤波算法（程序判断滤波算法） 根据经验判断，确定两次采样允许的最大偏差值（设定为A），每次检测到新值时判断： 如果本次值与上次值之差&amp;lt</description>
+    </item>
+    
+  </channel>
+</rss>
