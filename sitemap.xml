@@ -3,23 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://FelicxFoster.github.io/post/c&#43;&#43;%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2020-09-22T20:09:39+08:00</lastmod>
+    <loc>https://FelicxFoster.github.io/post/localization/</loc>
+    <lastmod>2020-09-24T18:07:10+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://FelicxFoster.github.io/</loc>
-    <lastmod>2020-09-22T20:09:39+08:00</lastmod>
+    <lastmod>2020-09-24T18:07:10+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://FelicxFoster.github.io/post/</loc>
-    <lastmod>2020-09-22T20:09:39+08:00</lastmod>
+    <lastmod>2020-09-24T18:07:10+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://FelicxFoster.github.io/post/c&#43;&#43;%E6%BB%A4%E6%B3%A2%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2020-09-22T17:47:57+08:00</lastmod>
+    <loc>https://FelicxFoster.github.io/about/</loc>
+    <lastmod>2019-09-24T00:13:27+00:00</lastmod>
   </url>
   
   <url>
@@ -28,6 +28,18 @@
   
   <url>
     <loc>https://FelicxFoster.github.io/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://FelicxFoster.github.io/archives/</loc>
+  </url>
+  
+  <url>
+    <loc>https://FelicxFoster.github.io/tools/</loc>
+  </url>
+  
+  <url>
+    <loc>https://FelicxFoster.github.io/search/</loc>
   </url>
   
 </urlset>
