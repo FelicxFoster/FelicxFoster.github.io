@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Localization on My Nook</title>
-    <link>https://felicx_gitee.gitee.io/tags/Localization/</link>
+    <link>https://FelicxFoster.github.io/tags/Localization/</link>
     <description>Recent content in Localization on My Nook</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 24 Sep 2020 18:07:10 +0800</lastBuildDate><atom:link href="https://felicx_gitee.gitee.io/tags/Localization/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Sep 2020 18:07:10 +0800</lastBuildDate><atom:link href="https://FelicxFoster.github.io/tags/Localization/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Apollo之Localization</title>
-      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/</link>
+      <link>https://FelicxFoster.github.io/post/Apollo%E4%B9%8BLOCALIZATION/</link>
       <pubDate>Thu, 24 Sep 2020 18:07:10 +0800</pubDate>
       
-      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/</guid>
+      <guid>https://FelicxFoster.github.io/post/Apollo%E4%B9%8BLOCALIZATION/</guid>
       <description>Dig into Apollo - Localization 天空越黑暗，星辰越璀璨 Table of Contents Localization模块简介 代码目录 RTK定位流程 NDT定位流程 Reference Localization模块简介 localization模块主要实现了以下2个功能： 输出车辆的位置信息（planning模块使用） 输出车辆的姿态、速度信息（control模</description>
     </item>
     
