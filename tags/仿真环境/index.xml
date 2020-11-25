@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>仿真环境 on My Nook</title>
+    <link>https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83/</link>
+    <description>Recent content in 仿真环境 on My Nook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apollo之仿真环境搭建</title>
+      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/</guid>
+      <description>注意：内存最好4G以上，硬盘容量至少100G。 1、查看你的CPU是否支持FMA和AVX 1 2 $ cat /proc/cpuinfo | grep avx $ cat /proc/cpuinfo | grep fma 有返回值即支持 2、浏览器必须支持WebGL（最好使用谷歌） 3、安装NVIDIA显卡驱动（可选）（我没装） (若不装Nvidia driver, 运行bash docker/scripts</description>
+    </item>
+    
+  </channel>
+</rss>

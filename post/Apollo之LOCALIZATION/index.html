@@ -1,0 +1,1512 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Apollo之Localization | My Nook</title>
+    <meta property="og:title" content="Apollo之Localization - My Nook">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-09-24T18:07:10&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-09-27T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="[Apollo Localization modules]">
+    <meta name="description" content="介绍Apollo Localization模块">
+        <meta name="author" content="Felicx">
+        
+    <meta property="og:url" content="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+        <link rel="stylesheet" href='/css/toc_style.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://felicx_gitee.gitee.io/">
+                        My Nook
+                    </a>
+                
+                <p class="description">What else did you expect me to say?</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://felicx_gitee.gitee.io/">首页</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/tools/" title="工具">工具</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#table-of-contents">Table of Contents</a></li>
+    <li><a href="#localization模块简介">Localization模块简介</a></li>
+    <li><a href="#代码目录">代码目录</a></li>
+    <li><a href="#rtk定位流程">RTK定位流程</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#ndt定位流程">NDT定位流程</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">Apollo之Localization</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年9月24日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://felicx_gitee.gitee.io/categories/Apollo'>Apollo</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h1 id="dig-into-apollo---localization">Dig into Apollo - Localization</h1>
+<blockquote>
+<p>天空越黑暗，星辰越璀璨</p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Localization模块简介</a></li>
+<li><a href="#content">代码目录</a></li>
+<li><a href="#rtk">RTK定位流程</a></li>
+<li><a href="#ndt">NDT定位流程</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<p><!-- raw HTML omitted --></p>
+<h2 id="localization模块简介">Localization模块简介</h2>
+<p>localization模块主要实现了以下2个功能：</p>
+<ol>
+<li>输出车辆的位置信息（planning模块使用）</li>
+<li>输出车辆的姿态、速度信息（control模块使用）</li>
+</ol>
+<p>其中apollo代码中分别实现了3种定位方法：</p>
+<ol>
+<li>RTK定位（GNSS + IMU定位）</li>
+<li>NDT定位（点云定位）</li>
+<li>MSF（融合定位）</li>
+</ol>
+<blockquote>
+<p>MSF方法参考论文&quot;Robust and Precise Vehicle Localization Based on Multi-Sensor Fusion in Diverse City Scenes&quot;</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<h2 id="代码目录">代码目录</h2>
+<p>下面是localization的目录结构，在查看具体的代码之前最好看下定位模块的readme文件:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scss" data-lang="scss"><span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">common</span>                      <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">声明配置</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000080">flags</span><span style="color:#000;font-weight:bold">)</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#000080">从conf目录中读取相应的值</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">conf</span>                        <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">配置文件存放目录</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">dag</span>                         <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">cyber</span> <span style="color:#000080">DAG流</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">launch</span>                      <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">cyber的配置文件</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#000080">依赖DAG图</span><span style="color:#a61717;background-color:#e3d2d2">（</span><span style="color:#000080">这2个和cyber有关的后面再分析</span><span style="color:#a61717;background-color:#e3d2d2">）</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">msf</span>                         <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">融合定位</span><span style="color:#a61717;background-color:#e3d2d2">（</span><span style="color:#000080">gnss</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000080">点云</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000080">IMU融合定位</span><span style="color:#a61717;background-color:#e3d2d2">）</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">common</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">io</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">test_data</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">util</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">local_integ</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">local_map</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">base_map</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">lossless_map</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">lossy_map</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">ndt_map</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">test_data</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">local_tool</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">data_extraction</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">local_visualization</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">map_creation</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">params</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>       <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">gnss_params</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>       <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">vehicle_params</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>       <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">velodyne_params</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">ndt</span>                         <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">ndt定位</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">map_creation</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">ndt_locator</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>   <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">test_data</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>       <span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">ndt_map</span>
+<span style="color:#a61717;background-color:#e3d2d2">│</span>       <span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">pcds</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">proto</span>                       <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">消息格式</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk</span>                         <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">rtk定位</span>
+<span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">testdata</span>                    <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">imu和gps的测试数据</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过上述目录可以知道，定位模块主要实现了rtk，ndt，msf这3个定位方法，分别对应不同的目录。proto文件夹定义了消息的格式，common和conf主要是存放一些配置和消息topic。下面我们逐个分析RTK定位、NDT定位和MSF定位。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="rtk定位流程">RTK定位流程</h2>
+<p>RTK定位是通过GPS和IMU的信息做融合然后输出车辆所在的位置。RTK通过基准站的获取当前GPS信号的误差，用来校正无人车当前的位置，可以得到厘米级别的精度。IMU的输出频率高，可以在GPS没有刷新的情况下（通常是1s刷新一次）用IMU获取车辆的位置。下面是RTK模块的目录结构。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scss" data-lang="scss"><span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">BUILD</span>                               <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">bazel编译文件</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization</span><span style="color:#458;font-weight:bold">.cc</span>                 <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">rtk定位功能实现模块</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization_component</span><span style="color:#458;font-weight:bold">.cc</span>       <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">rtk消息发布模块</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization_component</span><span style="color:#458;font-weight:bold">.h</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization</span><span style="color:#458;font-weight:bold">.h</span>
+<span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">rtk_localization_test</span><span style="color:#458;font-weight:bold">.cc</span>            <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">测试</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中&quot;rtk_localization_component.cc&quot;注册为标准的cyber模块，RTK定位模块在&quot;Init&quot;中初始化，每当接收到&quot;localization::Gps&quot;消息就触发执行&quot;Proc&quot;函数。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RTKLocalizationComponent</span> <span style="color:#000;font-weight:bold">final</span>
+    <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> cyber<span style="color:#000;font-weight:bold">::</span>Component<span style="color:#000;font-weight:bold">&lt;</span>localization<span style="color:#000;font-weight:bold">::</span>Gps<span style="color:#000;font-weight:bold">&gt;</span> {
+ <span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
+  RTKLocalizationComponent();
+  <span style="color:#000;font-weight:bold">~</span>RTKLocalizationComponent() <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">default</span>;
+
+  <span style="color:#458;font-weight:bold">bool</span> <span style="color:#900;font-weight:bold">Init</span>() <span style="color:#000;font-weight:bold">override</span>;
+
+  <span style="color:#458;font-weight:bold">bool</span> <span style="color:#900;font-weight:bold">Proc</span>(<span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>localization<span style="color:#000;font-weight:bold">::</span>Gps<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">&amp;</span>gps_msg) <span style="color:#000;font-weight:bold">override</span>;
+</code></pre></td></tr></table>
+</div>
+</div><p>下面我们分别查看这2个函数。</p>
+<ol>
+<li>Init函数
+Init函数实现比较简单，一是初始化Config，二是初始化IO。初始化Config主要是读取/localization/conf/rtk_localization.pb.txt中的配置，例如topic信息等。下面主要看下初始化IO。</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> RTKLocalizationComponent<span style="color:#000;font-weight:bold">::</span>InitIO() {
+  <span style="color:#998;font-style:italic">// 1.订阅imu_topic_的消息，每次接收到localization::CorrectedImu的IMU消息，执行回调“RTKLocalization::ImuCallback”
+</span><span style="color:#998;font-style:italic"></span>  corrected_imu_listener_ <span style="color:#000;font-weight:bold">=</span> node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateReader<span style="color:#000;font-weight:bold">&lt;</span>localization<span style="color:#000;font-weight:bold">::</span>CorrectedImu<span style="color:#000;font-weight:bold">&gt;</span>(
+      imu_topic_, std<span style="color:#000;font-weight:bold">::</span>bind(<span style="color:#000;font-weight:bold">&amp;</span>RTKLocalization<span style="color:#000;font-weight:bold">::</span>ImuCallback, localization_.get(),
+                            std<span style="color:#000;font-weight:bold">::</span>placeholders<span style="color:#000;font-weight:bold">::</span>_1));
+  CHECK(corrected_imu_listener_);
+  <span style="color:#998;font-style:italic">// 2.订阅gps_status_topic_的消息，每次接收到drivers::gnss::InsStat的GPS状态消息，执行回调&#34;RTKLocalization::GpsStatusCallback&#34;
+</span><span style="color:#998;font-style:italic"></span>  gps_status_listener_ <span style="color:#000;font-weight:bold">=</span> node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateReader<span style="color:#000;font-weight:bold">&lt;</span>drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>InsStat<span style="color:#000;font-weight:bold">&gt;</span>(
+      gps_status_topic_, std<span style="color:#000;font-weight:bold">::</span>bind(<span style="color:#000;font-weight:bold">&amp;</span>RTKLocalization<span style="color:#000;font-weight:bold">::</span>GpsStatusCallback,
+                                   localization_.get(), std<span style="color:#000;font-weight:bold">::</span>placeholders<span style="color:#000;font-weight:bold">::</span>_1));
+  CHECK(gps_status_listener_);
+
+  <span style="color:#998;font-style:italic">// 3.发布位置信息
+</span><span style="color:#998;font-style:italic"></span>  localization_talker_ <span style="color:#000;font-weight:bold">=</span>
+      node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateWriter<span style="color:#000;font-weight:bold">&lt;</span>LocalizationEstimate<span style="color:#000;font-weight:bold">&gt;</span>(localization_topic_);
+  CHECK(localization_talker_);
+  <span style="color:#998;font-style:italic">// 4.发布位置状态信息
+</span><span style="color:#998;font-style:italic"></span>  localization_status_talker_ <span style="color:#000;font-weight:bold">=</span>
+      node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateWriter<span style="color:#000;font-weight:bold">&lt;</span>LocalizationStatus<span style="color:#000;font-weight:bold">&gt;</span>(localization_status_topic_);
+  CHECK(localization_status_talker_);
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>也就是说，RTK模块同时还接收IMU和GPS的状态信息，然后触发对应的回调函数。具体的实现在&quot;RTKLocalization&quot;类中，我们先看下回调的具体实现。以&quot;GpsStatusCallback&quot;为例，每次读取到gps状态信息之后，会把信息保存到&quot;gps_status_list_&ldquo;列表中。&ldquo;ImuCallback&quot;类似，也是接收到IMU消息后，保存到&quot;imu_list_&ldquo;列表中。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">void</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>GpsStatusCallback(
+    <span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>InsStat<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">&amp;</span>status_msg) {
+  std<span style="color:#000;font-weight:bold">::</span>unique_lock<span style="color:#000;font-weight:bold">&lt;</span>std<span style="color:#000;font-weight:bold">::</span>mutex<span style="color:#000;font-weight:bold">&gt;</span> lock(gps_status_list_mutex_);
+  <span style="color:#000;font-weight:bold">if</span> (gps_status_list_.size() <span style="color:#000;font-weight:bold">&lt;</span> gps_status_list_max_size_) {
+    gps_status_list_.push_back(<span style="color:#000;font-weight:bold">*</span>status_msg);
+  } <span style="color:#000;font-weight:bold">else</span> {
+    gps_status_list_.pop_front();
+    gps_status_list_.push_back(<span style="color:#000;font-weight:bold">*</span>status_msg);
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>Proc
+在每次接收到&quot;localization::Gps&quot;消息后，触发执行&quot;Proc&quot;函数。这里注意如果需要接收多个消息，这里是3个消息，则选择最慢的消息作为触发，否则，如果选择比较快的消息作为触发，这样会导致作为触发的消息刷新了，而其它的消息还没有刷新。所以这里采用的是GPS消息作为触发消息，IMU的消息刷新快。下面我们看具体的实现。</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> RTKLocalizationComponent<span style="color:#000;font-weight:bold">::</span>Proc(
+    <span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>localization<span style="color:#000;font-weight:bold">::</span>Gps<span style="color:#000;font-weight:bold">&gt;&amp;</span> gps_msg) {
+  <span style="color:#998;font-style:italic">// 1. 通过RTKLocalization处理GPS消息回调
+</span><span style="color:#998;font-style:italic"></span>  localization_<span style="color:#000;font-weight:bold">-&gt;</span>GpsCallback(gps_msg);
+
+  <span style="color:#000;font-weight:bold">if</span> (localization_<span style="color:#000;font-weight:bold">-&gt;</span>IsServiceStarted()) {
+    LocalizationEstimate localization;
+    <span style="color:#998;font-style:italic">// 2. 获取定位消息
+</span><span style="color:#998;font-style:italic"></span>    localization_<span style="color:#000;font-weight:bold">-&gt;</span>GetLocalization(<span style="color:#000;font-weight:bold">&amp;</span>localization);
+    LocalizationStatus localization_status;
+    <span style="color:#998;font-style:italic">// 3. 获取定位状态
+</span><span style="color:#998;font-style:italic"></span>    localization_<span style="color:#000;font-weight:bold">-&gt;</span>GetLocalizationStatus(<span style="color:#000;font-weight:bold">&amp;</span>localization_status);
+
+    <span style="color:#998;font-style:italic">// 4. 发布位置信息
+</span><span style="color:#998;font-style:italic"></span>    PublishPoseBroadcastTopic(localization);
+    <span style="color:#998;font-style:italic">// 5. 发布位置转换信息
+</span><span style="color:#998;font-style:italic"></span>    PublishPoseBroadcastTF(localization);
+    <span style="color:#998;font-style:italic">// 6. 发布位置状态信息
+</span><span style="color:#998;font-style:italic"></span>    PublishLocalizationStatus(localization_status);
+    ADEBUG <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;[OnTimer]: Localization message publish success!&#34;</span>;
+  }
+
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>具体的执行过程如下图所示。
+
+        <img class="mx-auto" alt="rtk" src="https://raw.githubusercontent.com/FelicxFoster/Image-Hosting/master/Img/localization_img/location_rtk.jpg" />   
+    
+主要的执行过程在&quot;GpsCallback&quot;中，然后通过&quot;GetLocalization&quot;和&quot;GetLocalizationStatus&quot;获取结果，最后发布对应的位置信息、位置转换信息和位置状态信息。
+由于&quot;GpsCallback&quot;主要执行过程在&quot;PrepareLocalizationMsg&quot;中，因此我们主要分析&quot;PrepareLocalizationMsg&quot;的实现。</p>
+<h4 id="获取定位信息">获取定位信息</h4>
+<p>PrepareLocalizationMsg函数的具体实现如下。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">void</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>PrepareLocalizationMsg(
+    <span style="color:#000;font-weight:bold">const</span> localization<span style="color:#000;font-weight:bold">::</span>Gps <span style="color:#000;font-weight:bold">&amp;</span>gps_msg, LocalizationEstimate <span style="color:#000;font-weight:bold">*</span>localization,
+    LocalizationStatus <span style="color:#000;font-weight:bold">*</span>localization_status) {
+  <span style="color:#998;font-style:italic">// find the matching gps and imu message
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#458;font-weight:bold">double</span> gps_time_stamp <span style="color:#000;font-weight:bold">=</span> gps_msg.header().timestamp_sec();
+  CorrectedImu imu_msg;
+  <span style="color:#998;font-style:italic">// 1.查找最匹配的IMU信息
+</span><span style="color:#998;font-style:italic"></span>  FindMatchingIMU(gps_time_stamp, <span style="color:#000;font-weight:bold">&amp;</span>imu_msg);
+  <span style="color:#998;font-style:italic">// 2.根据GPS和IMU信息，给位置信息赋值
+</span><span style="color:#998;font-style:italic"></span>  ComposeLocalizationMsg(gps_msg, imu_msg, localization);
+
+  drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>InsStat gps_status;
+  <span style="color:#998;font-style:italic">// 3.查找最近的GPS状态信息
+</span><span style="color:#998;font-style:italic"></span>  FindNearestGpsStatus(gps_time_stamp, <span style="color:#000;font-weight:bold">&amp;</span>gps_status);
+  <span style="color:#998;font-style:italic">// 4.根据GPS状态信息，给位置状态信息赋值
+</span><span style="color:#998;font-style:italic"></span>  FillLocalizationStatusMsg(gps_status, localization_status);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>下面我们逐个分析上述4个过程。</p>
+<h4 id="findmatchingimu">FindMatchingIMU</h4>
+<p>在队列中找到最匹配的IMU消息，其中区分了队列的第一个，最后一个，以及如果在中间位置则进行插值。插值的时候根据距离最近的原则进行反比例插值。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>FindMatchingIMU(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">double</span> gps_timestamp_sec,
+                                      CorrectedImu <span style="color:#000;font-weight:bold">*</span>imu_msg) {
+
+  <span style="color:#998;font-style:italic">// 加锁，取出IMU队列中的数据
+</span><span style="color:#998;font-style:italic"></span>  std<span style="color:#000;font-weight:bold">::</span>unique_lock<span style="color:#000;font-weight:bold">&lt;</span>std<span style="color:#000;font-weight:bold">::</span>mutex<span style="color:#000;font-weight:bold">&gt;</span> lock(imu_list_mutex_);
+  <span style="color:#000;font-weight:bold">auto</span> imu_list <span style="color:#000;font-weight:bold">=</span> imu_list_;
+  lock.unlock();
+
+  <span style="color:#998;font-style:italic">// 在IMU队列中找到最新的IMU消息
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">auto</span> imu_it <span style="color:#000;font-weight:bold">=</span> imu_list.begin();
+  <span style="color:#000;font-weight:bold">for</span> (; imu_it <span style="color:#000;font-weight:bold">!=</span> imu_list.end(); <span style="color:#000;font-weight:bold">++</span>imu_it) {
+    <span style="color:#000;font-weight:bold">if</span> ((<span style="color:#000;font-weight:bold">*</span>imu_it).header().timestamp_sec() <span style="color:#000;font-weight:bold">-</span> gps_timestamp_sec <span style="color:#000;font-weight:bold">&gt;</span>
+        std<span style="color:#000;font-weight:bold">::</span>numeric_limits<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">double</span><span style="color:#000;font-weight:bold">&gt;::</span>min()) {
+      <span style="color:#000;font-weight:bold">break</span>;
+    }
+  }
+
+  <span style="color:#000;font-weight:bold">if</span> (imu_it <span style="color:#000;font-weight:bold">!=</span> imu_list.end()) {
+    <span style="color:#000;font-weight:bold">if</span> (imu_it <span style="color:#000;font-weight:bold">==</span> imu_list.begin()) {   <span style="color:#998;font-style:italic">// found one(异常情况)
+</span><span style="color:#998;font-style:italic"></span>      AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;IMU queue too short or request too old. &#34;</span>
+             <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Oldest timestamp[&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu_list.front().header().timestamp_sec()
+             <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;], Newest timestamp[&#34;</span>
+             <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu_list.back().header().timestamp_sec() <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;], GPS timestamp[&#34;</span>
+             <span style="color:#000;font-weight:bold">&lt;&lt;</span> gps_timestamp_sec <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;]&#34;</span>;
+      <span style="color:#000;font-weight:bold">*</span>imu_msg <span style="color:#000;font-weight:bold">=</span> imu_list.front();  <span style="color:#998;font-style:italic">// the oldest imu
+</span><span style="color:#998;font-style:italic"></span>    } <span style="color:#000;font-weight:bold">else</span> {
+      <span style="color:#998;font-style:italic">// here is the normal case(正常情况)
+</span><span style="color:#998;font-style:italic"></span>      <span style="color:#000;font-weight:bold">auto</span> imu_it_1 <span style="color:#000;font-weight:bold">=</span> imu_it;
+      imu_it_1<span style="color:#000;font-weight:bold">--</span>;
+      <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>(<span style="color:#000;font-weight:bold">*</span>imu_it).has_header() <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">!</span>(<span style="color:#000;font-weight:bold">*</span>imu_it_1).has_header()) {
+        AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;imu1 and imu_it_1 must both have header.&#34;</span>;
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">false</span>;
+      }
+      <span style="color:#998;font-style:italic">// 根据最新的IMU消息和它之前的消息做插值。
+</span><span style="color:#998;font-style:italic"></span>      <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>InterpolateIMU(<span style="color:#000;font-weight:bold">*</span>imu_it_1, <span style="color:#000;font-weight:bold">*</span>imu_it, gps_timestamp_sec, imu_msg)) {
+        AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;failed to interpolate IMU&#34;</span>;
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">false</span>;
+      }
+    }
+  } <span style="color:#000;font-weight:bold">else</span> {
+    <span style="color:#998;font-style:italic">// 如果没有找到，则取最新的20ms以内的消息，如果超过20ms则报错。
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// give the newest imu, without extrapolation
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">*</span>imu_msg <span style="color:#000;font-weight:bold">=</span> imu_list.back();
+    <span style="color:#000;font-weight:bold">if</span> (imu_msg <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">nullptr</span>) {
+      AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Fail to get latest observed imu_msg.&#34;</span>;
+      <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">false</span>;
+    }
+
+    <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>imu_msg<span style="color:#000;font-weight:bold">-&gt;</span>has_header()) {
+      AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;imu_msg must have header.&#34;</span>;
+      <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">false</span>;
+    }
+
+    <span style="color:#000;font-weight:bold">if</span> (std<span style="color:#000;font-weight:bold">::</span>fabs(imu_msg<span style="color:#000;font-weight:bold">-&gt;</span>header().timestamp_sec() <span style="color:#000;font-weight:bold">-</span> gps_timestamp_sec) <span style="color:#000;font-weight:bold">&gt;</span>
+        gps_imu_time_diff_threshold_) {
+      <span style="color:#998;font-style:italic">// 20ms threshold to report error
+</span><span style="color:#998;font-style:italic"></span>      AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Cannot find Matching IMU. IMU messages too old. &#34;</span>
+             <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Newest timestamp[&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu_list.back().header().timestamp_sec()
+             <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;], GPS timestamp[&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> gps_timestamp_sec <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;]&#34;</span>;
+    }
+  }
+
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>接下来我们看<a href="https://www.cnblogs.com/CV-life/p/11379126.html">线性插值</a></p>
+<ol>
+<li>InterpolateIMU
+根据上述函数得到2个IMU消息分别对角速度、线性加速度、欧拉角进行插值。原则是根据比例，反比例进行插值。</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>InterpolateIMU(<span style="color:#000;font-weight:bold">const</span> CorrectedImu <span style="color:#000;font-weight:bold">&amp;</span>imu1,
+                                     <span style="color:#000;font-weight:bold">const</span> CorrectedImu <span style="color:#000;font-weight:bold">&amp;</span>imu2,
+                                     <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">double</span> timestamp_sec,
+                                     CorrectedImu <span style="color:#000;font-weight:bold">*</span>imu_msg) {
+
+  <span style="color:#000;font-weight:bold">if</span> (timestamp_sec <span style="color:#000;font-weight:bold">-</span> imu1.header().timestamp_sec() <span style="color:#000;font-weight:bold">&lt;</span>
+      std<span style="color:#000;font-weight:bold">::</span>numeric_limits<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">double</span><span style="color:#000;font-weight:bold">&gt;::</span>min()) {
+    AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;[InterpolateIMU1]: the given time stamp[&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> timestamp_sec
+           <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;] is older than the 1st message[&#34;</span>
+           <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu1.header().timestamp_sec() <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;]&#34;</span>;
+    <span style="color:#000;font-weight:bold">*</span>imu_msg <span style="color:#000;font-weight:bold">=</span> imu1;
+  } <span style="color:#000;font-weight:bold">else</span> <span style="color:#900;font-weight:bold">if</span> (timestamp_sec <span style="color:#000;font-weight:bold">-</span> imu2.header().timestamp_sec() <span style="color:#000;font-weight:bold">&gt;</span>
+             std<span style="color:#000;font-weight:bold">::</span>numeric_limits<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">double</span><span style="color:#000;font-weight:bold">&gt;::</span>min()) {
+    AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;[InterpolateIMU2]: the given time stamp[&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> timestamp_sec
+           <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;] is newer than the 2nd message[&#34;</span>
+           <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu2.header().timestamp_sec() <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;]&#34;</span>;
+    <span style="color:#000;font-weight:bold">*</span>imu_msg <span style="color:#000;font-weight:bold">=</span> imu1;
+  } <span style="color:#000;font-weight:bold">else</span> {
+    <span style="color:#998;font-style:italic">// 线性插值
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">*</span>imu_msg <span style="color:#000;font-weight:bold">=</span> imu1;
+    imu_msg<span style="color:#000;font-weight:bold">-&gt;</span>mutable_header()<span style="color:#000;font-weight:bold">-&gt;</span>set_timestamp_sec(timestamp_sec);
+
+    <span style="color:#458;font-weight:bold">double</span> time_diff <span style="color:#000;font-weight:bold">=</span>
+        imu2.header().timestamp_sec() <span style="color:#000;font-weight:bold">-</span> imu1.header().timestamp_sec();
+    <span style="color:#000;font-weight:bold">if</span> (fabs(time_diff) <span style="color:#000;font-weight:bold">&gt;=</span> <span style="color:#099">0.001</span>) {
+      <span style="color:#458;font-weight:bold">double</span> frac1 <span style="color:#000;font-weight:bold">=</span>
+          (timestamp_sec <span style="color:#000;font-weight:bold">-</span> imu1.header().timestamp_sec()) <span style="color:#000;font-weight:bold">/</span> time_diff;
+      <span style="color:#998;font-style:italic">// 1. 分别对角速度、线性加速度、欧拉角进行插值
+</span><span style="color:#998;font-style:italic"></span>      <span style="color:#000;font-weight:bold">if</span> (imu1.imu().has_angular_velocity() <span style="color:#000;font-weight:bold">&amp;&amp;</span>
+          imu2.imu().has_angular_velocity()) {
+        <span style="color:#000;font-weight:bold">auto</span> val <span style="color:#000;font-weight:bold">=</span> InterpolateXYZ(imu1.imu().angular_velocity(),
+                                  imu2.imu().angular_velocity(), frac1);
+        imu_msg<span style="color:#000;font-weight:bold">-&gt;</span>mutable_imu()<span style="color:#000;font-weight:bold">-&gt;</span>mutable_angular_velocity()<span style="color:#000;font-weight:bold">-&gt;</span>CopyFrom(val);
+      }
+
+      ...
+    }
+  }
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>InterpolateXYZ
+根据距离插值，反比例，即frac1越小，则越靠近p1，frac1越大，则越靠近p2</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">template</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">T</span><span style="color:#000;font-weight:bold">&gt;</span>
+T RTKLocalization<span style="color:#000;font-weight:bold">::</span>InterpolateXYZ(<span style="color:#000;font-weight:bold">const</span> T <span style="color:#000;font-weight:bold">&amp;</span>p1, <span style="color:#000;font-weight:bold">const</span> T <span style="color:#000;font-weight:bold">&amp;</span>p2,
+                                  <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">double</span> frac1) {
+  T p;
+  <span style="color:#458;font-weight:bold">double</span> frac2 <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1.0</span> <span style="color:#000;font-weight:bold">-</span> frac1;
+  <span style="color:#000;font-weight:bold">if</span> (p1.has_x() <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">!</span>std<span style="color:#000;font-weight:bold">::</span>isnan(p1.x()) <span style="color:#000;font-weight:bold">&amp;&amp;</span> p2.has_x() <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">!</span>std<span style="color:#000;font-weight:bold">::</span>isnan(p2.x())) {
+    p.set_x(p1.x() <span style="color:#000;font-weight:bold">*</span> frac2 <span style="color:#000;font-weight:bold">+</span> p2.x() <span style="color:#000;font-weight:bold">*</span> frac1);
+  }
+  <span style="color:#000;font-weight:bold">if</span> (p1.has_y() <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">!</span>std<span style="color:#000;font-weight:bold">::</span>isnan(p1.y()) <span style="color:#000;font-weight:bold">&amp;&amp;</span> p2.has_y() <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">!</span>std<span style="color:#000;font-weight:bold">::</span>isnan(p2.y())) {
+    p.set_y(p1.y() <span style="color:#000;font-weight:bold">*</span> frac2 <span style="color:#000;font-weight:bold">+</span> p2.y() <span style="color:#000;font-weight:bold">*</span> frac1);
+  }
+  <span style="color:#000;font-weight:bold">if</span> (p1.has_z() <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">!</span>std<span style="color:#000;font-weight:bold">::</span>isnan(p1.z()) <span style="color:#000;font-weight:bold">&amp;&amp;</span> p2.has_z() <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">!</span>std<span style="color:#000;font-weight:bold">::</span>isnan(p2.z())) {
+    p.set_z(p1.z() <span style="color:#000;font-weight:bold">*</span> frac2 <span style="color:#000;font-weight:bold">+</span> p2.z() <span style="color:#000;font-weight:bold">*</span> frac1);
+  }
+  <span style="color:#000;font-weight:bold">return</span> p;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="composelocalizationmsg">ComposeLocalizationMsg</h4>
+<p>填充localization位置信息，这里实际上涉及到姿态解算，具体是根据GPS和IMU消息对位置信息进行赋值。需要注意需要根据航向对IMU的信息进行转换。
+位置，航向，线速度是GPS的
+加速度，角速度，欧拉角是IMU的</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">void</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>ComposeLocalizationMsg(
+    <span style="color:#000;font-weight:bold">const</span> localization<span style="color:#000;font-weight:bold">::</span>Gps <span style="color:#000;font-weight:bold">&amp;</span>gps_msg, <span style="color:#000;font-weight:bold">const</span> localization<span style="color:#000;font-weight:bold">::</span>CorrectedImu <span style="color:#000;font-weight:bold">&amp;</span>imu_msg,
+    LocalizationEstimate <span style="color:#000;font-weight:bold">*</span>localization) {
+  localization<span style="color:#000;font-weight:bold">-&gt;</span>Clear();
+
+  <span style="color:#998;font-style:italic">// 填充Localization的header消息
+</span><span style="color:#998;font-style:italic"></span>  FillLocalizationMsgHeader(localization);
+
+  localization<span style="color:#000;font-weight:bold">-&gt;</span>set_measurement_time(gps_msg.header().timestamp_sec());
+
+  <span style="color:#998;font-style:italic">// combine gps and imu
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">auto</span> mutable_pose <span style="color:#000;font-weight:bold">=</span> localization<span style="color:#000;font-weight:bold">-&gt;</span>mutable_pose();
+  <span style="color:#998;font-style:italic">// GPS消息包含位置信息
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">if</span> (gps_msg.has_localization()) {
+    <span style="color:#000;font-weight:bold">const</span> <span style="color:#000;font-weight:bold">auto</span> <span style="color:#000;font-weight:bold">&amp;</span>pose <span style="color:#000;font-weight:bold">=</span> gps_msg.localization();
+    <span style="color:#998;font-style:italic">// 1. 获取位置，填充position消息
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (pose.has_position()) {
+      <span style="color:#998;font-style:italic">// position
+</span><span style="color:#998;font-style:italic"></span>      <span style="color:#998;font-style:italic">// world frame -&gt; map frame
+</span><span style="color:#998;font-style:italic"></span>      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_position()<span style="color:#000;font-weight:bold">-&gt;</span>set_x(pose.position().x() <span style="color:#000;font-weight:bold">-</span>
+                                              map_offset_[<span style="color:#099">0</span>]);
+      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_position()<span style="color:#000;font-weight:bold">-&gt;</span>set_y(pose.position().y() <span style="color:#000;font-weight:bold">-</span>
+                                              map_offset_[<span style="color:#099">1</span>]);
+      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_position()<span style="color:#000;font-weight:bold">-&gt;</span>set_z(pose.position().z() <span style="color:#000;font-weight:bold">-</span>
+                                              map_offset_[<span style="color:#099">2</span>]);
+    }
+    <span style="color:#998;font-style:italic">// 2. 获取方向
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// orientation，填充orientation消息
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (pose.has_orientation()) {
+      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_orientation()<span style="color:#000;font-weight:bold">-&gt;</span>CopyFrom(pose.orientation());
+      <span style="color:#458;font-weight:bold">double</span> heading <span style="color:#000;font-weight:bold">=</span> common<span style="color:#000;font-weight:bold">::</span>math<span style="color:#000;font-weight:bold">::</span>QuaternionToHeading(
+          pose.orientation().qw(), pose.orientation().qx(),
+          pose.orientation().qy(), pose.orientation().qz());
+      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>set_heading(heading);
+    }
+    <span style="color:#998;font-style:italic">// linear velocity
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// 3. 获取速度，填充linear_velocity
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (pose.has_linear_velocity()) {
+      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_linear_velocity()<span style="color:#000;font-weight:bold">-&gt;</span>CopyFrom(pose.linear_velocity());
+    }
+  }
+
+  <span style="color:#000;font-weight:bold">if</span> (imu_msg.has_imu()) {
+    <span style="color:#000;font-weight:bold">const</span> <span style="color:#000;font-weight:bold">auto</span> <span style="color:#000;font-weight:bold">&amp;</span>imu <span style="color:#000;font-weight:bold">=</span> imu_msg.imu();
+    <span style="color:#998;font-style:italic">// linear acceleration
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// 4. 获取imu的线性加速度
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (imu.has_linear_acceleration()) {
+      <span style="color:#000;font-weight:bold">if</span> (localization<span style="color:#000;font-weight:bold">-&gt;</span>pose().has_orientation()) {
+        <span style="color:#998;font-style:italic">// linear_acceleration:
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// convert from vehicle reference to map reference
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// 为什么需要做旋转？？？转换为车当前方向的速度？？？
+</span><span style="color:#998;font-style:italic"></span>        Vector3d <span style="color:#900;font-weight:bold">orig</span>(imu.linear_acceleration().x(),
+                      imu.linear_acceleration().y(),
+                      imu.linear_acceleration().z());
+        Vector3d vec <span style="color:#000;font-weight:bold">=</span> common<span style="color:#000;font-weight:bold">::</span>math<span style="color:#000;font-weight:bold">::</span>QuaternionRotate(
+            localization<span style="color:#000;font-weight:bold">-&gt;</span>pose().orientation(), orig);
+        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_linear_acceleration()<span style="color:#000;font-weight:bold">-&gt;</span>set_x(vec[<span style="color:#099">0</span>]);
+        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_linear_acceleration()<span style="color:#000;font-weight:bold">-&gt;</span>set_y(vec[<span style="color:#099">1</span>]);
+        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_linear_acceleration()<span style="color:#000;font-weight:bold">-&gt;</span>set_z(vec[<span style="color:#099">2</span>]);
+
+        <span style="color:#998;font-style:italic">// linear_acceleration_vfr
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// 设置线性加速度
+</span><span style="color:#998;font-style:italic"></span>        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_linear_acceleration_vrf()<span style="color:#000;font-weight:bold">-&gt;</span>CopyFrom(
+            imu.linear_acceleration());
+      } <span style="color:#000;font-weight:bold">else</span> {
+        AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;[PrepareLocalizationMsg]: &#34;</span>
+               <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;fail to convert linear_acceleration&#34;</span>;
+      }
+    }
+
+    <span style="color:#998;font-style:italic">// 5. 设置角速度，也需要根据航向转换
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// angular velocity
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (imu.has_angular_velocity()) {
+      <span style="color:#000;font-weight:bold">if</span> (localization<span style="color:#000;font-weight:bold">-&gt;</span>pose().has_orientation()) {
+        <span style="color:#998;font-style:italic">// angular_velocity:
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// convert from vehicle reference to map reference
+</span><span style="color:#998;font-style:italic"></span>        Vector3d <span style="color:#900;font-weight:bold">orig</span>(imu.angular_velocity().x(), imu.angular_velocity().y(),
+                      imu.angular_velocity().z());
+        Vector3d vec <span style="color:#000;font-weight:bold">=</span> common<span style="color:#000;font-weight:bold">::</span>math<span style="color:#000;font-weight:bold">::</span>QuaternionRotate(
+            localization<span style="color:#000;font-weight:bold">-&gt;</span>pose().orientation(), orig);
+        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_angular_velocity()<span style="color:#000;font-weight:bold">-&gt;</span>set_x(vec[<span style="color:#099">0</span>]);
+        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_angular_velocity()<span style="color:#000;font-weight:bold">-&gt;</span>set_y(vec[<span style="color:#099">1</span>]);
+        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_angular_velocity()<span style="color:#000;font-weight:bold">-&gt;</span>set_z(vec[<span style="color:#099">2</span>]);
+
+        <span style="color:#998;font-style:italic">// angular_velocity_vf
+</span><span style="color:#998;font-style:italic"></span>        mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_angular_velocity_vrf()<span style="color:#000;font-weight:bold">-&gt;</span>CopyFrom(
+            imu.angular_velocity());
+      } <span style="color:#000;font-weight:bold">else</span> {
+        AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;[PrepareLocalizationMsg]: fail to convert angular_velocity&#34;</span>;
+      }
+    }
+
+    <span style="color:#998;font-style:italic">// 6. 设置欧拉角
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// euler angle
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (imu.has_euler_angles()) {
+      mutable_pose<span style="color:#000;font-weight:bold">-&gt;</span>mutable_euler_angles()<span style="color:#000;font-weight:bold">-&gt;</span>CopyFrom(imu.euler_angles());
+    }
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="findnearestgpsstatus">FindNearestGpsStatus</h4>
+<p>获取最近的Gps状态信息，这里实现的算法是遍历查找离&quot;gps_time_stamp&quot;最近的状态，gps_time_stamp是按GPS自己的时间戳排列的</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>FindNearestGpsStatus(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">double</span> gps_timestamp_sec,
+                                           drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>InsStat <span style="color:#000;font-weight:bold">*</span>status) {
+  CHECK_NOTNULL(status);
+
+  std<span style="color:#000;font-weight:bold">::</span>unique_lock<span style="color:#000;font-weight:bold">&lt;</span>std<span style="color:#000;font-weight:bold">::</span>mutex<span style="color:#000;font-weight:bold">&gt;</span> lock(gps_status_list_mutex_);
+  <span style="color:#000;font-weight:bold">auto</span> gps_status_list <span style="color:#000;font-weight:bold">=</span> gps_status_list_;
+  lock.unlock();
+
+  <span style="color:#998;font-style:italic">// 1. 遍历查找最近的GPS状态信息
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#458;font-weight:bold">double</span> timestamp_diff_sec <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1e8</span>;
+  <span style="color:#000;font-weight:bold">auto</span> nearest_itr <span style="color:#000;font-weight:bold">=</span> gps_status_list.end();
+  <span style="color:#000;font-weight:bold">for</span> (<span style="color:#000;font-weight:bold">auto</span> itr <span style="color:#000;font-weight:bold">=</span> gps_status_list.begin(); itr <span style="color:#000;font-weight:bold">!=</span> gps_status_list.end();
+       <span style="color:#000;font-weight:bold">++</span>itr) {
+    <span style="color:#458;font-weight:bold">double</span> diff <span style="color:#000;font-weight:bold">=</span> std<span style="color:#000;font-weight:bold">::</span>abs(itr<span style="color:#000;font-weight:bold">-&gt;</span>header().timestamp_sec() <span style="color:#000;font-weight:bold">-</span> gps_timestamp_sec);
+    <span style="color:#000;font-weight:bold">if</span> (diff <span style="color:#000;font-weight:bold">&lt;</span> timestamp_diff_sec) {
+      timestamp_diff_sec <span style="color:#000;font-weight:bold">=</span> diff;
+      nearest_itr <span style="color:#000;font-weight:bold">=</span> itr;
+    }
+  }
+  <span style="color:#000;font-weight:bold">if</span> (nearest_itr <span style="color:#000;font-weight:bold">==</span> gps_status_list.end()) {
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">false</span>;
+  }
+
+  <span style="color:#000;font-weight:bold">if</span> (timestamp_diff_sec <span style="color:#000;font-weight:bold">&gt;</span> gps_status_time_diff_threshold_) {
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">false</span>;
+  }
+
+  <span style="color:#000;font-weight:bold">*</span>status <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">*</span>nearest_itr;
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="filllocalizationstatusmsg">FillLocalizationStatusMsg</h4>
+<p>从GNSS，也就是Novatel那个传感器获取位置状态，一共有3种状态：稳定状态(INS_RTKFIXED)、浮动状态(INS_RTKFLOAT)、错误状态(ERROR)。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">void</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>FillLocalizationStatusMsg(
+    <span style="color:#000;font-weight:bold">const</span> drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>InsStat <span style="color:#000;font-weight:bold">&amp;</span>status,
+    LocalizationStatus <span style="color:#000;font-weight:bold">*</span>localization_status) {
+  apollo<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>Header <span style="color:#000;font-weight:bold">*</span>header <span style="color:#000;font-weight:bold">=</span> localization_status<span style="color:#000;font-weight:bold">-&gt;</span>mutable_header();
+  <span style="color:#458;font-weight:bold">double</span> timestamp <span style="color:#000;font-weight:bold">=</span> apollo<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>time<span style="color:#000;font-weight:bold">::</span>Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds();
+  header<span style="color:#000;font-weight:bold">-&gt;</span>set_timestamp_sec(timestamp);
+  localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_measurement_time(status.header().timestamp_sec());
+
+  <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>status.has_pos_type()) {
+    localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_fusion_status(MeasureState<span style="color:#000;font-weight:bold">::</span>ERROR);
+    localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_state_message(
+        <span style="color:#d14">&#34;Error: Current Localization Status Is Missing.&#34;</span>);
+    <span style="color:#000;font-weight:bold">return</span>;
+  }
+
+  <span style="color:#000;font-weight:bold">auto</span> pos_type <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">static_cast</span><span style="color:#000;font-weight:bold">&lt;</span>drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>SolutionType<span style="color:#000;font-weight:bold">&gt;</span>(status.pos_type());
+  <span style="color:#000;font-weight:bold">switch</span> (pos_type) {
+    <span style="color:#000;font-weight:bold">case</span> drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>SolutionType<span style="color:#000;font-weight:bold">::</span><span style="color:#900;font-weight:bold">INS_RTKFIXED</span>:
+      localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_fusion_status(MeasureState<span style="color:#000;font-weight:bold">::</span>OK);
+      localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_state_message(<span style="color:#d14">&#34;&#34;</span>);
+      <span style="color:#000;font-weight:bold">break</span>;
+    <span style="color:#000;font-weight:bold">case</span> drivers<span style="color:#000;font-weight:bold">::</span>gnss<span style="color:#000;font-weight:bold">::</span>SolutionType<span style="color:#000;font-weight:bold">::</span><span style="color:#900;font-weight:bold">INS_RTKFLOAT</span>:
+      localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_fusion_status(MeasureState<span style="color:#000;font-weight:bold">::</span>WARNNING);
+      localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_state_message(
+          <span style="color:#d14">&#34;Warning: Current Localization Is Unstable.&#34;</span>);
+      <span style="color:#000;font-weight:bold">break</span>;
+    <span style="color:#000;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span>
+      localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_fusion_status(MeasureState<span style="color:#000;font-weight:bold">::</span>ERROR);
+      localization_status<span style="color:#000;font-weight:bold">-&gt;</span>set_state_message(
+          <span style="color:#d14">&#34;Error: Current Localization Is Very Unstable.&#34;</span>);
+      <span style="color:#000;font-weight:bold">break</span>;
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="runwatchdog">RunWatchDog</h4>
+<p>就是看门狗，用来定时检测时间戳是否正确。里面主要比较GPS时间戳和系统时间、以及比较IMU时间戳和系统时间，如果GPS时间戳延时或IMU时间戳延迟于系统时间1s，看门狗提示&quot;gps/imu frame Delay!&quot;。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">void</span> RTKLocalization<span style="color:#000;font-weight:bold">::</span>RunWatchDog(<span style="color:#458;font-weight:bold">double</span> gps_timestamp) {
+  <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>enable_watch_dog_) {
+    <span style="color:#000;font-weight:bold">return</span>;
+  }
+
+  <span style="color:#998;font-style:italic">// check GPS time stamp against system time
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#998;font-style:italic">// 定位服务启动后，GPS超时则设置msg_delay为真
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#458;font-weight:bold">double</span> gps_delay_sec <span style="color:#000;font-weight:bold">=</span> common<span style="color:#000;font-weight:bold">::</span>time<span style="color:#000;font-weight:bold">::</span>Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds() <span style="color:#000;font-weight:bold">-</span> gps_timestamp;
+  <span style="color:#458;font-weight:bold">double</span> gps_service_delay <span style="color:#000;font-weight:bold">=</span>
+      common<span style="color:#000;font-weight:bold">::</span>time<span style="color:#000;font-weight:bold">::</span>Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds() <span style="color:#000;font-weight:bold">-</span> service_started_time;
+  <span style="color:#458;font-weight:bold">int64_t</span> gps_delay_cycle_cnt <span style="color:#000;font-weight:bold">=</span>
+      <span style="color:#000;font-weight:bold">static_cast</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int64_t</span><span style="color:#000;font-weight:bold">&gt;</span>(gps_delay_sec <span style="color:#000;font-weight:bold">*</span> localization_publish_freq_);
+
+  <span style="color:#458;font-weight:bold">bool</span> msg_delay <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">false</span>;
+  <span style="color:#000;font-weight:bold">if</span> (gps_delay_cycle_cnt <span style="color:#000;font-weight:bold">&gt;</span> report_threshold_err_num_ <span style="color:#000;font-weight:bold">&amp;&amp;</span>
+      <span style="color:#000;font-weight:bold">static_cast</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span>(gps_service_delay) <span style="color:#000;font-weight:bold">&gt;</span> service_delay_threshold) {
+    msg_delay <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>;
+    std<span style="color:#000;font-weight:bold">::</span>stringstream ss;
+    ss <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Raw GPS Message Delay. GPS message is &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> gps_delay_cycle_cnt
+       <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34; cycle &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> gps_delay_sec <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34; sec behind current time.&#34;</span>;
+    monitor_logger_.ERROR(ss.str());
+  }
+
+  <span style="color:#998;font-style:italic">// check IMU time stamp against system time
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#998;font-style:italic">// 定位服务启动之后，IMU超时则设置msg_delay为真
+</span><span style="color:#998;font-style:italic"></span>  std<span style="color:#000;font-weight:bold">::</span>unique_lock<span style="color:#000;font-weight:bold">&lt;</span>std<span style="color:#000;font-weight:bold">::</span>mutex<span style="color:#000;font-weight:bold">&gt;</span> lock(imu_list_mutex_);
+  <span style="color:#000;font-weight:bold">auto</span> imu_msg <span style="color:#000;font-weight:bold">=</span> imu_list_.back();
+  lock.unlock();
+  <span style="color:#458;font-weight:bold">double</span> imu_delay_sec <span style="color:#000;font-weight:bold">=</span>
+      common<span style="color:#000;font-weight:bold">::</span>time<span style="color:#000;font-weight:bold">::</span>Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds() <span style="color:#000;font-weight:bold">-</span> imu_msg.header().timestamp_sec();
+  <span style="color:#458;font-weight:bold">int64_t</span> imu_delay_cycle_cnt <span style="color:#000;font-weight:bold">=</span>
+      <span style="color:#000;font-weight:bold">static_cast</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int64_t</span><span style="color:#000;font-weight:bold">&gt;</span>(imu_delay_sec <span style="color:#000;font-weight:bold">*</span> localization_publish_freq_);
+  <span style="color:#000;font-weight:bold">if</span> (imu_delay_cycle_cnt <span style="color:#000;font-weight:bold">&gt;</span> report_threshold_err_num_ <span style="color:#000;font-weight:bold">&amp;&amp;</span>
+      <span style="color:#000;font-weight:bold">static_cast</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span>(gps_service_delay) <span style="color:#000;font-weight:bold">&gt;</span> service_delay_threshold) {
+    msg_delay <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>;
+    std<span style="color:#000;font-weight:bold">::</span>stringstream ss;
+    ss <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Raw IMU Message Delay. IMU message is &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu_delay_cycle_cnt
+       <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34; cycle &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> imu_delay_sec <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34; sec behind current time.&#34;</span>;
+    monitor_logger_.ERROR(ss.str());
+  }
+
+  <span style="color:#998;font-style:italic">// to prevent it from beeping continuously
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#998;font-style:italic">// 第一次触发之后，然后每隔1s触发一次
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">if</span> (msg_delay <span style="color:#000;font-weight:bold">&amp;&amp;</span> (last_reported_timestamp_sec_ <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">1.</span> <span style="color:#000;font-weight:bold">||</span>
+                    common<span style="color:#000;font-weight:bold">::</span>time<span style="color:#000;font-weight:bold">::</span>Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds() <span style="color:#000;font-weight:bold">&gt;</span>
+                        last_reported_timestamp_sec_ <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1.</span>)) {
+    AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;gps/imu frame Delay!&#34;</span>;
+    last_reported_timestamp_sec_ <span style="color:#000;font-weight:bold">=</span> common<span style="color:#000;font-weight:bold">::</span>time<span style="color:#000;font-weight:bold">::</span>Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds();
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="发布消息">发布消息</h4>
+<p>最后通过以下几个函数发布消息。</p>
+<ol>
+<li>PublishPoseBroadcastTopic  // 发布位置信息</li>
+<li>PublishPoseBroadcastTF     // 发布位置转换transform信息</li>
+<li>PublishLocalizationStatus  // 发布位置状态信息</li>
+</ol>
+<p>以上就是整个RTK的定位流程，主要的思路是通过接收GPS和IMU信息结合输出无人车的位置信息，这里还有一个疑问是为什么最后输出的定位信息的位置是直接采用的GPS的位置信息，没有通过IMU信息对位置信息做解算，还是说在其它模块中实现的？？？</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="ndt定位流程">NDT定位流程</h2>
+<p>NDT是一种点云配准算法，可同时用于点云的建图和定位。利用已有的高精度地图和激光雷达实时测量数据实现高精度定位。下面是NDT模块的目录结构。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scss" data-lang="scss"><span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">BUILD</span>                               <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">bazel编译文件</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization</span><span style="color:#458;font-weight:bold">.cc</span>                 <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">rtk定位功能实现模块</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization_component</span><span style="color:#458;font-weight:bold">.cc</span>       <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">rtk消息发布模块</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization_component</span><span style="color:#458;font-weight:bold">.h</span>
+<span style="color:#a61717;background-color:#e3d2d2">├──</span> <span style="color:#000080">rtk_localization</span><span style="color:#458;font-weight:bold">.h</span>
+<span style="color:#a61717;background-color:#e3d2d2">└──</span> <span style="color:#000080">rtk_localization_test</span><span style="color:#458;font-weight:bold">.cc</span>            <span style="color:#000;font-weight:bold">//</span> <span style="color:#000080">测试</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://ieeexplore.ieee.org/document/8461224">Robust and Precise Vehicle Localization Based on Multi-Sensor Fusion in Diverse City Scenes</a></p>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://felicx_gitee.gitee.io/">Felicx</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/">https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://felicx_gitee.gitee.io/tags/Apollo'>Apollo</a></li>
+                
+                <li><a href='https://felicx_gitee.gitee.io/tags/Localization'>Localization</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://felicx_gitee.gitee.io/">My Nook By Felicx</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://felicx_gitee.gitee.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://felicx_gitee.gitee.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BMAP/" title="Apollo之Map">Apollo之Map</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/" title="Apollo之Planning">Apollo之Planning</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" title="Apollo之仿真环境搭建">Apollo之仿真环境搭建</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%8B%E7%BB%8D/" title="Apollo介绍">Apollo介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/" title="Apollo之Localization">Apollo之Localization</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/" title=""></a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://felicx_gitee.gitee.io/categories/Apollo/">Apollo (5)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Apollo/">Apollo</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Localization/">Localization</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Map/">Map</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Planning/">Planning</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83/">仿真环境</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/qq_37427972" title="Felicx的博客">Felicx的博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://felicx_gitee.gitee.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

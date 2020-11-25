@@ -6,14 +6,50 @@
     <description>Recent content in Apollo on My Nook</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 24 Sep 2020 18:07:10 +0800</lastBuildDate><atom:link href="https://felicx_gitee.gitee.io/tags/Apollo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://felicx_gitee.gitee.io/tags/Apollo/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Localization</title>
-      <link>https://felicx_gitee.gitee.io/post/localization/</link>
+      <title>Apollo之Map</title>
+      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BMAP/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BMAP/</guid>
+      <description>Dig into Apollo - Map Table of Contents Map模块简介 Map目录结构 地图数据结构 地图信息头 人行横道 路口 车道 停止信号 交通信号标志 让行 重叠区域 禁止停车 道路信息 停车区域 行人道路 opendriver地图解析 高精度地图API 如何制作高精度地图 采集 加工 转换 Reference Map模块简介 其实我们只需要知道map模块的主要功能是“加</description>
+    </item>
+    
+    <item>
+      <title>Apollo之Planning</title>
+      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/</guid>
+      <description>Dig into Apollo - Planning 天空越黑暗，星辰越璀璨 Table of Contents Planning模块简介 Planning输入输出 Planning整个流程 Planning模块入口 模块注册 模块初始化 模块运行 OnLanePlanning 初始化 事件触发 Planner Planner注册场景 运行场景 Scenario 场景转换 场景运行 Task DP &amp;amp; QP Reference Planning模块简介 规划(plannin</description>
+    </item>
+    
+    <item>
+      <title>Apollo之仿真环境搭建</title>
+      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/</guid>
+      <description>注意：内存最好4G以上，硬盘容量至少100G。 1、查看你的CPU是否支持FMA和AVX 1 2 $ cat /proc/cpuinfo | grep avx $ cat /proc/cpuinfo | grep fma 有返回值即支持 2、浏览器必须支持WebGL（最好使用谷歌） 3、安装NVIDIA显卡驱动（可选）（我没装） (若不装Nvidia driver, 运行bash docker/scripts</description>
+    </item>
+    
+    <item>
+      <title>Apollo介绍</title>
+      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%BB%8B%E7%BB%8D/</guid>
+      <description>简介 apollo是百度的自动驾驶开源框架，根据自动驾驶的功能划分为不同的模块，下面会根据目录结构和功能模块分别介绍和学习&amp;quot;apollo模块&amp;quot;。下面简单介绍下各个模块的作用: 定位 - 知道汽车在哪里,这里的定位可能涉及方方面面,比如GPS,但是GPS的精度只有米级别</description>
+    </item>
+    
+    <item>
+      <title>Apollo之Localization</title>
+      <link>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/</link>
       <pubDate>Thu, 24 Sep 2020 18:07:10 +0800</pubDate>
       
-      <guid>https://felicx_gitee.gitee.io/post/localization/</guid>
-      <description>Dig into Apollo - Localization 天空越黑暗，星辰越璀璨 Table of Contents Localization模块简介 代码目录 RTK定位流程 Reference Localization模块简介 localization模块主要实现了以下2个功能： 输出车辆的位置信息（planning模块使用） 输出车辆的姿态、速度信息（control模块使用） 其中a</description>
+      <guid>https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/</guid>
+      <description>Dig into Apollo - Localization 天空越黑暗，星辰越璀璨 Table of Contents Localization模块简介 代码目录 RTK定位流程 NDT定位流程 Reference Localization模块简介 localization模块主要实现了以下2个功能： 输出车辆的位置信息（planning模块使用） 输出车辆的姿态、速度信息（control模</description>
     </item>
     
   </channel>

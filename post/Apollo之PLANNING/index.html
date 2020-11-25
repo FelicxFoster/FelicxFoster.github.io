@@ -1,0 +1,1435 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Apollo之Planning | My Nook</title>
+    <meta property="og:title" content="Apollo之Planning - My Nook">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-11-25T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-11-25T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="[Apollo Planning modules]">
+    <meta name="description" content="介绍Apollo Planning模块">
+        <meta name="author" content="Felicx">
+        
+    <meta property="og:url" content="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+        <link rel="stylesheet" href='/css/toc_style.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://felicx_gitee.gitee.io/">
+                        My Nook
+                    </a>
+                
+                <p class="description">What else did you expect me to say?</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://felicx_gitee.gitee.io/">首页</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/tools/" title="工具">工具</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#table-of-contents">Table of Contents</a></li>
+    <li><a href="#planning模块简介">Planning模块简介</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#planning模块入口">Planning模块入口</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#onlaneplanning">OnLanePlanning</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#planner">Planner</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#scenario">Scenario</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#task">Task</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">Apollo之Planning</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://felicx_gitee.gitee.io/categories/Apollo'>Apollo</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h1 id="dig-into-apollo---planning">Dig into Apollo - Planning</h1>
+<blockquote>
+<p>天空越黑暗，星辰越璀璨</p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Planning模块简介</a>
+<ul>
+<li><a href="#planning_io">Planning输入输出</a></li>
+<li><a href="#planning_flow">Planning整个流程</a></li>
+</ul>
+</li>
+<li><a href="#planning_entry">Planning模块入口</a>
+<ul>
+<li><a href="#planning_register">模块注册</a></li>
+<li><a href="#planning_init">模块初始化</a></li>
+<li><a href="#planning_proc">模块运行</a></li>
+</ul>
+</li>
+<li><a href="#onLanePlanning">OnLanePlanning</a>
+<ul>
+<li><a href="#onLanePlanning_init">初始化</a></li>
+<li><a href="#onLanePlanning_trigger">事件触发</a></li>
+</ul>
+</li>
+<li><a href="#planner">Planner</a>
+<ul>
+<li><a href="#planner_register">Planner注册场景</a></li>
+<li><a href="#planner_plan">运行场景</a></li>
+</ul>
+</li>
+<li><a href="#scenario">Scenario</a>
+<ul>
+<li><a href="#scenario_update">场景转换</a></li>
+<li><a href="#scenario_process">场景运行</a></li>
+</ul>
+</li>
+<li><a href="#task">Task</a>
+<ul>
+<li><a href="#dp_qp">DP &amp; QP</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<p><!-- raw HTML omitted --></p>
+<h2 id="planning模块简介">Planning模块简介</h2>
+<p>规划(planning)模块的作用是根据感知预测的结果，当前的车辆信息和路况规划出一条车辆能够行驶的轨迹，这个轨迹会交给控制(control)模块，控制模块通过油门，刹车和方向盘使得车辆按照规划的轨迹运行。
+规划模块的轨迹是短期轨迹，即车辆短期内行驶的轨迹，长期的轨迹是routing模块规划出的导航轨迹，即起点到目的地的轨迹，规划模块会先生成导航轨迹，然后根据导航轨迹和路况的情况，沿着短期轨迹行驶，直到目的地。这点也很好理解，我们开车之前先打开导航，然后根据导航行驶，如果前面有车就会减速或者变道，超车，避让行人等，这就是短期轨迹，结合上述的方式直到行驶到目的地。</p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="planning输入输出">Planning输入输出</h4>
+<p>我们先看下Apollo的数据流向：
+
+        <img class="mx-auto" alt="Apollo_dataflow" src="https://raw.githubusercontent.com/daohu527/misc/master/blog/planning/dataflow.png" />   
+    </p>
+<p>可以看到规划(planning)模块的上游是Localization, Prediction, Routing模块，而下游是Control模块。Routing模块先规划出一条导航线路，然后Planning模块根据这条线路做局部优化，如果Planning模块发现短期规划的线路行不通（比如前面修路，或者错过了路口），会触发Routing模块重新规划线路，因此这两个模块的数据流是双向的。
+Planning模块的输入在&quot;planning_component.h&quot;中，接口如下:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#458;font-weight:bold">bool</span> <span style="color:#900;font-weight:bold">Proc</span>(<span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>prediction<span style="color:#000;font-weight:bold">::</span>PredictionObstacles<span style="color:#000;font-weight:bold">&gt;&amp;</span>
+                prediction_obstacles,
+            <span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>canbus<span style="color:#000;font-weight:bold">::</span>Chassis<span style="color:#000;font-weight:bold">&gt;&amp;</span> chassis,
+            <span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>localization<span style="color:#000;font-weight:bold">::</span>LocalizationEstimate<span style="color:#000;font-weight:bold">&gt;&amp;</span>
+                localization_estimate) <span style="color:#000;font-weight:bold">override</span>;
+</code></pre></td></tr></table>
+</div>
+</div><p>输入参数为:</p>
+<ol>
+<li>预测的障碍物信息(prediction_obstacles)</li>
+<li>车辆底盘(chassis)信息(车辆的速度，加速度，航向角等信息)</li>
+<li>车辆当前位置(localization_estimate)</li>
+</ol>
+<blockquote>
+<p>实际上还有高精度地图信息，不在参数中传入，而是在函数中直接读取的。</p>
+</blockquote>
+<p>Planning模块的输出结果在&quot;PlanningComponent::Proc()&ldquo;中，为规划好的线路，发布到Control模块订阅的Topic中。
+输出结果为：规划好的路径。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">planning_writer_<span style="color:#000;font-weight:bold">-&gt;</span>Write(std<span style="color:#000;font-weight:bold">::</span>make_shared<span style="color:#000;font-weight:bold">&lt;</span>ADCTrajectory<span style="color:#000;font-weight:bold">&gt;</span>(adc_trajectory_pb));
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h4 id="planning整个流程">Planning整个流程</h4>
+<p>下图是整个Planning模块的执行过程：
+
+        <img class="mx-auto" alt="planning_flow" src="https://github.com/daohu527/misc/blob/master/blog/planning/planning_flow.png" />   
+    </p>
+<ol>
+<li>模块的入口是PlanningComponent，在Cyber中注册模块，订阅和发布消息，并且注册对应的Planning类。</li>
+<li>Planning的过程之前是定时器触发，即每隔一段固定的时间执行一次，现已经改为事件触发，即只要收集完成对应Topic的消息，就会触发执行，这样的好处是提高的实时性。</li>
+<li>Planning类主要实现了2个功能，一个是启动ReferenceLineProvider来提供参考线，后面生成的轨迹都是在参考线的基础上做优化，ReferenceLineProvider启动了一个单独的线程，每隔50ms执行一次，和Planning主流程并行执行。Planning类另外的一个功能是执行Planning主流程。</li>
+<li>Planning主流程先是选择对应的Planner，我们这里主要分析PublicRoadPlanner，在配置文件中定义了Planner支持的场景(Scenario)，把规划分为具体的几个场景来执行，每个场景又分为几个阶段(Stage)，每个阶段会执行多个任务(Task)，任务执行完成后，对应的场景就完成了。不同场景间的切换是由一个状态机(ScenarioDispatch)来控制的。规划控制器根据ReferenceLineProvider提供的参考线，在不同的场景下做切换，生成一条车辆可以行驶的轨迹，并且不断重复上述过程直到到达目的地。</li>
+</ol>
+<p>接下来我们逐步分析整个planning模块的代码结构。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="planning模块入口">Planning模块入口</h2>
+<p><!-- raw HTML omitted --></p>
+<h4 id="模块注册">模块注册</h4>
+<p>Planning模块的入口为&quot;planning_component.h&quot;和&quot;planning_component.cc&quot;两个文件，实现的功能如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#998;font-style:italic">// 订阅和发布消息
+</span><span style="color:#998;font-style:italic"></span>std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>cyber<span style="color:#000;font-weight:bold">::</span>Reader<span style="color:#000;font-weight:bold">&lt;</span>perception<span style="color:#000;font-weight:bold">::</span>TrafficLightDetection<span style="color:#000;font-weight:bold">&gt;&gt;</span>
+  traffic_light_reader_;
+std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>cyber<span style="color:#000;font-weight:bold">::</span>Reader<span style="color:#000;font-weight:bold">&lt;</span>routing<span style="color:#000;font-weight:bold">::</span>RoutingResponse<span style="color:#000;font-weight:bold">&gt;&gt;</span> routing_reader_;
+std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>cyber<span style="color:#000;font-weight:bold">::</span>Reader<span style="color:#000;font-weight:bold">&lt;</span>planning<span style="color:#000;font-weight:bold">::</span>PadMessage<span style="color:#000;font-weight:bold">&gt;&gt;</span> pad_message_reader_;
+std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>cyber<span style="color:#000;font-weight:bold">::</span>Reader<span style="color:#000;font-weight:bold">&lt;</span>relative_map<span style="color:#000;font-weight:bold">::</span>MapMsg<span style="color:#000;font-weight:bold">&gt;&gt;</span> relative_map_reader_;
+
+std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>cyber<span style="color:#000;font-weight:bold">::</span>Writer<span style="color:#000;font-weight:bold">&lt;</span>ADCTrajectory<span style="color:#000;font-weight:bold">&gt;&gt;</span> planning_writer_;
+std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>cyber<span style="color:#000;font-weight:bold">::</span>Writer<span style="color:#000;font-weight:bold">&lt;</span>routing<span style="color:#000;font-weight:bold">::</span>RoutingRequest<span style="color:#000;font-weight:bold">&gt;&gt;</span> rerouting_writer_;
+
+<span style="color:#998;font-style:italic">// 在Cyber中注册模块
+</span><span style="color:#998;font-style:italic"></span>CYBER_REGISTER_COMPONENT(PlanningComponent)
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h4 id="模块初始化">模块初始化</h4>
+<p>除了注册模块，订阅和发布消息之外，planning模块实现了2个主要函数&quot;init&quot;和&quot;proc&rdquo;。
+Init中实现了模块的初始化：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">  <span style="color:#000;font-weight:bold">if</span> (FLAGS_open_space_planner_switchable) {
+    planning_base_ <span style="color:#000;font-weight:bold">=</span> std<span style="color:#000;font-weight:bold">::</span>make_unique<span style="color:#000;font-weight:bold">&lt;</span>OpenSpacePlanning<span style="color:#000;font-weight:bold">&gt;</span>();
+  } <span style="color:#000;font-weight:bold">else</span> {
+    <span style="color:#000;font-weight:bold">if</span> (FLAGS_use_navigation_mode) {
+      planning_base_ <span style="color:#000;font-weight:bold">=</span> std<span style="color:#000;font-weight:bold">::</span>make_unique<span style="color:#000;font-weight:bold">&lt;</span>NaviPlanning<span style="color:#000;font-weight:bold">&gt;</span>();
+    } <span style="color:#000;font-weight:bold">else</span> {
+      planning_base_ <span style="color:#000;font-weight:bold">=</span> std<span style="color:#000;font-weight:bold">::</span>make_unique<span style="color:#000;font-weight:bold">&lt;</span>OnLanePlanning<span style="color:#000;font-weight:bold">&gt;</span>();
+    }
+  }
+</code></pre></td></tr></table>
+</div>
+</div><p>上面实现了3种Planning的注册，planning模块根据配置选择不同的Planning实现方式，&ldquo;FLAGS_open_space_planner_switchable&quot;和&quot;FLAGS_use_navigation_mode&quot;在Planning模块的conf目录中。因为上述2个配置默认都为false，Planning默认情况下的实现是&quot;OnLanePlanning&rdquo;。下面介绍下这3种Planning的区别。</p>
+<ul>
+<li><strong>OpenSpacePlanning</strong> - 主要的应用场景是自主泊车和狭窄路段的掉头。<a href="https://github.com/ApolloAuto/apollo/blob/master/docs/specs/Open_Space_Planner.md">参考</a></li>
+<li><strong>NaviPlanning</strong> -</li>
+<li><strong>OnLanePlanning</strong> - 主要的应用场景是开放道路的自动驾驶。</li>
+</ul>
+<p>模块之间的关系如下：
+
+        <img class="mx-auto" alt="planning" src="https://raw.githubusercontent.com/daohu527/misc/master/blog/planning/planning_base.png" />   
+    </p>
+<p>可以看到&quot;OpenSpacePlanning&quot;,&ldquo;NaviPlanning&quot;和&quot;OnLanePlanning&quot;都继承自同一个基类，并且在PlanningComponent中通过配置选择一个具体的实现进行注册。</p>
+<p>Init接下来实现了具体的消息发布和消息订阅，我们只看具体的一个例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#998;font-style:italic">// 读取routing模块的消息
+</span><span style="color:#998;font-style:italic"></span>routing_reader_ <span style="color:#000;font-weight:bold">=</span> node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateReader<span style="color:#000;font-weight:bold">&lt;</span>RoutingResponse<span style="color:#000;font-weight:bold">&gt;</span>(
+      FLAGS_routing_response_topic,
+      [<span style="color:#000;font-weight:bold">this</span>](<span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>RoutingResponse<span style="color:#000;font-weight:bold">&gt;&amp;</span> routing) {
+        AINFO <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Received routing data: run routing callback.&#34;</span>
+              <span style="color:#000;font-weight:bold">&lt;&lt;</span> routing<span style="color:#000;font-weight:bold">-&gt;</span>header().DebugString();
+        std<span style="color:#000;font-weight:bold">::</span>lock_guard<span style="color:#000;font-weight:bold">&lt;</span>std<span style="color:#000;font-weight:bold">::</span>mutex<span style="color:#000;font-weight:bold">&gt;</span> lock(mutex_);
+        routing_.CopyFrom(<span style="color:#000;font-weight:bold">*</span>routing);
+      });
+<span style="color:#998;font-style:italic">// 读取红绿灯
+</span><span style="color:#998;font-style:italic"></span>  traffic_light_reader_ <span style="color:#000;font-weight:bold">=</span> ...
+<span style="color:#998;font-style:italic">// 是否使用导航模式
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">if</span> (FLAGS_use_navigation_mode) {
+    pad_message_reader_ <span style="color:#000;font-weight:bold">=</span> ...
+<span style="color:#998;font-style:italic">// 读取相对地图
+</span><span style="color:#998;font-style:italic"></span>    relative_map_reader_ <span style="color:#000;font-weight:bold">=</span> ...
+  }
+<span style="color:#998;font-style:italic">// 发布规划好的线路
+</span><span style="color:#998;font-style:italic"></span>  planning_writer_ <span style="color:#000;font-weight:bold">=</span>
+      node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateWriter<span style="color:#000;font-weight:bold">&lt;</span>ADCTrajectory<span style="color:#000;font-weight:bold">&gt;</span>(FLAGS_planning_trajectory_topic);
+<span style="color:#998;font-style:italic">// 发布重新规划请求
+</span><span style="color:#998;font-style:italic"></span>  rerouting_writer_ <span style="color:#000;font-weight:bold">=</span>
+      node_<span style="color:#000;font-weight:bold">-&gt;</span>CreateWriter<span style="color:#000;font-weight:bold">&lt;</span>RoutingRequest<span style="color:#000;font-weight:bold">&gt;</span>(FLAGS_routing_request_topic);
+</code></pre></td></tr></table>
+</div>
+</div><p>至此，Planning模块的初始化就完成了。</p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="模块运行">模块运行</h4>
+<p>Proc的主要是检查数据，并且执行注册好的Planning，生成路线并且发布。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> PlanningComponent<span style="color:#000;font-weight:bold">::</span>Proc(...) {
+  <span style="color:#998;font-style:italic">// 1. 检查是否需要重新规划线路。
+</span><span style="color:#998;font-style:italic"></span>  CheckRerouting();
+
+  <span style="color:#998;font-style:italic">// 2. 数据放入local_view_中，并且检查输入数据。
+</span><span style="color:#998;font-style:italic"></span>  ...
+
+  <span style="color:#998;font-style:italic">// 3. 执行注册好的Planning，生成线路。
+</span><span style="color:#998;font-style:italic"></span>  planning_base_<span style="color:#000;font-weight:bold">-&gt;</span>RunOnce(local_view_, <span style="color:#000;font-weight:bold">&amp;</span>adc_trajectory_pb);
+
+  <span style="color:#998;font-style:italic">// 4. 发布消息
+</span><span style="color:#998;font-style:italic"></span>  planning_writer_<span style="color:#000;font-weight:bold">-&gt;</span>Write(std<span style="color:#000;font-weight:bold">::</span>make_shared<span style="color:#000;font-weight:bold">&lt;</span>ADCTrajectory<span style="color:#000;font-weight:bold">&gt;</span>(adc_trajectory_pb));
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>整个&quot;PlanningComponent&quot;的分析就完成了，可以看到&quot;PlanningComponent&quot;是Planning模块的入口，在Apollo3.5引入了Cyber之后，实现了Planning模块在Cyber中的注册，订阅和发布topic消息。同时实现了3种不同的Planning，根据配置选择其中的一种并且运行。
+由于默认的Planning是开放道路的OnLanePlanning，我们接下来主要分析这个Planning。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="onlaneplanning">OnLanePlanning</h2>
+<p>每次Planning会根据以下2个信息作为输入来执行：</p>
+<ol>
+<li>Planning上下文信息</li>
+<li>Frame结构体(车辆信息，位置信息等所有规划需要用到的信息，在/planning/common/frame.h中)</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">uint32_t</span> sequence_num_ <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>;
+LocalView local_view_;
+<span style="color:#000;font-weight:bold">const</span> hdmap<span style="color:#000;font-weight:bold">::</span>HDMap <span style="color:#000;font-weight:bold">*</span>hdmap_ <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">nullptr</span>;
+common<span style="color:#000;font-weight:bold">::</span>TrajectoryPoint planning_start_point_;
+common<span style="color:#000;font-weight:bold">::</span>VehicleState vehicle_state_;
+std<span style="color:#000;font-weight:bold">::</span>list<span style="color:#000;font-weight:bold">&lt;</span>ReferenceLineInfo<span style="color:#000;font-weight:bold">&gt;</span> reference_line_info_;
+
+<span style="color:#458;font-weight:bold">bool</span> is_near_destination_ <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">false</span>;
+
+<span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">* the reference line info that the vehicle finally choose to drive on
+</span><span style="color:#998;font-style:italic">**/</span>
+<span style="color:#000;font-weight:bold">const</span> ReferenceLineInfo <span style="color:#000;font-weight:bold">*</span>drive_reference_line_info_ <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">nullptr</span>;
+
+ThreadSafeIndexedObstacles obstacles_;
+std<span style="color:#000;font-weight:bold">::</span>unordered_map<span style="color:#000;font-weight:bold">&lt;</span>std<span style="color:#000;font-weight:bold">::</span>string, <span style="color:#000;font-weight:bold">const</span> perception<span style="color:#000;font-weight:bold">::</span>TrafficLight <span style="color:#000;font-weight:bold">*&gt;</span>
+  traffic_lights_;
+
+ChangeLaneDecider change_lane_decider_;
+ADCTrajectory current_frame_planned_trajectory_;  <span style="color:#998;font-style:italic">// last published trajectory
+</span><span style="color:#998;font-style:italic"></span>
+std<span style="color:#000;font-weight:bold">::</span>vector<span style="color:#000;font-weight:bold">&lt;</span>routing<span style="color:#000;font-weight:bold">::</span>LaneWaypoint<span style="color:#000;font-weight:bold">&gt;</span> future_route_waypoints_;
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h4 id="初始化">初始化</h4>
+<p>OnLanePlanning的初始化逻辑在Init中，主要实现分配具体的Planner，启动参考线提供器(reference_line_provider_)，代码分析如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Status OnLanePlanning<span style="color:#000;font-weight:bold">::</span>Init(<span style="color:#000;font-weight:bold">const</span> PlanningConfig<span style="color:#000;font-weight:bold">&amp;</span> config) {
+  ...
+
+  <span style="color:#998;font-style:italic">// 启动参考线提供器，会另启动一个线程，执行一个定时任务，每隔50ms提供一次参考线。
+</span><span style="color:#998;font-style:italic"></span>  reference_line_provider_ <span style="color:#000;font-weight:bold">=</span> std<span style="color:#000;font-weight:bold">::</span>make_unique<span style="color:#000;font-weight:bold">&lt;</span>ReferenceLineProvider<span style="color:#000;font-weight:bold">&gt;</span>(hdmap_);
+  reference_line_provider_<span style="color:#000;font-weight:bold">-&gt;</span>Start();
+
+  <span style="color:#998;font-style:italic">// 为Planning分配具体的Planner。
+</span><span style="color:#998;font-style:italic"></span>  planner_ <span style="color:#000;font-weight:bold">=</span> planner_dispatcher_<span style="color:#000;font-weight:bold">-&gt;</span>DispatchPlanner();
+
+  ...
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到&quot;DispatchPlanner&quot;在&quot;OnLanePlanning&quot;实例化的时候就指定了。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">OnLanePlanning</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> PlanningBase {
+ <span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
+  OnLanePlanning() {
+    planner_dispatcher_ <span style="color:#000;font-weight:bold">=</span> std<span style="color:#000;font-weight:bold">::</span>make_unique<span style="color:#000;font-weight:bold">&lt;</span>OnLanePlannerDispatcher<span style="color:#000;font-weight:bold">&gt;</span>();
+  }
+</code></pre></td></tr></table>
+</div>
+</div><p>在看&quot;OnLanePlannerDispatcher&quot;具体的实现，也是根据配置选择具体的&quot;Planner&rdquo;，默认为&quot;PUBLIC_ROAD&quot;规划器:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#998;font-style:italic">// 配置文件
+</span><span style="color:#998;font-style:italic"></span>standard_planning_config {
+  <span style="color:#900;font-weight:bold">planner_type</span>: PUBLIC_ROAD
+  <span style="color:#900;font-weight:bold">planner_type</span>: OPEN_SPACE
+  ...
+}
+
+<span style="color:#998;font-style:italic">// OnLanePlannerDispatcher具体实现
+</span><span style="color:#998;font-style:italic"></span>std<span style="color:#000;font-weight:bold">::</span>unique_ptr<span style="color:#000;font-weight:bold">&lt;</span>Planner<span style="color:#000;font-weight:bold">&gt;</span> OnLanePlannerDispatcher<span style="color:#000;font-weight:bold">::</span>DispatchPlanner() {
+  PlanningConfig planning_config;
+  apollo<span style="color:#000;font-weight:bold">::</span>cyber<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>GetProtoFromFile(FLAGS_planning_config_file,
+                                          <span style="color:#000;font-weight:bold">&amp;</span>planning_config);
+  <span style="color:#000;font-weight:bold">if</span> (FLAGS_open_space_planner_switchable) {
+    <span style="color:#000;font-weight:bold">return</span> planner_factory_.CreateObject(
+        <span style="color:#998;font-style:italic">// OPEN_SPACE规划器
+</span><span style="color:#998;font-style:italic"></span>        planning_config.standard_planning_config().planner_type(<span style="color:#099">1</span>));
+  }
+  <span style="color:#000;font-weight:bold">return</span> planner_factory_.CreateObject(
+      <span style="color:#998;font-style:italic">// PUBLIC_ROAD规划器
+</span><span style="color:#998;font-style:italic"></span>      planning_config.standard_planning_config().planner_type(<span style="color:#099">0</span>));
+}
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h4 id="事件触发">事件触发</h4>
+<p>OnLanePlanning的主要逻辑在&quot;RunOnce()&ldquo;中，在Apollo 3.5之前是定时器触发，3.5改为事件触发，即收到对应的消息之后，就触发执行，这样做的好处是增加了实时性 <a href="https://github.com/ApolloAuto/apollo/issues/6572">参考</a>。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">void</span> OnLanePlanning<span style="color:#000;font-weight:bold">::</span>RunOnce(<span style="color:#000;font-weight:bold">const</span> LocalView<span style="color:#000;font-weight:bold">&amp;</span> local_view,
+                             ADCTrajectory<span style="color:#000;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">const</span> ptr_trajectory_pb) {
+
+  <span style="color:#998;font-style:italic">// 初始化Frame
+</span><span style="color:#998;font-style:italic"></span>  status <span style="color:#000;font-weight:bold">=</span> InitFrame(frame_num, stitching_trajectory.back(), vehicle_state);
+  ...
+
+  <span style="color:#998;font-style:italic">// 判断是否符合交通规则
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">for</span> (<span style="color:#000;font-weight:bold">auto</span><span style="color:#000;font-weight:bold">&amp;</span> <span style="color:#900;font-weight:bold">ref_line_info</span> : <span style="color:#000;font-weight:bold">*</span>frame_<span style="color:#000;font-weight:bold">-&gt;</span>mutable_reference_line_info()) {
+    TrafficDecider traffic_decider;
+    traffic_decider.Init(traffic_rule_configs_);
+    <span style="color:#000;font-weight:bold">auto</span> traffic_status <span style="color:#000;font-weight:bold">=</span> traffic_decider.Execute(frame_.get(), <span style="color:#000;font-weight:bold">&amp;</span>ref_line_info);
+    <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>traffic_status.ok() <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">!</span>ref_line_info.IsDrivable()) {
+      ref_line_info.SetDrivable(<span style="color:#0086b3">false</span>);
+      AWARN <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Reference line &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> ref_line_info.Lanes().Id()
+            <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34; traffic decider failed&#34;</span>;
+      <span style="color:#000;font-weight:bold">continue</span>;
+    }
+  }
+
+  <span style="color:#998;font-style:italic">// 执行计划
+</span><span style="color:#998;font-style:italic"></span>  status <span style="color:#000;font-weight:bold">=</span> Plan(start_timestamp, stitching_trajectory, ptr_trajectory_pb);
+
+  ...
+}
+
+
+Status OnLanePlanning<span style="color:#000;font-weight:bold">::</span>Plan(
+    <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">double</span> current_time_stamp,
+    <span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>vector<span style="color:#000;font-weight:bold">&lt;</span>TrajectoryPoint<span style="color:#000;font-weight:bold">&gt;&amp;</span> stitching_trajectory,
+    ADCTrajectory<span style="color:#000;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">const</span> ptr_trajectory_pb) {
+
+  ...
+
+  <span style="color:#998;font-style:italic">// 调用具体的(PUBLIC_ROAD)Planner执行
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">auto</span> status <span style="color:#000;font-weight:bold">=</span> planner_<span style="color:#000;font-weight:bold">-&gt;</span>Plan(stitching_trajectory.back(), frame_.get(),
+                               ptr_trajectory_pb);
+  ...
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>上述就是&quot;OnLanePlanning&quot;的执行过程，先是Planner分发器根据配置，选择具体的planner，然后初始化Frame，(PUBLIC_ROAD)planner根据输入帧执行&quot;Plan&quot;方法。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="planner">Planner</h2>
+<p>我们先看下Planner目录结构，一共实现了5种Planner：</p>
+<pre><code>.
+├── BUILD
+├── navi_planner_dispatcher.cc
+├── navi_planner_dispatcher.h
+├── navi_planner_dispatcher_test.cc
+├── on_lane_planner_dispatcher.cc
+├── on_lane_planner_dispatcher.h
+├── on_lane_planner_dispatcher_test.cc
+├── planner_dispatcher.cc
+├── planner_dispatcher.h
+├── planner.h
+├── lattice           // lattice planner
+├── navi              // navi planner
+├── open_space        // open space planner
+├── public_road       // public road planner
+└── rtk               // rtk planner
+</code></pre><p>可以看到Planner目录分别实现了Planner发布器和具体的Planner，关于发布器我们后面会根据流程图来介绍，这里先介绍一下5种不同的Planner。</p>
+<ul>
+<li><strong>rtk</strong>          - 根据录制的轨迹来规划行车路线</li>
+<li><strong>public_road</strong>  - 开放道路的轨迹规划器</li>
+<li><strong>lattice</strong>      - 基于网格算法的轨迹规划器</li>
+<li><strong>navi</strong>         - 基于实时相对地图的规划器</li>
+<li><strong>open_space</strong>   - 自主泊车规划器</li>
+</ul>
+<p><!-- raw HTML omitted --></p>
+<h4 id="planner注册场景">Planner注册场景</h4>
+<p>下面我们整理一下planner模块的流程：
+
+        <img class="mx-auto" alt="planner流程" src="https://raw.githubusercontent.com/daohu527/misc/master/blog/planning/planning_component.png" />   
+    </p>
+<ol>
+<li>PlanningComponent在cyber中注册</li>
+<li>选择Planning</li>
+<li>根据不同的Dispatcher，分发Planner</li>
+</ol>
+<p>下面我们主要介绍&quot;PublicRoadPlanner&rdquo;，主要的实现还是在Init和Plan中。
+init中主要是注册规划器支持的场景(scenario)。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Status PublicRoadPlanner<span style="color:#000;font-weight:bold">::</span>Init(<span style="color:#000;font-weight:bold">const</span> PlanningConfig<span style="color:#000;font-weight:bold">&amp;</span> config) {
+  <span style="color:#998;font-style:italic">// 读取public Road配置
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">const</span> <span style="color:#000;font-weight:bold">auto</span><span style="color:#000;font-weight:bold">&amp;</span> public_road_config <span style="color:#000;font-weight:bold">=</span>
+      config_.standard_planning_config().planner_public_road_config();
+
+  <span style="color:#998;font-style:italic">// 根据配置注册不同的场景
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">for</span> (<span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>; i <span style="color:#000;font-weight:bold">&lt;</span> public_road_config.scenario_type_size(); <span style="color:#000;font-weight:bold">++</span>i) {
+    <span style="color:#000;font-weight:bold">const</span> ScenarioConfig<span style="color:#000;font-weight:bold">::</span>ScenarioType scenario <span style="color:#000;font-weight:bold">=</span>
+        public_road_config.scenario_type(i);
+    supported_scenarios.insert(scenario);
+  }
+  scenario_manager_.Init(supported_scenarios);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>我们看下&quot;PublicRoadPlanner&quot;支持的场景有哪些？</p>
+<pre><code>// 还是在&quot;/conf/planning_config.pb.txt&quot;中
+standard_planning_config {
+  planner_type: PUBLIC_ROAD
+  planner_type: OPEN_SPACE
+  planner_public_road_config {
+     // 支持的场景
+     scenario_type: LANE_FOLLOW  // 车道线保持
+     scenario_type: SIDE_PASS    // 超车
+     scenario_type: STOP_SIGN_UNPROTECTED  // 停止
+     scenario_type: TRAFFIC_LIGHT_PROTECTED    // 红绿灯
+     scenario_type: TRAFFIC_LIGHT_UNPROTECTED_LEFT_TURN  // 红绿灯左转
+     scenario_type: TRAFFIC_LIGHT_UNPROTECTED_RIGHT_TURN // 红绿灯右转
+     scenario_type: VALET_PARKING  // 代客泊车
+  }
+</code></pre><p><!-- raw HTML omitted --></p>
+<h4 id="运行场景">运行场景</h4>
+<p>接着看&quot;Plan&quot;中的实现：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Status PublicRoadPlanner<span style="color:#000;font-weight:bold">::</span>Plan(<span style="color:#000;font-weight:bold">const</span> TrajectoryPoint<span style="color:#000;font-weight:bold">&amp;</span> planning_start_point,
+                               Frame<span style="color:#000;font-weight:bold">*</span> frame,
+                               ADCTrajectory<span style="color:#000;font-weight:bold">*</span> ptr_computed_trajectory) {
+  DCHECK_NOTNULL(frame);
+  <span style="color:#998;font-style:italic">// 更新场景，决策当前应该执行什么场景
+</span><span style="color:#998;font-style:italic"></span>  scenario_manager_.Update(planning_start_point, <span style="color:#000;font-weight:bold">*</span>frame);
+  <span style="color:#998;font-style:italic">// 获取当前场景
+</span><span style="color:#998;font-style:italic"></span>  scenario_ <span style="color:#000;font-weight:bold">=</span> scenario_manager_.mutable_scenario();
+  <span style="color:#998;font-style:italic">// 执行当前场景的任务
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">auto</span> result <span style="color:#000;font-weight:bold">=</span> scenario_<span style="color:#000;font-weight:bold">-&gt;</span>Process(planning_start_point, frame);
+
+
+  <span style="color:#998;font-style:italic">// 当前场景完成
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">if</span> (result <span style="color:#000;font-weight:bold">==</span> scenario<span style="color:#000;font-weight:bold">::</span>Scenario<span style="color:#000;font-weight:bold">::</span>STATUS_DONE) {
+    <span style="color:#998;font-style:italic">// only updates scenario manager when previous scenario&#39;s status is
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// STATUS_DONE
+</span><span style="color:#998;font-style:italic"></span>    scenario_manager_.Update(planning_start_point, <span style="color:#000;font-weight:bold">*</span>frame);
+  } <span style="color:#000;font-weight:bold">else</span> <span style="color:#900;font-weight:bold">if</span> (result <span style="color:#000;font-weight:bold">==</span> scenario<span style="color:#000;font-weight:bold">::</span>Scenario<span style="color:#000;font-weight:bold">::</span>STATUS_UNKNOWN) {
+    <span style="color:#998;font-style:italic">// 当前场景失败
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">return</span> Status(common<span style="color:#000;font-weight:bold">::</span>PLANNING_ERROR, <span style="color:#d14">&#34;scenario returned unknown&#34;</span>);
+  }
+  <span style="color:#000;font-weight:bold">return</span> Status<span style="color:#000;font-weight:bold">::</span>OK();
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到&quot;Planner&quot;模块把具体的规划转化成一系列的场景，每次执行规划之前先判断更新当前的场景，然后针对具体的场景去执行。
+下面我们先看下&quot;Scenario&quot;模块，然后把这2个模块串起来讲解。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="scenario">Scenario</h2>
+<p>我们同样先看下&quot;Scenario&quot;的目录结构：</p>
+<pre><code>.
+├── bare_intersection
+├── BUILD
+├── lane_follow            // 车道线保持
+├── narrow_street_u_turn   // 狭窄掉头
+├── scenario.cc
+├── scenario.h
+├── scenario_manager.cc
+├── scenario_manager.h
+├── side_pass             // 超车
+├── stage.cc
+├── stage.h
+├── stop_sign             // 停止
+├── traffic_light         // 红绿灯
+├── util
+└── valet_parking         // 代客泊车
+</code></pre><p>其中需要知道场景如何转换，以及每种场景如何执行。几种场景的介绍可以先看下Apollo的官方文档<a href="https://github.com/ApolloAuto/apollo/blob/master/modules/planning/README.md">planning</a>，主要的场景是lane_follow，side_pass和stop_sign。</p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="场景转换">场景转换</h4>
+<p>场景转换的实现在&quot;scenario_manager.cc&quot;中，其中实现了场景注册，创建场景和更新场景的功能。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> ScenarioManager<span style="color:#000;font-weight:bold">::</span>Init(
+    <span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>set<span style="color:#000;font-weight:bold">&lt;</span>ScenarioConfig<span style="color:#000;font-weight:bold">::</span>ScenarioType<span style="color:#000;font-weight:bold">&gt;&amp;</span> supported_scenarios) {
+  <span style="color:#998;font-style:italic">// 注册场景
+</span><span style="color:#998;font-style:italic"></span>  RegisterScenarios();
+  default_scenario_type_ <span style="color:#000;font-weight:bold">=</span> ScenarioConfig<span style="color:#000;font-weight:bold">::</span>LANE_FOLLOW;
+  supported_scenarios_ <span style="color:#000;font-weight:bold">=</span> supported_scenarios;
+  <span style="color:#998;font-style:italic">// 创建场景，默认为lane_follow
+</span><span style="color:#998;font-style:italic"></span>  current_scenario_ <span style="color:#000;font-weight:bold">=</span> CreateScenario(default_scenario_type_);
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+
+<span style="color:#998;font-style:italic">// 更新场景
+</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">void</span> ScenarioManager<span style="color:#000;font-weight:bold">::</span>Update(<span style="color:#000;font-weight:bold">const</span> common<span style="color:#000;font-weight:bold">::</span>TrajectoryPoint<span style="color:#000;font-weight:bold">&amp;</span> ego_point,
+                             <span style="color:#000;font-weight:bold">const</span> Frame<span style="color:#000;font-weight:bold">&amp;</span> frame) {
+  CHECK(<span style="color:#000;font-weight:bold">!</span>frame.reference_line_info().empty());
+  <span style="color:#998;font-style:italic">// 保留当前帧
+</span><span style="color:#998;font-style:italic"></span>  Observe(frame);
+  <span style="color:#998;font-style:italic">// 场景分发
+</span><span style="color:#998;font-style:italic"></span>  ScenarioDispatch(ego_point, frame);
+}
+
+<span style="color:#998;font-style:italic">// 通过一个有限状态机，决定当前的场景
+</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">void</span> ScenarioManager<span style="color:#000;font-weight:bold">::</span>ScenarioDispatch(<span style="color:#000;font-weight:bold">const</span> common<span style="color:#000;font-weight:bold">::</span>TrajectoryPoint<span style="color:#000;font-weight:bold">&amp;</span> ego_point,
+                                       <span style="color:#000;font-weight:bold">const</span> Frame<span style="color:#000;font-weight:bold">&amp;</span> frame) {
+  ...
+}
+
+</code></pre></td></tr></table>
+</div>
+</div><p>其中&quot;ScenarioDispatch&quot;的状态切换可以参考下图:
+
+        <img class="mx-auto" alt="Scenario切换" src="https://github.com/daohu527/misc/blob/master/blog/planning/Flowchart.jpg" />   
+    </p>
+<p>可以看到，每次切换场景必须是从默认场景(LANE_FOLLOW)开始，即每次场景切换之后都会回到默认场景。</p>
+<blockquote>
+<p>ScenarioDispatch目前的代码还没完全完成(有些分支TODO)，而且个人感觉这个实现不够简介和优秀，逻辑看起来有些混乱，不知道是否可以用状态机改进？</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<h4 id="场景运行">场景运行</h4>
+<p>场景的执行在&quot;scenario.cc&quot;和对应的场景目录中，实际上每个场景又分为一个或者多个阶段(stage)，每个阶段又由不同的任务(task)组成。执行一个场景，就是顺序执行不同阶段的不同任务。
+
+        <img class="mx-auto" alt="Planner结构" src="https://raw.githubusercontent.com/daohu527/misc/master/blog/planning/Planner.png" />   
+    
+下面我们来看一个具体的例子，Scenario对应的stage和task在&quot;planning/conf/scenario&quot;中。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#998;font-style:italic">// Scenario对应的Stage
+</span><span style="color:#998;font-style:italic"></span><span style="color:#900;font-weight:bold">scenario_type</span>: SIDE_PASS
+<span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_APPROACH_OBSTACLE
+<span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_GENERATE_PATH
+<span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_STOP_ON_WAITPOINT
+<span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_DETECT_SAFETY
+<span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_PASS_OBSTACLE
+<span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_BACKUP
+
+<span style="color:#998;font-style:italic">// Stage对应的Task
+</span><span style="color:#998;font-style:italic"></span><span style="color:#900;font-weight:bold">stage_type</span>: SIDE_PASS_APPROACH_OBSTACLE
+<span style="color:#900;font-weight:bold">enabled</span>: <span style="color:#0086b3">true</span>
+<span style="color:#900;font-weight:bold">task_type</span>: DP_POLY_PATH_OPTIMIZER
+<span style="color:#900;font-weight:bold">task_type</span>: PATH_DECIDER
+<span style="color:#900;font-weight:bold">task_type</span>: SPEED_BOUNDS_PRIORI_DECIDER
+<span style="color:#900;font-weight:bold">task_type</span>: DP_ST_SPEED_OPTIMIZER
+<span style="color:#900;font-weight:bold">task_type</span>: SPEED_DECIDER
+<span style="color:#900;font-weight:bold">task_type</span>: SPEED_BOUNDS_FINAL_DECIDER
+<span style="color:#900;font-weight:bold">task_type</span>: QP_SPLINE_ST_SPEED_OPTIMIZER
+
+<span style="color:#998;font-style:italic">// 以此类推
+</span></code></pre></td></tr></table>
+</div>
+</div><p>由于Scenario都是顺序执行，只需要判断这一阶段是否结束，然后转到下一个阶段就可以了。具体的实现在：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Scenario<span style="color:#000;font-weight:bold">::</span>ScenarioStatus Scenario<span style="color:#000;font-weight:bold">::</span>Process(
+    <span style="color:#000;font-weight:bold">const</span> common<span style="color:#000;font-weight:bold">::</span>TrajectoryPoint<span style="color:#000;font-weight:bold">&amp;</span> planning_init_point, Frame<span style="color:#000;font-weight:bold">*</span> frame) {
+  ...
+
+  <span style="color:#998;font-style:italic">// 如果当前阶段完成，则退出
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">if</span> (current_stage_<span style="color:#000;font-weight:bold">-&gt;</span>stage_type() <span style="color:#000;font-weight:bold">==</span> ScenarioConfig<span style="color:#000;font-weight:bold">::</span>NO_STAGE) {
+    scenario_status_ <span style="color:#000;font-weight:bold">=</span> STATUS_DONE;
+    <span style="color:#000;font-weight:bold">return</span> scenario_status_;
+  }
+
+  <span style="color:#998;font-style:italic">// 进入下一阶段执行或者错误处理
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">auto</span> ret <span style="color:#000;font-weight:bold">=</span> current_stage_<span style="color:#000;font-weight:bold">-&gt;</span>Process(planning_init_point, frame);
+  <span style="color:#000;font-weight:bold">switch</span> (ret) {
+    <span style="color:#000;font-weight:bold">case</span> Stage<span style="color:#000;font-weight:bold">::</span><span style="color:#900;font-weight:bold">ERROR</span>: {
+      ...}
+    <span style="color:#000;font-weight:bold">case</span> Stage<span style="color:#000;font-weight:bold">::</span><span style="color:#900;font-weight:bold">RUNNING</span>: {
+      ...}
+    <span style="color:#000;font-weight:bold">case</span> Stage<span style="color:#000;font-weight:bold">::</span><span style="color:#900;font-weight:bold">FINISHED</span>: {
+      ...}
+    <span style="color:#000;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span> {
+      ...}
+  }
+  <span style="color:#000;font-weight:bold">return</span> scenario_status_;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>我们接着看一下Stage中&quot;Process&quot;的执行：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Stage<span style="color:#000;font-weight:bold">::</span>StageStatus LaneFollowStage<span style="color:#000;font-weight:bold">::</span>Process(
+    <span style="color:#000;font-weight:bold">const</span> TrajectoryPoint<span style="color:#000;font-weight:bold">&amp;</span> planning_start_point, Frame<span style="color:#000;font-weight:bold">*</span> frame) {
+    ...
+    <span style="color:#998;font-style:italic">// 根据参考线规划
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">auto</span> cur_status <span style="color:#000;font-weight:bold">=</span>
+        PlanOnReferenceLine(planning_start_point, frame, <span style="color:#000;font-weight:bold">&amp;</span>reference_line_info);
+    ...
+}
+
+<span style="color:#998;font-style:italic">// LANE_FOLLOW中的PlanOnReferenceLine
+</span><span style="color:#998;font-style:italic"></span>Status LaneFollowStage<span style="color:#000;font-weight:bold">::</span>PlanOnReferenceLine(
+    <span style="color:#000;font-weight:bold">const</span> TrajectoryPoint<span style="color:#000;font-weight:bold">&amp;</span> planning_start_point, Frame<span style="color:#000;font-weight:bold">*</span> frame,
+    ReferenceLineInfo<span style="color:#000;font-weight:bold">*</span> reference_line_info) {
+
+  <span style="color:#998;font-style:italic">// 顺序执行stage中的任务
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">for</span> (<span style="color:#000;font-weight:bold">auto</span><span style="color:#000;font-weight:bold">*</span> <span style="color:#900;font-weight:bold">optimizer</span> : task_list_) {
+    <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">double</span> start_timestamp <span style="color:#000;font-weight:bold">=</span> Clock<span style="color:#000;font-weight:bold">::</span>NowInSeconds();
+    <span style="color:#998;font-style:italic">// 任务
+</span><span style="color:#998;font-style:italic"></span>    ret <span style="color:#000;font-weight:bold">=</span> optimizer<span style="color:#000;font-weight:bold">-&gt;</span>Execute(frame, reference_line_info);
+  }
+
+
+  <span style="color:#998;font-style:italic">// 增加障碍物的代价
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">for</span> (<span style="color:#000;font-weight:bold">const</span> <span style="color:#000;font-weight:bold">auto</span><span style="color:#000;font-weight:bold">*</span> <span style="color:#900;font-weight:bold">obstacle</span> :
+       reference_line_info<span style="color:#000;font-weight:bold">-&gt;</span>path_decision()<span style="color:#000;font-weight:bold">-&gt;</span>obstacles().Items()) {
+    <span style="color:#000;font-weight:bold">if</span> (obstacle<span style="color:#000;font-weight:bold">-&gt;</span>IsVirtual()) {
+      <span style="color:#000;font-weight:bold">continue</span>;
+    }
+    <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>obstacle<span style="color:#000;font-weight:bold">-&gt;</span>IsStatic()) {
+      <span style="color:#000;font-weight:bold">continue</span>;
+    }
+    <span style="color:#000;font-weight:bold">if</span> (obstacle<span style="color:#000;font-weight:bold">-&gt;</span>LongitudinalDecision().has_stop()) {
+      ...
+    }
+  }
+
+  <span style="color:#998;font-style:italic">// 返回参考线
+</span><span style="color:#998;font-style:italic"></span>  reference_line_info<span style="color:#000;font-weight:bold">-&gt;</span>SetTrajectory(trajectory);
+  reference_line_info<span style="color:#000;font-weight:bold">-&gt;</span>SetDrivable(<span style="color:#0086b3">true</span>);
+  <span style="color:#000;font-weight:bold">return</span> Status<span style="color:#000;font-weight:bold">::</span>OK();
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>上面是用&quot;LaneFollowStage&quot;中的&quot;PlanOnReferenceLine&quot;来举例子，不同场景中的&quot;PlanOnReferenceLine&quot;实现可能也不一样，这样设计的好处是，当发现一个场景有问题，需要修改不会影响到其他的场景。同时也可以针对不同场景做优化，比通用的规划更加适合单独的场景。每种场景都有一个专门的目录来进行优化。</p>
+<p>接下来我们看下Task是如何执行的。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="task">Task</h2>
+<p>我们先看Task的目录结构：</p>
+<pre><code>.
+├── BUILD
+├── deciders       // 决策器
+├── optimizers     // 优化器
+├── rss
+├── smoothers     // 平滑器
+├── task.cc
+├── task_factory.cc
+├── task_factory.h
+└── task.h
+</code></pre><p>可以看到每个Task都可以对应到一个决策器或者优化器（平滑器不作为Task，单独作为一个类）。</p>
+<p>每个Task都实现了&quot;Execute&quot;方法，而每个决策器和优化器都继承至Task类。可以参考下图：
+
+        <img class="mx-auto" alt="Task类" src="https://raw.githubusercontent.com/daohu527/misc/master/blog/planning/Task.jpg" />   
+    </p>
+<blockquote>
+<p>Task类的生成用到了设计模式的工厂模式，通过&quot;TaskFactory&quot;类生产不同的Task类。</p>
+</blockquote>
+<p><!-- raw HTML omitted --></p>
+<h4 id="dp--qp">DP &amp; QP</h4>
+<p>Task中的决策器和优化器采用的方法有DP和QP:</p>
+<ul>
+<li><strong>DP</strong> 动态规划</li>
+<li><strong>QP</strong> 二次规划</li>
+</ul>
+<p>QP方法的路径优化和速度优化可以参考apollo文档:
+<a href="https://github.com/ApolloAuto/apollo/blob/master/docs/specs/qp_spline_path_optimizer.md">QP-Spline-Path Optimizer</a>
+<a href="https://github.com/ApolloAuto/apollo/blob/master/docs/specs/qp_spline_st_speed_optimizer.md">QP-Spline-ST-Speed Optimizer</a></p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://paul.pub/apollo-planning/#id-planning%E4%B8%8Eplanner">解析百度Apollo之决策规划模块</a>
+<a href="https://github.com/ApolloAuto/apollo/blob/master/docs/specs/Open_Space_Planner.md">Open Space Planner Algorithm</a></p>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://felicx_gitee.gitee.io/">Felicx</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/">https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/Apollo%E4%B9%8BMAP/">Apollo之Map</a></li>
+        
+        <li><a href="/post/Apollo%E4%B9%8BLOCALIZATION/">Apollo之Localization</a></li>
+        
+        <li><a href="/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/">Apollo之仿真环境搭建</a></li>
+        
+        <li><a href="/post/Apollo%E4%BB%8B%E7%BB%8D/">Apollo介绍</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://felicx_gitee.gitee.io/tags/Apollo'>Apollo</a></li>
+                
+                <li><a href='https://felicx_gitee.gitee.io/tags/Planning'>Planning</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://felicx_gitee.gitee.io/">My Nook By Felicx</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://felicx_gitee.gitee.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://felicx_gitee.gitee.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BMAP/" title="Apollo之Map">Apollo之Map</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/" title="Apollo之Planning">Apollo之Planning</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" title="Apollo之仿真环境搭建">Apollo之仿真环境搭建</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%8B%E7%BB%8D/" title="Apollo介绍">Apollo介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/" title="Apollo之Localization">Apollo之Localization</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/" title=""></a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://felicx_gitee.gitee.io/categories/Apollo/">Apollo (5)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Apollo/">Apollo</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Localization/">Localization</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Map/">Map</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Planning/">Planning</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83/">仿真环境</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/qq_37427972" title="Felicx的博客">Felicx的博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://felicx_gitee.gitee.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Apollo之仿真环境搭建 | My Nook</title>
+    <meta property="og:title" content="Apollo之仿真环境搭建 - My Nook">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-11-25T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-11-25T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="[Apollo 仿真环境]">
+    <meta name="description" content="介绍Apollo仿真环境搭建">
+        <meta name="author" content="Felicx">
+        
+    <meta property="og:url" content="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+        <link rel="stylesheet" href='/css/toc_style.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://felicx_gitee.gitee.io/">
+                        My Nook
+                    </a>
+                
+                <p class="description">What else did you expect me to say?</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://felicx_gitee.gitee.io/">首页</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/tools/" title="工具">工具</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents"></nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">Apollo之仿真环境搭建</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://felicx_gitee.gitee.io/categories/Apollo'>Apollo</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <p>注意：内存最好4G以上，硬盘容量至少100G。</p>
+<p>1、查看你的CPU是否支持FMA和AVX</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> cat <span style="color:#000;font-weight:bold">/</span>proc<span style="color:#000;font-weight:bold">/</span>cpuinfo <span style="color:#a61717;background-color:#e3d2d2">|</span> grep avx
+<span style="color:#a61717;background-color:#e3d2d2">$</span> cat <span style="color:#000;font-weight:bold">/</span>proc<span style="color:#000;font-weight:bold">/</span>cpuinfo <span style="color:#a61717;background-color:#e3d2d2">|</span> grep fma
+</code></pre></td></tr></table>
+</div>
+</div><p>有返回值即支持</p>
+<p>2、浏览器必须支持<a href="https://link.zhihu.com/?target=https%3A//get.webgl.org/">WebGL</a>（最好使用谷歌）</p>
+<p>3、安装NVIDIA显卡驱动（可选）（我没装）
+(若不装Nvidia driver, 运行bash docker/scripts/dev_start.sh报错，但不影响后续进程)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> ubuntu<span style="color:#000;font-weight:bold">-</span>drivers devices
+</code></pre></td></tr></table>
+</div>
+</div><p>会显示推荐安装的驱动，装那个就好</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt install nvidia<span style="color:#000;font-weight:bold">-</span>340 (安装指定版本)
+</code></pre></td></tr></table>
+</div>
+</div><p>4、安装git</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt<span style="color:#000;font-weight:bold">-</span><span style="color:#000;font-weight:bold">get</span> install git
+</code></pre></td></tr></table>
+</div>
+</div><p>5、下载Apollo源码</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> git clone https:<span style="color:#000;font-weight:bold">//</span>github.com<span style="color:#000;font-weight:bold">/</span>ApolloAuto<span style="color:#000;font-weight:bold">/</span>apollo.git
+<span style="color:#000;font-weight:bold">//</span> 若下载指定版本
+<span style="color:#a61717;background-color:#e3d2d2">$</span> git clone <span style="color:#000;font-weight:bold">--</span>branch v2.5.0 https:<span style="color:#000;font-weight:bold">//</span>github.com<span style="color:#000;font-weight:bold">/</span>ApolloAuto<span style="color:#000;font-weight:bold">/</span>apollo.git
+</code></pre></td></tr></table>
+</div>
+</div><p>6、<a href="https://link.zhihu.com/?target=https%3A//docs.docker.com/install/linux/docker-ce/ubuntu/%23install-using-the-repository">安装Docker CE环境</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt<span style="color:#000;font-weight:bold">-</span><span style="color:#000;font-weight:bold">get</span> update
+<span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt<span style="color:#000;font-weight:bold">-</span><span style="color:#000;font-weight:bold">get</span> install <span style="color:#000;font-weight:bold">\</span>
+    apt<span style="color:#000;font-weight:bold">-</span>transport<span style="color:#000;font-weight:bold">-</span>https <span style="color:#000;font-weight:bold">\</span>
+    ca<span style="color:#000;font-weight:bold">-</span>certificates <span style="color:#000;font-weight:bold">\</span>
+    curl <span style="color:#000;font-weight:bold">\</span>
+    gnupg<span style="color:#000;font-weight:bold">-</span>agent <span style="color:#000;font-weight:bold">\</span>
+    software<span style="color:#000;font-weight:bold">-</span>properties<span style="color:#000;font-weight:bold">-</span>common
+<span style="color:#a61717;background-color:#e3d2d2">$</span> curl <span style="color:#000;font-weight:bold">-</span>fsSL https:<span style="color:#000;font-weight:bold">//</span>download.docker.com<span style="color:#000;font-weight:bold">/</span>linux<span style="color:#000;font-weight:bold">/</span>ubuntu<span style="color:#000;font-weight:bold">/</span>gpg <span style="color:#a61717;background-color:#e3d2d2">|</span> sudo apt<span style="color:#000;font-weight:bold">-</span>key add <span style="color:#000;font-weight:bold">-</span>
+<span style="color:#000;font-weight:bold">//</span> 确认拥有指纹的钥匙
+<span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt<span style="color:#000;font-weight:bold">-</span>key fingerprint 0EBFCD88
+<span style="color:#000;font-weight:bold">//</span> 返回东西类似这个就好了
+pub   rsa4096 2017<span style="color:#000;font-weight:bold">-</span>02<span style="color:#000;font-weight:bold">-</span>22 <span style="color:#000;font-weight:bold">[</span>SCEA<span style="color:#000;font-weight:bold">]</span>
+      9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid           <span style="color:#000;font-weight:bold">[</span> unknown<span style="color:#000;font-weight:bold">]</span> Docker Release (CE deb) <span style="color:#000;font-weight:bold">&lt;</span>docker<span style="color:#a61717;background-color:#e3d2d2">@</span>docker.com<span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">sub</span>   <span style="color:#900;font-weight:bold">rsa4096</span> 2017<span style="color:#000;font-weight:bold">-</span>02<span style="color:#000;font-weight:bold">-</span>22 <span style="color:#000;font-weight:bold">[</span>S<span style="color:#000;font-weight:bold">]</span>
+<span style="color:#000;font-weight:bold">//</span> 下面是一句
+<span style="color:#a61717;background-color:#e3d2d2">$</span> sudo add<span style="color:#000;font-weight:bold">-</span>apt<span style="color:#000;font-weight:bold">-</span>repository <span style="color:#000;font-weight:bold">\</span>
+   <span style="color:#d14">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+</span><span style="color:#d14">   $(lsb_release -cs) \
+</span><span style="color:#d14">   stable&#34;</span>
+<span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt<span style="color:#000;font-weight:bold">-</span><span style="color:#000;font-weight:bold">get</span> update
+<span style="color:#a61717;background-color:#e3d2d2">$</span> sudo apt<span style="color:#000;font-weight:bold">-</span><span style="color:#000;font-weight:bold">get</span> install docker<span style="color:#000;font-weight:bold">-</span>ce<span style="color:#000;font-weight:bold">=</span>17.03.1<span style="color:#a61717;background-color:#e3d2d2">~</span>ce<span style="color:#000;font-weight:bold">-</span>0<span style="color:#a61717;background-color:#e3d2d2">~</span>ubuntu<span style="color:#000;font-weight:bold">-</span>trusty
+</code></pre></td></tr></table>
+</div>
+</div><p>PS：其实，人家Apollo已经帮我们想好了，运行下面一句就能代替上面所有了</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> bash docker<span style="color:#000;font-weight:bold">/</span>setup_host<span style="color:#000;font-weight:bold">/</span>install_docker.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>7、<a href="https://link.zhihu.com/?target=https%3A//docs.docker.com/install/linux/linux-postinstall/">添加用户名到docker 中，这样使用docker时无需再输入sudo</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> sudo groupadd docker
+<span style="color:#a61717;background-color:#e3d2d2">$</span> sudo usermod <span style="color:#000;font-weight:bold">-</span>aG docker fu(用户名)
+<span style="color:#000;font-weight:bold">//</span> 注销账号<span style="color:#a61717;background-color:#e3d2d2">，</span>重新登录<span style="color:#a61717;background-color:#e3d2d2">，</span>让刚才的命令生效
+<span style="color:#a61717;background-color:#e3d2d2">$</span> docker run hello<span style="color:#000;font-weight:bold">-</span>world (这时不用sudo<span style="color:#a61717;background-color:#e3d2d2">，</span>命令仍能执行<span style="color:#a61717;background-color:#e3d2d2">，</span>说明安装成功<span style="color:#a61717;background-color:#e3d2d2">。</span>稍微等一下<span style="color:#a61717;background-color:#e3d2d2">，</span>会有东西的)
+</code></pre></td></tr></table>
+</div>
+</div><p>8、<a href="https://link.zhihu.com/?target=https%3A//github.com/ApolloAuto/apollo/tree/master/docs/demo_guide">下载Apollo依赖环境的image文件</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> cd apollo
+<span style="color:#a61717;background-color:#e3d2d2">$</span> bash docker<span style="color:#000;font-weight:bold">/</span>scripts<span style="color:#000;font-weight:bold">/</span>dev_start.sh
+<span style="color:#000;font-weight:bold">//</span> 听说使用bash docker<span style="color:#000;font-weight:bold">/</span>scripts<span style="color:#000;font-weight:bold">/</span>dev_start.sh <span style="color:#000;font-weight:bold">-</span>C <span style="color:#a61717;background-color:#e3d2d2">，</span>速度快些<span style="color:#a61717;background-color:#e3d2d2">，</span>然而我都下不了<span style="color:#a61717;background-color:#e3d2d2">，</span>只能乖乖用上面那个
+<span style="color:#000;font-weight:bold">//</span> (当装的不是Nvidia显卡时<span style="color:#a61717;background-color:#e3d2d2">，</span>会提示<span style="color:#a61717;background-color:#e3d2d2">“</span>modprobe: FATAL: <span style="color:#000;font-weight:bold">Module</span> <span style="color:#555">nvidia</span> <span style="color:#000;font-weight:bold">not</span> found<span style="color:#d14">&#34;的错误信息, 不必在意。）
+</span><span style="color:#d14">// 另外可能需要修改下Docker，自带的那个源似乎访问不了
+</span><span style="color:#d14">// 参考这个https://segmentfault.com/a/1190000016083023
+</span><span style="color:#d14">// 他的第三步就不用了，然后重启，记得再次进入apllo文件夹
+</span></code></pre></td></tr></table>
+</div>
+</div><p>9、进入Docker环境</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> bash docker<span style="color:#000;font-weight:bold">/</span>scripts<span style="color:#000;font-weight:bold">/</span>dev_into.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>这时命令窗口显示前缀的方式会发生改变：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb">类似这样<span style="color:#a61717;background-color:#e3d2d2">：</span>
+fu<span style="color:#a61717;background-color:#e3d2d2">@</span>in_dev_docker:<span style="color:#000;font-weight:bold">/</span>apollo<span style="color:#a61717;background-color:#e3d2d2">$</span>
+<span style="color:#000;font-weight:bold">//</span> 退出Docker用exit
+</code></pre></td></tr></table>
+</div>
+</div><p>10、<a href="https://link.zhihu.com/?target=https%3A//github.com/ApolloAuto/apollo/tree/master/third_party/can_card_library/esd_can">安装ESD CAN library</a> （这个步骤只需执行一次）
+仿真不用装。到实车上的才要，所以这步我就没走</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> cd <span style="color:#000;font-weight:bold">/</span>apollo<span style="color:#000;font-weight:bold">/</span>third_party<span style="color:#000;font-weight:bold">/</span>can_card_library<span style="color:#000;font-weight:bold">/</span>esd_can<span style="color:#a61717;background-color:#e3d2d2">／</span>
+<span style="color:#000;font-weight:bold">//</span> 要在docker环境下
+<span style="color:#000;font-weight:bold">//</span> 建立两个新目录include和lib
+<span style="color:#a61717;background-color:#e3d2d2">$</span> mkdir include
+<span style="color:#a61717;background-color:#e3d2d2">$</span> mkdir <span style="color:#000;font-weight:bold">lib</span>
+<span style="color:#000;font-weight:bold">//</span> 把 ntcan.h 拷贝到 include<span style="color:#000;font-weight:bold">/</span>
+<span style="color:#000;font-weight:bold">//</span> 把64<span style="color:#000;font-weight:bold">-</span>bit的libntcan.so.4.0.1 拷贝到 <span style="color:#000;font-weight:bold">lib</span><span style="color:#000;font-weight:bold">/</span>
+<span style="color:#000;font-weight:bold">//</span> 进行符号连接
+<span style="color:#a61717;background-color:#e3d2d2">$</span> cd .<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">lib</span><span style="color:#000;font-weight:bold">/</span><span style="color:#a61717;background-color:#e3d2d2">;</span>
+<span style="color:#a61717;background-color:#e3d2d2">$</span> ln <span style="color:#000;font-weight:bold">-</span>s libntcan.so.4.0.1 libntcan.so.4<span style="color:#a61717;background-color:#e3d2d2">;</span>
+<span style="color:#a61717;background-color:#e3d2d2">$</span> ln <span style="color:#000;font-weight:bold">-</span>s libntcan.so.4.0.1 libntcan.so.4.0
+</code></pre></td></tr></table>
+</div>
+</div><p>11、编译apollo</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> bash apollo.sh build
+<span style="color:#000;font-weight:bold">//</span> 需重新编译时<span style="color:#a61717;background-color:#e3d2d2">，</span>先跑下面这个命令
+<span style="color:#a61717;background-color:#e3d2d2">$</span> bash apollo.sh clean
+</code></pre></td></tr></table>
+</div>
+</div><p>挺久的，可以喝几杯咖啡了</p>
+<p>12、启动仿真环境Dreamview</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#a61717;background-color:#e3d2d2">$</span> bash scripts<span style="color:#000;font-weight:bold">/</span>bootstrap.sh
+<span style="color:#000;font-weight:bold">//</span> 可能报错<span style="color:#a61717;background-color:#e3d2d2">，</span>重新开个终端<span style="color:#a61717;background-color:#e3d2d2">，</span>再进入Docker<span style="color:#a61717;background-color:#e3d2d2">，</span>重新运行
+</code></pre></td></tr></table>
+</div>
+</div><p>13、启动rosbag</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#000;font-weight:bold">//</span> 下个数据包
+<span style="color:#a61717;background-color:#e3d2d2">$</span> python docs<span style="color:#000;font-weight:bold">/</span>demo_guide<span style="color:#000;font-weight:bold">/</span>rosbag_helper.py demo_2.0.bag
+<span style="color:#000;font-weight:bold">//</span> 运行
+<span style="color:#a61717;background-color:#e3d2d2">$</span> rosbag play demo_2.0.bag <span style="color:#000;font-weight:bold">--</span><span style="color:#000;font-weight:bold">loop</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>14、开始愉快的玩耍
+打开Chrome，输入http://localhost:8888, 这时你就可以看到仿真窗口了</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vb" data-lang="vb"><span style="color:#000;font-weight:bold">Module</span> <span style="color:#555">Controller</span><span style="color:#000;font-weight:bold">---&gt;</span>打开Planning和Routing<span style="color:#a61717;background-color:#e3d2d2">;</span>
+Tasks<span style="color:#000;font-weight:bold">---&gt;</span>打开SimControl
+</code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://felicx_gitee.gitee.io/">Felicx</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/">https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/Apollo%E4%B9%8BMAP/">Apollo之Map</a></li>
+        
+        <li><a href="/post/Apollo%E4%B9%8BPLANNING/">Apollo之Planning</a></li>
+        
+        <li><a href="/post/Apollo%E4%BB%8B%E7%BB%8D/">Apollo介绍</a></li>
+        
+        <li><a href="/post/Apollo%E4%B9%8BLOCALIZATION/">Apollo之Localization</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://felicx_gitee.gitee.io/tags/Apollo'>Apollo</a></li>
+                
+                <li><a href='https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83'>仿真环境</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://felicx_gitee.gitee.io/">My Nook By Felicx</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://felicx_gitee.gitee.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://felicx_gitee.gitee.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BMAP/" title="Apollo之Map">Apollo之Map</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/" title="Apollo之Planning">Apollo之Planning</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" title="Apollo之仿真环境搭建">Apollo之仿真环境搭建</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%8B%E7%BB%8D/" title="Apollo介绍">Apollo介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/" title="Apollo之Localization">Apollo之Localization</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/" title=""></a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://felicx_gitee.gitee.io/categories/Apollo/">Apollo (5)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Apollo/">Apollo</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Localization/">Localization</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Map/">Map</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Planning/">Planning</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83/">仿真环境</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/qq_37427972" title="Felicx的博客">Felicx的博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://felicx_gitee.gitee.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

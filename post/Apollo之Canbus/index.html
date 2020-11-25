@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> | My Nook</title>
+    <meta property="og:title" content=" - My Nook">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="Apollo,C&#43;&#43;,Felicx">
+    <meta name="description" content="">
+        
+    <meta name="author" content="Felicx">
+    <meta property="og:url" content="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+        <link rel="stylesheet" href='/css/toc_style.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://felicx_gitee.gitee.io/">
+                        My Nook
+                    </a>
+                
+                <p class="description">What else did you expect me to say?</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://felicx_gitee.gitee.io/">首页</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/tools/" title="工具">工具</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://felicx_gitee.gitee.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#table-of-contents">Table of Contents</a></li>
+    <li><a href="#canbus模块介绍">Canbus模块介绍</a></li>
+    <li><a href="#canbus模块主流程">Canbus模块主流程</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#canbus驱动程序">Canbus(驱动程序)</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title"></h1>
+        </header>
+        <date class="post-meta meta-date">
+            1年1月1日
+        </date>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h1 id="dig-into-apollo---canbus-githubhttpsimgshieldsiogithublicensedaohu527dig-into-apollosvgstylepopout">Dig into Apollo - Canbus 
+        <img class="mx-auto" alt="GitHub" src="https://img.shields.io/github/license/daohu527/Dig-into-Apollo.svg?style=popout" />   
+    </h1>
+<blockquote>
+<p>天空越黑暗，星辰越璀璨</p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Canbus模块介绍</a></li>
+<li><a href="#main">Canbus模块主流程</a>
+<ul>
+<li><a href="#vehicle_factory">车辆工厂模式(VehicleFactory)</a></li>
+<li><a href="#lincoln_controller">车辆控制器(LincolnController)</a></li>
+</ul>
+</li>
+<li><a href="#canbus_driver">Canbus(驱动程序)</a>
+<ul>
+<li><a href="#message_manager">消息管理器(MessageManager)</a></li>
+<li><a href="#can_receiver">消息接收(CanReceiver)</a></li>
+<li><a href="#can_sender">消息发送(CanSender)</a></li>
+<li><a href="#can_client">canbus客户端(CanClient)</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<p><!-- raw HTML omitted --></p>
+<h2 id="canbus模块介绍">Canbus模块介绍</h2>
+<p>我们先看下什么是Canbus： 控制器局域网 (Controller Area Network，简称CAN或者CAN bus) 是一种车用总线标准。被设计用于在不需要主机（Host）的情况下，允许网络上的节点相互通信。采用广播机制，并利用标识符来定义内容和消息的优先顺序，使得canbus的扩展性良好，同时不基于特殊类型（Host）的节点，增加了升级网络的便利性。
+这里的<strong>Canbus模块其实可以称为Chassis模块</strong>，主要的作用是反馈车当前的状态（航向，角度，速度等信息），并且发送控制命令到车线控底盘，<strong>可以说Canbus模块是车和自动驾驶软件之间的桥梁</strong>。由于这个模块和&quot;drivers/canbus&quot;的联系紧密，因此也一起在这里介绍。
+Canbus模块是车和自动驾驶软件之间的桥梁，通过canbus驱动(drivers/canbus)来实现将车身信息发送给apollo上层软件，同时接收控制命令，发送给汽车线控底盘实现对汽车的控制。</p>
+<p>那么canbus模块的输入是什么？输出是什么呢？
+
+        <img class="mx-auto" alt="input" src="img/canbus_img/input.jpg" />   
+    <br>
+可以看到canbus模块：</p>
+<ul>
+<li><strong>输入</strong> - 1. ControlCommand（控制命令）</li>
+<li><strong>输出</strong> - 1. Chassis（汽车底盘信息）, 2. ChassisDetail（汽车底盘信息详细信息）</li>
+</ul>
+<p>Canbus模块的输入是control模块发送的控制命令，输出汽车底盘信息，这里apollo的上层模块被当做一个can_client来处理，实现接收和发送canbus上的消息。</p>
+<p>Canbus模块的目录结构如下：</p>
+<pre><code>├── BUILD                    // bazel编译文件
+├── canbus_component.cc      // canbus主入口
+├── canbus_component.h       
+├── canbus_test.cc           // canbus测试
+├── common                   // gflag配置
+├── conf                     // 配置文件
+├── dag                      // dag依赖
+├── launch                   // launch加载
+├── proto                    // protobuf文件
+├── testdata                 // 测试数据
+├── tools                    // 遥控汽车和测试canbus总线工具
+└── vehicle                  //   
+</code></pre><p>接着我们来分析下Canbus模块的执行流程。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="canbus模块主流程">Canbus模块主流程</h2>
+<p>Canbus模块的主流程在文件&quot;canbus_component.cc&quot;中，canbus模块为定时触发，每10ms执行一次，发布chassis信息，而ControlCommand则是每次读取到之后触发回调&quot;OnControlCommand&quot;，发送&quot;control_command&quot;到线控底盘。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">bool</span> CanbusComponent<span style="color:#000;font-weight:bold">::</span>Proc() {
+  PublishChassis();
+  <span style="color:#000;font-weight:bold">if</span> (FLAGS_enable_chassis_detail_pub) {
+    PublishChassisDetail();
+  }
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>由于不同型号的车辆的canbus命令不一样，在&quot;/vehicle&quot;中适配了不同型号车辆的canbus消息格式，所有的车都继承自Vehicle_controller基类，通过对Vehicle_controller的抽象来发送和读取canbus信息。
+
+        <img class="mx-auto" alt="main" src="img/canbus_img/main.jpg" />   
+    </p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="车辆工厂模式vehiclefactory">车辆工厂模式(VehicleFactory)</h4>
+<p>在vehicle中可以适配不同的车型，而每种车型都对应一个vehicle_controller，创建每种车辆的控制器(VehicleController)和消息管理(MessageManager)流程如下： 
+
+        <img class="mx-auto" alt="factory" src="img/factory.jpg" />   
+    <br>
+VehicleFactory类通过创建不同的类型AbstractVehicleFactory，每个车型自己的Factory在创建出对应的VehicleController和MessageManager，用林肯来举例子就是： VehicleFactory创建LincolnVehicleFactory，之后通过CreateMessageManager和CreateVehicleController创建对应的控制器（LincolnController）和消息管理器（LincolnMessageManager）。<br>
+上述代码流程用到了设计模式的工厂模式，通过车辆工厂创造不同的车辆类型。</p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="车辆控制器lincolncontroller">车辆控制器(LincolnController)</h4>
+<p>下面以林肯来介绍LincolnController，以及如何接收chassis信息，其它的车型可以以此类推，下面主要分为2部分介绍，第一部分为controller的init-&gt;start-&gt;stop流程，第二部分为chassis信息获取：
+
+        <img class="mx-auto" alt="process" src="img/process.jpg" />   
+    <br>
+可以看到control模块初始化(init)的过程获取了发送的消息的格式，通过can_sender应该发送那些消息，而启动(start)之后启动一个看门狗，检查canbus消息格式是否正确，最后关闭(stop)模块则是结束看门狗进程。</p>
+<p>
+        <img class="mx-auto" alt="chassis" src="img/chassis.jpg" />   
+    <br>
+而chassis的获取则是通过message_manager_获取chassis_detail，之后对chassis进行赋值。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="canbus驱动程序">Canbus(驱动程序)</h2>
+<p>上层的canbus就介绍完成了，而canbus的发送(CanSender)和接收(CanReceiver)，还有消息管理(MessageManager)都是在&quot;drivers/canbus&quot;中实现的。</p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="消息管理器messagemanager">消息管理器(MessageManager)</h4>
+<p>MessageManager是如何获取消息的呢？</p>
+<p><strong>MessageManager主要作用是解析和保存canbus数据，而具体的接收和发送则是在&quot;CanReceiver&quot;和&quot;CanSender&quot;中</strong>，拿接收消息举例子，也就是说CanReceiver收到消息后，会调用MessageManager中的parse去解析消息，消息的解析协议在&quot;modules/canbus/vehicle/lincoln/protocol&quot;中，每个消息把自己对应的信息塞到&quot;chassis_detail&quot;中完成了消息的接收。<br>
+
+        <img class="mx-auto" alt="canbus" src="img/canbus.jpg" />   
+    </p>
+<p><!-- raw HTML omitted --></p>
+<h4 id="消息接收canreceiver">消息接收(CanReceiver)</h4>
+<p>canbus消息的接收在上面有介绍，在CanReceiver中的&quot;Start&quot;调用&quot;RecvThreadFunc&quot;实现消息的接收，这里会启动一个异步进程去完成接收。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">template</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">typename</span> SensorType<span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">::</span>apollo<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>ErrorCode CanReceiver<span style="color:#000;font-weight:bold">&lt;</span>SensorType<span style="color:#000;font-weight:bold">&gt;::</span>Start() {
+  <span style="color:#000;font-weight:bold">if</span> (is_init_ <span style="color:#000;font-weight:bold">==</span> <span style="color:#0086b3">false</span>) {
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">::</span>apollo<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>ErrorCode<span style="color:#000;font-weight:bold">::</span>CANBUS_ERROR;
+  }
+  is_running_.exchange(<span style="color:#0086b3">true</span>);
+  
+  <span style="color:#998;font-style:italic">// 启动异步接收消息
+</span><span style="color:#998;font-style:italic"></span>  async_result_ <span style="color:#000;font-weight:bold">=</span> cyber<span style="color:#000;font-weight:bold">::</span>Async(<span style="color:#000;font-weight:bold">&amp;</span>CanReceiver<span style="color:#000;font-weight:bold">&lt;</span>SensorType<span style="color:#000;font-weight:bold">&gt;::</span>RecvThreadFunc, <span style="color:#000;font-weight:bold">this</span>);
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">::</span>apollo<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>ErrorCode<span style="color:#000;font-weight:bold">::</span>OK;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>RecvThreadFunc通过&quot;can_client_&ldquo;接收消息，然后通过&quot;MessageManager&quot;去解析消息，在MessageManager中有讲到。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">template</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">typename</span> SensorType<span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#458;font-weight:bold">void</span> CanReceiver<span style="color:#000;font-weight:bold">&lt;</span>SensorType<span style="color:#000;font-weight:bold">&gt;::</span>RecvThreadFunc() {
+
+  ...
+  <span style="color:#000;font-weight:bold">while</span> (IsRunning()) {
+    std<span style="color:#000;font-weight:bold">::</span>vector<span style="color:#000;font-weight:bold">&lt;</span>CanFrame<span style="color:#000;font-weight:bold">&gt;</span> buf;
+    <span style="color:#458;font-weight:bold">int32_t</span> frame_num <span style="color:#000;font-weight:bold">=</span> MAX_CAN_RECV_FRAME_LEN;
+    
+    <span style="color:#998;font-style:italic">// 1. can_client_接收canbus数据
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (can_client_<span style="color:#000;font-weight:bold">-&gt;</span>Receive(<span style="color:#000;font-weight:bold">&amp;</span>buf, <span style="color:#000;font-weight:bold">&amp;</span>frame_num) <span style="color:#000;font-weight:bold">!=</span>
+        <span style="color:#000;font-weight:bold">::</span>apollo<span style="color:#000;font-weight:bold">::</span>common<span style="color:#000;font-weight:bold">::</span>ErrorCode<span style="color:#000;font-weight:bold">::</span>OK) {
+      
+      cyber<span style="color:#000;font-weight:bold">::</span>USleep(default_period);
+      <span style="color:#000;font-weight:bold">continue</span>;
+    }
+    ...
+
+    <span style="color:#000;font-weight:bold">for</span> (<span style="color:#000;font-weight:bold">const</span> <span style="color:#000;font-weight:bold">auto</span> <span style="color:#000;font-weight:bold">&amp;</span><span style="color:#900;font-weight:bold">frame</span> : buf) {
+      <span style="color:#458;font-weight:bold">uint8_t</span> len <span style="color:#000;font-weight:bold">=</span> frame.len;
+      <span style="color:#458;font-weight:bold">uint32_t</span> uid <span style="color:#000;font-weight:bold">=</span> frame.id;
+      <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">uint8_t</span> <span style="color:#000;font-weight:bold">*</span>data <span style="color:#000;font-weight:bold">=</span> frame.data;
+
+      <span style="color:#998;font-style:italic">// 2. MessageManager解析canbus数据
+</span><span style="color:#998;font-style:italic"></span>      pt_manager_<span style="color:#000;font-weight:bold">-&gt;</span>Parse(uid, data, len);
+      <span style="color:#000;font-weight:bold">if</span> (enable_log_) {
+        ADEBUG <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;recv_can_frame#&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> frame.CanFrameString();
+      }
+    }
+    cyber<span style="color:#000;font-weight:bold">::</span>Yield();
+  }
+  AINFO <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Can client receiver thread stopped.&#34;</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h4 id="消息发送cansender">消息发送(CanSender)</h4>
+<p>消息发送对应的是在CanSender中的&quot;Start&quot;调用&quot;PowerSendThreadFunc&rdquo;，我们可以看具体实现:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">template</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">typename</span> SensorType<span style="color:#000;font-weight:bold">&gt;</span>
+common<span style="color:#000;font-weight:bold">::</span>ErrorCode CanSender<span style="color:#000;font-weight:bold">&lt;</span>SensorType<span style="color:#000;font-weight:bold">&gt;::</span>Start() {
+  <span style="color:#000;font-weight:bold">if</span> (is_running_) {
+    AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Cansender has already started.&#34;</span>;
+    <span style="color:#000;font-weight:bold">return</span> common<span style="color:#000;font-weight:bold">::</span>ErrorCode<span style="color:#000;font-weight:bold">::</span>CANBUS_ERROR;
+  }
+  is_running_ <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>;
+  
+  <span style="color:#998;font-style:italic">// 启动线程发送消息
+</span><span style="color:#998;font-style:italic"></span>  thread_.reset(<span style="color:#000;font-weight:bold">new</span> std<span style="color:#000;font-weight:bold">::</span><span style="color:#000;font-weight:bold">thread</span>([<span style="color:#000;font-weight:bold">this</span>] { PowerSendThreadFunc(); }));
+
+  <span style="color:#000;font-weight:bold">return</span> common<span style="color:#000;font-weight:bold">::</span>ErrorCode<span style="color:#000;font-weight:bold">::</span>OK;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>PowerSendThreadFunc再通过&quot;can_client&quot;发送消息：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">      std<span style="color:#000;font-weight:bold">::</span>vector<span style="color:#000;font-weight:bold">&lt;</span>CanFrame<span style="color:#000;font-weight:bold">&gt;</span> can_frames;
+      CanFrame can_frame <span style="color:#000;font-weight:bold">=</span> message.CanFrame();
+      can_frames.push_back(can_frame);
+      
+      <span style="color:#998;font-style:italic">// 通过can_client发送消息
+</span><span style="color:#998;font-style:italic"></span>      <span style="color:#000;font-weight:bold">if</span> (can_client_<span style="color:#000;font-weight:bold">-&gt;</span>SendSingleFrame(can_frames) <span style="color:#000;font-weight:bold">!=</span> common<span style="color:#000;font-weight:bold">::</span>ErrorCode<span style="color:#000;font-weight:bold">::</span>OK) {
+        AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;Send msg failed:&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> can_frame.CanFrameString();
+      }
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted --></p>
+<h4 id="canbus客户端canclient">canbus客户端(CanClient)</h4>
+<p>CanClient是canbus客户端，同时也是canbus的驱动程序，针对不同的canbus卡，对发送和接收进行封装，并且提供给消息发送和接收控制器使用。<br>
+
+        <img class="mx-auto" alt="canclient" src="img/canclient.jpg" />   
+    <br>
+拿&quot;EsdCanClient&quot;来举例子，发送在&quot;Send&quot;函数中，调用的是第三方的硬件驱动，目录在&quot;third_party/can_card_library/esd_can&quot;，实现can消息的发送：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">ErrorCode EsdCanClient<span style="color:#000;font-weight:bold">::</span>Send(<span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>vector<span style="color:#000;font-weight:bold">&lt;</span>CanFrame<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">&amp;</span>frames,
+                             <span style="color:#458;font-weight:bold">int32_t</span> <span style="color:#000;font-weight:bold">*</span><span style="color:#000;font-weight:bold">const</span> frame_num) {
+  ...
+
+  <span style="color:#998;font-style:italic">// canWrite为第三方库的硬件驱动，third_party/can_card_library/esd_can
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#998;font-style:italic">// Synchronous transmission of CAN messages
+</span><span style="color:#998;font-style:italic"></span>  <span style="color:#458;font-weight:bold">int32_t</span> ret <span style="color:#000;font-weight:bold">=</span> canWrite(dev_handler_, send_frames_, frame_num, <span style="color:#000;font-weight:bold">nullptr</span>);
+  <span style="color:#000;font-weight:bold">if</span> (ret <span style="color:#000;font-weight:bold">!=</span> NTCAN_SUCCESS) {
+    AERROR <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;send message failed, error code: &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> ret <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;, &#34;</span>
+           <span style="color:#000;font-weight:bold">&lt;&lt;</span> GetErrorString(ret);
+    <span style="color:#000;font-weight:bold">return</span> ErrorCode<span style="color:#000;font-weight:bold">::</span>CAN_CLIENT_ERROR_BASE;
+  }
+  <span style="color:#000;font-weight:bold">return</span> ErrorCode<span style="color:#000;font-weight:bold">::</span>OK;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>其他的can卡可以参考上述的流程，至此整个canbus驱动就分析完成了。</p>
+<p><!-- raw HTML omitted --></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://www.ni.com/zh-tw/innovations/white-papers/06/controller-area-network--can--overview.html">Controller Area Network (CAN BUS) 通訊​協定​原理​概述</a></p>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://felicx_gitee.gitee.io/">Felicx</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/">https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/about/">关于我</a></li>
+        
+        <li><a href="/tools/">我的工具</a></li>
+        
+        <li><a href="/archives/">归档</a></li>
+        
+        <li><a href="/search/">搜索</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://felicx_gitee.gitee.io/">My Nook By Felicx</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://felicx_gitee.gitee.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://felicx_gitee.gitee.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BMAP/" title="Apollo之Map">Apollo之Map</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BPLANNING/" title="Apollo之Planning">Apollo之Planning</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" title="Apollo之仿真环境搭建">Apollo之仿真环境搭建</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%BB%8B%E7%BB%8D/" title="Apollo介绍">Apollo介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BLOCALIZATION/" title="Apollo之Localization">Apollo之Localization</a>
+    </li>
+    
+    <li>
+        <a href="https://felicx_gitee.gitee.io/post/Apollo%E4%B9%8BCanbus/" title=""></a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://felicx_gitee.gitee.io/categories/Apollo/">Apollo (5)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Apollo/">Apollo</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Localization/">Localization</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Map/">Map</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/Planning/">Planning</a>
+    
+    <a href="https://felicx_gitee.gitee.io/tags/%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83/">仿真环境</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/qq_37427972" title="Felicx的博客">Felicx的博客</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://felicx_gitee.gitee.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
