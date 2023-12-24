@@ -9,7 +9,7 @@
     
     <title>
         
-            Hello World |
+            gdb 调试 C++ 程序 core dump |
         
         阿展的摸鱼空间
     </title>
@@ -86,7 +86,7 @@
                     </li>
                     
                         <li class="menu-item">
-                            <a class=""
+                            <a class="active"
                                href="/archives"
                             >归档</a>
                         </li>
@@ -118,7 +118,7 @@
             </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class=""
+                    <a class="active"
                        href="/archives"
                     >归档</a>
                 </li>
@@ -147,7 +147,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        Hello World
+                        gdb 调试 C++ 程序 core dump
                     </div>
                 
 
@@ -175,18 +175,43 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2023-12-23 21:34:13</span>
-                <span class="mobile">2023-12-23 21:34</span>
+                <span class="pc">2023-11-01 12:35:15</span>
+                <span class="mobile">2023-11-01 12:35</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sat Dec 23 2023 21:34:13 GMT+0800">2023-12-23 21:34:13</span>
+                <span class="pc" data-updated="Sun Dec 24 2023 10:13:30 GMT+0800">2023-12-24 10:13:30</span>
             </span>
         
 
         
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/kai-fa-yun-wei/">kai-fa-yun-wei</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
 
+        
+            <span class="post-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/linux/">linux</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/gdb/">gdb</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/c/">c</a></li>
+                        
+                    
+                </ul>
+            </span>
         
 
         
@@ -206,19 +231,13 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <p>Welcome to <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/" >Hexo<i class="fas fa-external-link-alt"></i></a>! This is your very first post. Check <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/" >documentation<i class="fas fa-external-link-alt"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fas fa-external-link-alt"></i></a> or you can ask me on <a class="link"   target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fas fa-external-link-alt"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html" >Writing<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/server.html" >Server<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html" >Generating<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fas fa-external-link-alt"></i></a></p>
+                    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近用C++写ros程序，老是有莫名其妙的core dump。而调试core dump最方便就是使用gdb，这里做个记录。</p>
+<h1 id="调试准备"><a href="#调试准备" class="headerlink" title="调试准备"></a>调试准备</h1><p>程序执行时, 经常会因为段错误（Segment Fault）而退出，操作系统会把此程序当前内存信息dump到磁盘上，即生成<code>core</code>文件。那gdb主要就是分析core文件。</p>
+<h2 id="设置core文件大小"><a href="#设置core文件大小" class="headerlink" title="设置core文件大小"></a>设置core文件大小</h2><p>系统默认不会生成core文件，需要进一步设置。core文件的生成依赖于shell的设置, 在shell中运行命令：<code>ulimit -a</code>，从第一行的设置项可以看到系统设置的core file size 为0，即不生成core file。<br><img   src="http://121.196.169.103/home/halo/img_storage/Linux_6/gdb_1.png"  alt="gdb_1"><br>使用命令：<code>ulimit -c unlimited</code>，可以设置core file size为无限，但只限当前终端可用。<br><img   src="http://121.196.169.103/home/halo/img_storage/Linux_6/gdb_2.png"  alt="gdb_2"></p>
+<h1 id="C-文件调试"><a href="#C-文件调试" class="headerlink" title="C++文件调试"></a>C++文件调试</h1><p>如果是单一的C++文件调试，直接用在编译时加上<code>-g</code>添加调试信息即可<br>比如<code>g++ -g test.cpp -o test</code>，遇到core dump会在<code>test.cpp</code>所在目录下生成<code>core</code>文件，直接<code>gdb ./test core</code>即可</p>
+<h1 id="CMake文件调试"><a href="#CMake文件调试" class="headerlink" title="CMake文件调试"></a>CMake文件调试</h1><p>如果工程是用CMake构建的，那么需要在CMakeLists.txt中加入如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET(CMAKE_BUILD_TYPE <span class="string">&quot;Debug&quot;</span>)  </span><br><span class="line">SET(CMAKE_CXX_FLAGS_DEBUG <span class="string">&quot;<span class="variable">$ENV</span>&#123;CXXFLAGS&#125; -O0 -Wall -g2 -ggdb&quot;</span>)  </span><br><span class="line">SET(CMAKE_CXX_FLAGS_RELEASE <span class="string">&quot;<span class="variable">$ENV</span>&#123;CXXFLAGS&#125; -O3 -Wall&quot;</span>)  </span><br></pre></td></tr></table></figure>
+<p>和单个C++文件一样，进程奔溃时，系统会把奔溃前的信息转储在一个叫做core的文件，直接<code>gdb ./test core</code>即可。<br>另外<code>objdump</code>这个指令也可以查看core文件，<code>objdump -s core</code>。</p>
 
                 </div>
 
@@ -226,6 +245,22 @@
 
                 <div class="post-bottom-tags-and-share border-box">
                     <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/linux/">linux</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/gdb/">gdb</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/c/">c</a>
+                                    </li>
+                                
+                            </ul>
                         
                     </div>
                     <div>
@@ -261,15 +296,31 @@
                 
                     <div class="post-nav border-box">
                         
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/archives/halo2.0-bo-ke-da-jian"
+                                   title="Halo2.0 博客搭建"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Halo2.0 博客搭建</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/archives/cloudflare-jie-xi-org-yu-ming"
-                                   title="Cloudflare 解析 ORG 域名"
+                                   href="/archives/ji-shu-jiao-liu-1-coursera-shi-pin-wu-fa-bo-fang-wen-ti-jie-jue"
+                                   title="Coursera 视频无法播放问题解决"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Cloudflare 解析 ORG 域名</span>
+                                        <span class="post-nav-title-item text-ellipsis">Coursera 视频无法播放问题解决</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -338,7 +389,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87"><span class="nav-text">调试准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEcore%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-text">设置core文件大小</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E6%96%87%E4%BB%B6%E8%B0%83%E8%AF%95"><span class="nav-text">C++文件调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMake%E6%96%87%E4%BB%B6%E8%B0%83%E8%AF%95"><span class="nav-text">CMake文件调试</span></a></li></ol>
     </div>
 </div>
 
@@ -506,7 +557,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87"><span class="nav-text">调试准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEcore%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-text">设置core文件大小</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E6%96%87%E4%BB%B6%E8%B0%83%E8%AF%95"><span class="nav-text">C++文件调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMake%E6%96%87%E4%BB%B6%E8%B0%83%E8%AF%95"><span class="nav-text">CMake文件调试</span></a></li></ol>
     </div>
 </div>
 

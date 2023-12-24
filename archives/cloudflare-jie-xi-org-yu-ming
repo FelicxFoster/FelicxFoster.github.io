@@ -9,7 +9,7 @@
     
     <title>
         
-            Hello World |
+            Cloudflare 解析 ORG 域名 |
         
         阿展的摸鱼空间
     </title>
@@ -86,7 +86,7 @@
                     </li>
                     
                         <li class="menu-item">
-                            <a class=""
+                            <a class="active"
                                href="/archives"
                             >归档</a>
                         </li>
@@ -118,7 +118,7 @@
             </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class=""
+                    <a class="active"
                        href="/archives"
                     >归档</a>
                 </li>
@@ -147,7 +147,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        Hello World
+                        Cloudflare 解析 ORG 域名
                     </div>
                 
 
@@ -175,18 +175,40 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2023-12-23 21:34:13</span>
-                <span class="mobile">2023-12-23 21:34</span>
+                <span class="pc">2023-11-18 22:46:48</span>
+                <span class="mobile">2023-11-18 22:46</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sat Dec 23 2023 21:34:13 GMT+0800">2023-12-23 21:34:13</span>
+                <span class="pc" data-updated="Sun Dec 24 2023 10:13:30 GMT+0800">2023-12-24 10:13:30</span>
             </span>
         
 
         
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/zhe-teng-xi-lie/">zhe-teng-xi-lie</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
 
+        
+            <span class="post-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/jian-zhan/">jian-zhan</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/yu-ming/">yu-ming</a></li>
+                        
+                    
+                </ul>
+            </span>
         
 
         
@@ -206,19 +228,33 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <p>Welcome to <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/" >Hexo<i class="fas fa-external-link-alt"></i></a>! This is your very first post. Check <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/" >documentation<i class="fas fa-external-link-alt"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fas fa-external-link-alt"></i></a> or you can ask me on <a class="link"   target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fas fa-external-link-alt"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html" >Writing<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/server.html" >Server<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html" >Generating<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fas fa-external-link-alt"></i></a></p>
+                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们有了自己的域名，那么怎么让域名与我们的 ip 产生联系呢。 这个时候我们就可以使用 CDN 服务商来进行 DNS 解析。</p>
+<p>但是，我之前申请的是 .org 这种顶级域名，这类域名在国内没有获得国家工信部备案审批，不能在国内备案。对这类不能在国内备案的域名，是不能用阿里云腾讯云这些国内注册服务商进行 DNS 解析的。</p>
+<p>怎么搞，这时就得用上  <a class="link"   target="_blank" rel="noopener" href="https://dash.cloudflare.com/" >Cloudflare<i class="fas fa-external-link-alt"></i></a> 这样的 CDN 服务商来进行 DNS 解析了。</p>
+<h2 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h2><p>进入官网，右上角默认的是 English(US)，可以点击 English(US) 切换到简体中文，然后注册一个账号。</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/1.4hzn2sewhv0.webp"  alt="img"></p>
+<h2 id="添加站点"><a href="#添加站点" class="headerlink" title="添加站点"></a>添加站点</h2><p>登录到 Cloudflare 账户后，我们需要添加一个站点，也就是你申请到的域名。</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/2.62ws3760c540.webp"  alt="img"></p>
+<h2 id="选择域名解析方案"><a href="#选择域名解析方案" class="headerlink" title="选择域名解析方案"></a>选择域名解析方案</h2><p>进入选择套餐界面，选择免费的解析套餐，点 Continue；</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/3.39oj1keldri0.webp"  alt="img"></p>
+<h2 id="更改名服务器"><a href="#更改名服务器" class="headerlink" title="更改名服务器"></a>更改名服务器</h2><p>Cloudflare 会为你提供两个新的域名服务器（Name Server）地址。</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/4.77ffc3nuxqw0.webp"  alt="img"></p>
+<p>你需要在你的域名注册商处更新你的域名服务器设置，将现有的域名服务器替换为 Cloudflare 提供的地址。这一步使得你的域名流量经过 Cloudflare 的网络。</p>
+<p>比如我是 <a class="link"   target="_blank" rel="noopener" href="https://nic.eu.org/arf/en/login/" >en.org<i class="fas fa-external-link-alt"></i></a> 的。登陆 eu.org 后台，找到Nameservers</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/5.31dlbky5ft40.webp"  alt="img"></p>
+<p>将上面申请的两组 Nameservers 填入 Name1 和 Name2</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/6.1c7xqj0qdz6o.webp"  alt="img"></p>
+<p>确认提交，等待 NS 记录生效后，Cloudflare会进行验证。这可能需要一些时间，一般是 24 小时之内会有 Cloudflare 的邮件通知。我们可以先回到Cloudflare界面，点击完成。</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/7.51fbx2c6nq00.webp"  alt="img"></p>
+<h2 id="安全性设置（可选）"><a href="#安全性设置（可选）" class="headerlink" title="安全性设置（可选）"></a>安全性设置（可选）</h2><h3 id="设置-SSL-安全为-strict"><a href="#设置-SSL-安全为-strict" class="headerlink" title="设置 SSL 安全为 strict"></a>设置 SSL 安全为 strict</h3><p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/8.2pzajf7x24k0.webp"  alt="img"></p>
+<h3 id="设置自动-https-重写"><a href="#设置自动-https-重写" class="headerlink" title="设置自动 https 重写"></a>设置自动 https 重写</h3><p>在<code>SSL/TLS-&gt;边缘证书</code>中开启“始终使用 HTTPS”。注意，这里的“始终使用 HTTPS”选项不能和 nginx 端同时开启，两端只能开启一个，否则会出错。</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/9.5d4d2n5k8i00.webp"  alt="img"></p>
+<h3 id="打开速度优化"><a href="#打开速度优化" class="headerlink" title="打开速度优化"></a>打开速度优化</h3><p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/10.3u2h9no7vtq0.webp"  alt="img"></p>
+<h2 id="设置-DNS-记录"><a href="#设置-DNS-记录" class="headerlink" title="设置 DNS 记录"></a>设置 DNS 记录</h2><p>完成上面的步骤后，点击 DNS ，进行主域名的 ip 解析。通过 A 记录解析我们的 ip 地址。设置好解析记录后，等待 5 分钟，就可以 ping 通这个域名了。</p>
+<p><img   src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/11.74etizm5kgk0.webp"  alt="img"></p>
+<p>记得把代理状态设置为仅限 DNS，即不开启小云朵。</p>
+<p>小云朵开启表示：完全代理，让 Cloudflare 完全代理网站，这样可以避免用户检测到真实的服务器 ip，每次检测都是 Cloudflare 公司的节点 ip；小云朵关闭（灰色）就表示：不使用 Cloudflare 的节点代理，相当于直连到你的服务器。</p>
+<p>特别是如果你使用了 Nginx Proxy Manager 进行域名反代，就不能开启小云朵。</p>
 
                 </div>
 
@@ -226,6 +262,18 @@
 
                 <div class="post-bottom-tags-and-share border-box">
                     <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/jian-zhan/">jian-zhan</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/yu-ming/">yu-ming</a>
+                                    </li>
+                                
+                            </ul>
                         
                     </div>
                     <div>
@@ -261,15 +309,31 @@
                 
                     <div class="post-nav border-box">
                         
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/undefined.html"
+                                   title="Hello World"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/archives/cloudflare-jie-xi-org-yu-ming"
-                                   title="Cloudflare 解析 ORG 域名"
+                                   href="/archives/halo2.0-bo-ke-da-jian"
+                                   title="Halo2.0 博客搭建"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Cloudflare 解析 ORG 域名</span>
+                                        <span class="post-nav-title-item text-ellipsis">Halo2.0 博客搭建</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -338,7 +402,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7"><span class="nav-text">注册账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%AB%99%E7%82%B9"><span class="nav-text">添加站点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%96%B9%E6%A1%88"><span class="nav-text">选择域名解析方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">更改名服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E8%AE%BE%E7%BD%AE%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-text">安全性设置（可选）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-SSL-%E5%AE%89%E5%85%A8%E4%B8%BA-strict"><span class="nav-text">设置 SSL 安全为 strict</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8-https-%E9%87%8D%E5%86%99"><span class="nav-text">设置自动 https 重写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96"><span class="nav-text">打开速度优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-DNS-%E8%AE%B0%E5%BD%95"><span class="nav-text">设置 DNS 记录</span></a></li></ol>
     </div>
 </div>
 
@@ -506,7 +570,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7"><span class="nav-text">注册账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%AB%99%E7%82%B9"><span class="nav-text">添加站点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%96%B9%E6%A1%88"><span class="nav-text">选择域名解析方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">更改名服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E8%AE%BE%E7%BD%AE%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-text">安全性设置（可选）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-SSL-%E5%AE%89%E5%85%A8%E4%B8%BA-strict"><span class="nav-text">设置 SSL 安全为 strict</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8-https-%E9%87%8D%E5%86%99"><span class="nav-text">设置自动 https 重写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96"><span class="nav-text">打开速度优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-DNS-%E8%AE%B0%E5%BD%95"><span class="nav-text">设置 DNS 记录</span></a></li></ol>
     </div>
 </div>
 
