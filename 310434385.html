@@ -299,7 +299,7 @@
 <p>这里有个问题，怎么避免重复值，比如下面这张图，<code>dfsGrid</code>遍历时会一直在这里不断循环。<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/DFS_BFS.5ct4jg7qlqw.gif"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/DFS_BFS.5ct4jg7qlqw.gif"
                         alt="grid_DFS"
                  ><br>简单的方法就是标记已经遍历过的格子。比如岛屿问题，把走过的陆地格子的值改为2。这样就能得到一个网格<code>DFS</code>遍历的通用框架代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfsGrid</span><span class="params">(vector&lt;vector&lt;<span class="type">char</span>&gt;&gt;&amp; grid, <span class="type">int</span> row, <span class="type">int</span> col)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (row &gt;= grid.<span class="built_in">size</span>() || col &gt;= grid[<span class="number">0</span>].<span class="built_in">size</span>() || row &lt; <span class="number">0</span> || col &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 防止row和col越界(上下左右)</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (grid[row][col] != <span class="string">&#x27;1&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 遍历到海洋或者已经遍历过的陆地,退出</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  grid[row][col] = <span class="string">&#x27;2&#x27;</span>;         <span class="comment">// 去重,防止多次遍历</span></span><br><span class="line">  <span class="built_in">dfsGrid</span>(grid, row - <span class="number">1</span>, col);  <span class="comment">// 上</span></span><br><span class="line">  <span class="built_in">dfsGrid</span>(grid, row + <span class="number">1</span>, col);  <span class="comment">// 下</span></span><br><span class="line">  <span class="built_in">dfsGrid</span>(grid, row, col - <span class="number">1</span>);  <span class="comment">// 左</span></span><br><span class="line">  <span class="built_in">dfsGrid</span>(grid, row, col + <span class="number">1</span>);  <span class="comment">// 右</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -312,7 +312,7 @@
 <p>示例 1：<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/island-perimeter.nzxtw4ugmqo.png"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/island-perimeter.nzxtw4ugmqo.png"
                         alt="island-perimeter"
                  ><br>输入：$grid &#x3D; [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]$<br>输出：16<br>解释：它的周长是上面图片中的 16 个黄色的边</p>
 <p>示例 2：<br>输入：grid &#x3D; [[1]]<br>输出：4</p>
@@ -321,7 +321,7 @@
 <h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>这道题最牛逼的一点是你要想到，岛屿的周长就是岛屿方格和非岛屿方格相邻的边的数量（如下图所示）。也就是说，在<code>DFS</code>遍历中，从一个岛屿方格走向一个非岛屿方格，就将周长加1。<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/DFS_island_perimeter.3q6rbq6djn00.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/DFS_island_perimeter.3q6rbq6djn00.webp"
                         alt="DFS_island_perimeter"
                  ><br>所以，我们可以修改下网格<code>DFS</code>遍历的通用框架：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfsGrid</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; grid, <span class="type">int</span> row, <span class="type">int</span> col)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (row &gt;= grid.<span class="built_in">size</span>() || col &gt;= grid[<span class="number">0</span>].<span class="built_in">size</span>() || row &lt; <span class="number">0</span> || col &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 从一个岛屿方格走向网格边界,周长加1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (grid[row][col] == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 从一个岛屿方格走向水域方格,周长加1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (grid[row][col] != <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">// 过滤掉已经遍历过的</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  grid[row][col] = <span class="number">2</span>;  <span class="comment">// 去重,防止多次遍历</span></span><br><span class="line">  <span class="type">int</span> res = <span class="built_in">dfsGrid</span>(grid, row - <span class="number">1</span>, col) + <span class="built_in">dfsGrid</span>(grid, row + <span class="number">1</span>, col) +</span><br><span class="line">            <span class="built_in">dfsGrid</span>(grid, row, col - <span class="number">1</span>) + <span class="built_in">dfsGrid</span>(grid, row, col + <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -332,7 +332,7 @@
 <p>示例 1：<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/max-area-of-island.peqwbergm1c.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/max-area-of-island.peqwbergm1c.webp"
                         alt="max-area-of-island"
                  ><br>输入：$grid &#x3D; [[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]$<br>输出：6<br>解释：答案不应该是 11 ，因为岛屿只能包含水平或垂直这四个方向上的 1 。</p>
 <p>示例 2：<br>输入：$grid &#x3D; [[0,0,0,0,0,0,0,0]]$<br>输出：0</p>
@@ -350,17 +350,17 @@
 <p>因此需要两次<code>DFS</code>遍历：<br>1、划分岛屿，给每个岛屿标号<br>标号要标什么呢？假设我们在所有的格子上标记出岛屿的面积。然后搜索哪个海洋格子相邻的两个岛屿面积最大。<br>例如下图中红色方框内的海洋格子，上边、左边都与岛屿相邻，我们可以计算出它变成陆地之后可以连接成的岛屿面积为<code>7 + 1 + 2 = 10</code>。<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/DFS_large_island_1.gr0d38qfci0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/DFS_large_island_1.gr0d38qfci0.webp"
                         alt="DFS_large_island_1"
                  ><br>然而，这种做法可能遇到一个问题。如下图中红色方框内的海洋格子，它的上边、左边都与岛屿相邻，这时候连接成的岛屿面积难道是<code>7 + 1 + 7 = 15</code>？显然不是。这两个7来自同一个岛屿，所以填海造陆之后得到的岛屿面积应该只有<code>7 + 1 = 8</code>。<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/DFS_large_island_2.42rzlk9665k0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/DFS_large_island_2.42rzlk9665k0.webp"
                         alt="DFS_large_island_2"
                  ><br>可以看到，要让算法正确，我们得能区分一个海洋格子相邻的两个7是不是来自同一个岛屿。那么，我们不能在方格中标记岛屿的面积，而应该用<code>map</code>记录每个岛屿面积，给每个岛屿标记<code>map</code>的<code>key</code>。<br>如下图所示。这样我们就可以发现红色方框内的海洋格子，它的两个相邻的岛屿实际上是同一个。<br><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/LeetCode_1/DFS_large_island_3.72066hxpc1o0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/LeetCode_1/DFS_large_island_3.72066hxpc1o0.webp"
                         alt="DFS_large_island_3"
                  ></p>
 <p>2、填充海洋，连接四周的岛屿<br>和上面类似，要遍历每个海洋格子上下左右的格子。又因为我们已经有<code>map</code>来记录了各个岛屿的面积，所以只需要在遍历时发现是岛屿，加上对应的面积即可，不需要再全部遍历该岛屿的陆地。<br>要注意的是，我们是将一个海洋变为陆地，所以海洋会占一个面积。</p>

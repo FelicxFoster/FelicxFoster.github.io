@@ -274,7 +274,7 @@
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Apollo_1/Canbus_Process.1gy2z7xwqklc.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/Apollo_1/Canbus_Process.1gy2z7xwqklc.webp"
                         alt="canbus流程"
                  ></p>
 <p>可以看到<code>canbus</code>模块：</p>
@@ -287,14 +287,14 @@
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Apollo_1/Canbus_Module.2tfnhrmqs2q0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/Apollo_1/Canbus_Module.2tfnhrmqs2q0.webp"
                         alt="Canbus"
                  ></p>
 <p>接着我们来分析下<code>Canbus</code>模块的执行流程。</p>
 <h2 id="Canbus-主模块"><a href="#Canbus-主模块" class="headerlink" title="Canbus(主模块)"></a>Canbus(主模块)</h2><p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Apollo_1/Canbus_Frame.2umkzfzax280.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/Apollo_1/Canbus_Frame.2umkzfzax280.webp"
                         alt="canbus框架"
                  ></p>
 <p><code>Canbus</code>模块的主流程在文件<code>&quot;canbus_component.cc&quot;</code>中，<code>Canbus</code>模块为定时触发，每10ms执行一次，发布<code>chassis</code>信息，而<code>ControlCommand</code>则是每次读取到之后触发回调<code>&quot;OnControlCommand&quot;</code>，发送<code>&quot;control_command&quot;</code>到线控底盘。</p>
@@ -304,7 +304,7 @@
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Apollo_1/Vehicle_Factory.1mb9orifcli8.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/Apollo_1/Vehicle_Factory.1mb9orifcli8.webp"
                         alt="factory"
                  ><br><code>VehicleFactory</code>类通过创建不同的类型<code>AbstractVehicleFactory</code>，每个车型自己的<code>Factory</code>在创建出对应的<code>VehicleController</code>和<code>MessageManager</code>。<br>用林肯来举例子就是： <code>VehicleFactory</code>创建<code>LincolnVehicleFactory</code>，之后通过<code>CreateMessageManager</code>和<code>CreateVehicleController</code>创建对应的控制器（<code>LincolnController</code>）和消息管理器（<code>LincolnMessageManager</code>）。<br>上述代码流程用到了设计模式的工厂模式，通过车辆工厂创造不同的车辆类型。</p>
 <h4 id="车辆控制器-LincolnController"><a href="#车辆控制器-LincolnController" class="headerlink" title="车辆控制器(LincolnController)"></a>车辆控制器(LincolnController)</h4><p>下面以林肯来介绍<code>LincolnController</code>，以及如何接收<code>chassis</code>信息，其它的车型可以以此类推。<br>可以看上面的整体流程图<code>lincoln_controller.cc</code>部分，显然，<code>controller</code>分为三部分<code>init-&gt;start-&gt;stop</code>，<code>init</code>过程是获取<code>MessageManager</code>的<code>protocolData</code>，即发送的消息协议数据类型，然后通过<code>CanSender</code>发送这些消息。如以<code>int</code>为协议来代表的是整数，以<code>char</code>为协议代表的字符。那这个<code>protocolData</code>就是我们以这个类型为协议来替代车辆行驶的具体操作。例如在<code>modules/canbus/vehicle/brake_60.h</code>这个<code>Brake60</code>类的操作就是刹车。<br><code>start</code>之后启动一个看门狗，检查<code>canbus</code>消息格式是否正确，最后<code>stop</code>模块则是结束看门狗进程。</p>

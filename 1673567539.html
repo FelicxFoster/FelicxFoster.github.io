@@ -392,7 +392,7 @@ mjx-container[display="true"] + br {
 <li>基于Eigen工具库求解（提示：通过特征向量分解的方式）</li>
 </ul>
 <p>3、生成测试数据集，并对比验证不同实现的拟合效果<br>4、输出一份报告，包括：问题的定义，求解细节，以及验证结果等</p>
-<p><img lazyload="" alt="示例" data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Interview_1/example.5c1nzwl8jkg0.webp"></p>
+<p><img lazyload="" alt="示例" data-src="https://felicxfoster.github.io/PicXImage/Interview_1/example.5c1nzwl8jkg0.webp"></p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>其实就是直线拟合，这里就想到了最小二乘（视觉SLAM十四讲有写）。</p>
 <p>最小二乘法，又称最小平方法。它通过最小化误差的平方和寻找数据的最佳函数匹配。主要作用是从一堆相关数据中求解数据的一般性规律。在图像处理方面多用于各种形状的拟合。</p>
 <p>最小二乘拟合直线，主要体现为找到一条直线，使得所有已知的点到这条直线的欧式距离的和最小（或者理解为点到直线的误差平方和最小）。</p>
@@ -442,8 +442,8 @@ mjx-container[display="true"] + br {
 <p>最后优化求解</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ceres::Solver::Options options;</span><br><span class="line">options.max_num_iterations = <span class="number">20</span>;</span><br><span class="line">options.linear_solver_type = ceres::DENSE_QR;</span><br><span class="line">options.minimizer_progress_to_stdout = <span class="literal">true</span>;</span><br><span class="line">ceres::Solver::Summary summary;</span><br><span class="line">ceres::<span class="built_in">Solve</span>(options, &amp;problem, &amp;summary);</span><br></pre></td></tr></table></figure>
 
-<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p><img lazyload="" alt="Direct_Solution" data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Interview_1/Direct_Solution.1gbxf47m3na8.webp"></p>
-<p><img lazyload="" alt="Ceres_Solution" data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Interview_1/Ceres_Solution.5hh48gp8qbw0.webp"></p>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p><img lazyload="" alt="Direct_Solution" data-src="https://felicxfoster.github.io/PicXImage/Interview_1/Direct_Solution.1gbxf47m3na8.webp"></p>
+<p><img lazyload="" alt="Ceres_Solution" data-src="https://felicxfoster.github.io/PicXImage/Interview_1/Ceres_Solution.5hh48gp8qbw0.webp"></p>
 <h4 id="代码仓库"><a href="#代码仓库" class="headerlink" title="代码仓库"></a>代码仓库</h4><p><a class="link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster/Least_Square_Fitting_Line">Least_Square_Fitting_Line<i class="fas fa-external-link-alt"></i></a></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>1、<a class="link" target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/wokaowokaowokao12345/article/details/72850143">最小二乘法求解直线方程系数<i class="fas fa-external-link-alt"></i></a></p>
 <p>2、<a class="link" target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/songjianliuhan/article/details/120568650">ceres拟合直线<i class="fas fa-external-link-alt"></i></a></p>

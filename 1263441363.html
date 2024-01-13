@@ -279,28 +279,28 @@
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/1.4hzn2sewhv0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/1.4hzn2sewhv0.webp"
                         alt="img"
                  ></p>
 <h2 id="添加站点"><a href="#添加站点" class="headerlink" title="添加站点"></a>添加站点</h2><p>登录到 Cloudflare 账户后，我们需要添加一个站点，也就是你申请到的域名。</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/2.62ws3760c540.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/2.62ws3760c540.webp"
                         alt="img"
                  ></p>
 <h2 id="选择域名解析方案"><a href="#选择域名解析方案" class="headerlink" title="选择域名解析方案"></a>选择域名解析方案</h2><p>进入选择套餐界面，选择免费的解析套餐，点 Continue；</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/3.39oj1keldri0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/3.39oj1keldri0.webp"
                         alt="img"
                  ></p>
 <h2 id="更改名服务器"><a href="#更改名服务器" class="headerlink" title="更改名服务器"></a>更改名服务器</h2><p>Cloudflare 会为你提供两个新的域名服务器（Name Server）地址。</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/4.77ffc3nuxqw0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/4.77ffc3nuxqw0.webp"
                         alt="img"
                  ></p>
 <p>你需要在你的域名注册商处更新你的域名服务器设置，将现有的域名服务器替换为 Cloudflare 提供的地址。这一步使得你的域名流量经过 Cloudflare 的网络。</p>
@@ -308,47 +308,47 @@
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/5.31dlbky5ft40.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/5.31dlbky5ft40.webp"
                         alt="img"
                  ></p>
 <p>将上面申请的两组 Nameservers 填入 Name1 和 Name2</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/6.1c7xqj0qdz6o.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/6.1c7xqj0qdz6o.webp"
                         alt="img"
                  ></p>
 <p>确认提交，等待 NS 记录生效后，Cloudflare会进行验证。这可能需要一些时间，一般是 24 小时之内会有 Cloudflare 的邮件通知。我们可以先回到Cloudflare界面，点击完成。</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/7.51fbx2c6nq00.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/7.51fbx2c6nq00.webp"
                         alt="img"
                  ></p>
 <h2 id="安全性设置（可选）"><a href="#安全性设置（可选）" class="headerlink" title="安全性设置（可选）"></a>安全性设置（可选）</h2><h3 id="设置-SSL-安全为-strict"><a href="#设置-SSL-安全为-strict" class="headerlink" title="设置 SSL 安全为 strict"></a>设置 SSL 安全为 strict</h3><p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/8.2pzajf7x24k0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/8.2pzajf7x24k0.webp"
                         alt="img"
                  ></p>
 <h3 id="设置自动-https-重写"><a href="#设置自动-https-重写" class="headerlink" title="设置自动 https 重写"></a>设置自动 https 重写</h3><p>在<code>SSL/TLS-&gt;边缘证书</code>中开启“始终使用 HTTPS”。注意，这里的“始终使用 HTTPS”选项不能和 nginx 端同时开启，两端只能开启一个，否则会出错。</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/9.5d4d2n5k8i00.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/9.5d4d2n5k8i00.webp"
                         alt="img"
                  ></p>
 <h3 id="打开速度优化"><a href="#打开速度优化" class="headerlink" title="打开速度优化"></a>打开速度优化</h3><p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/10.3u2h9no7vtq0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/10.3u2h9no7vtq0.webp"
                         alt="img"
                  ></p>
 <h2 id="设置-DNS-记录"><a href="#设置-DNS-记录" class="headerlink" title="设置 DNS 记录"></a>设置 DNS 记录</h2><p>完成上面的步骤后，点击 DNS ，进行主域名的 ip 解析。通过 A 记录解析我们的 ip 地址。设置好解析记录后，等待 5 分钟，就可以 ping 通这个域名了。</p>
 <p><img  
                        lazyload
                        alt="image"
-                       data-src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/blog_toss_series/11.74etizm5kgk0.webp"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_toss_series/11.74etizm5kgk0.webp"
                         alt="img"
                  ></p>
 <p>记得把代理状态设置为仅限 DNS，即不开启小云朵。</p>
