@@ -9,7 +9,7 @@
     
     <title>
         
-            ROS 之自定义 msg |
+            Docusaurus 搭建个人知识库 |
         
         YOLOのBLOG
     </title>
@@ -189,7 +189,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        ROS 之自定义 msg
+                        Docusaurus 搭建个人知识库
                     </div>
                 
 
@@ -217,13 +217,13 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2019 年 08 月 10 日 14:13</span>
-                <span class="mobile">2019-08-10 14:13</span>
+                <span class="pc">2024 年 01 月 13 日 23:24</span>
+                <span class="mobile">2024-01-13 23:24</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sat Aug 10 2019 14:50:55 GMT+0800">2019 年 08 月 10 日 14:50</span>
+                <span class="pc" data-updated="Sat Jan 13 2024 23:30:25 GMT+0800">2024 年 01 月 13 日 23:30</span>
             </span>
         
 
@@ -231,7 +231,7 @@
             <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
                 <ul class="post-category-ul">
                     
-                            <li class="category-item"><a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></li>
+                            <li class="category-item"><a href="/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/">折腾系列</a></li>
                         
                     
                 </ul>
@@ -243,7 +243,7 @@
                 <i class="icon fas fa-tags"></i>&nbsp;
                 <ul class="post-tag-ul">
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/ros/">ros</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/docusaurus/">docusaurus</a></li>
                         
                     
                 </ul>
@@ -253,12 +253,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>949 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>769 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>3 分钟</span>
             </span>
         
         
@@ -279,81 +279,35 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="代码层级图"><a href="#代码层级图" class="headerlink" title="代码层级图"></a>代码层级图</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">|- usbacn_ws</span><br><span class="line">    |- build</span><br><span class="line">    |- devel</span><br><span class="line">    |- src</span><br><span class="line">        |- CMakeLists.txt</span><br><span class="line">        |- usbcan_test</span><br><span class="line">            |- include</span><br><span class="line">                |- .h*</span><br><span class="line">            |- lib</span><br><span class="line">                |- .so*</span><br><span class="line">            |- msg</span><br><span class="line">                |- test.msg</span><br><span class="line">            |- main.cpp</span><br><span class="line">            |- CmakeLists.txt</span><br><span class="line">            |- package.xml</span><br></pre></td></tr></table></figure>
+                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>博客是用来展示自己的，想写啥就写啥，所以会比较杂。而 Wiki 更偏向于电子百科，可以作为个人知识库。市面上有很多优秀的 Wiki 系统，但我不想花钱买数据库服务，只能找不需要数据库的这一类系统。因此找到了 <code>Docusaurus</code> ，支持用 <code>jsx</code> 语法的 <code>markdown</code>，无缝结合 <code>React</code>。</p>
+<h2 id="Docusaurus-安装"><a href="#Docusaurus-安装" class="headerlink" title="Docusaurus 安装"></a>Docusaurus 安装</h2><p>主要参考了<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.docusaurus.cn/docs/installation" >官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="系统需求"><a href="#系统需求" class="headerlink" title="系统需求"></a>系统需求</h3><p>Node.js &gt;&#x3D; 16.14 或 yarn &gt;&#x3D; 1.5</p>
+<h3 id="创建站点"><a href="#创建站点" class="headerlink" title="创建站点"></a>创建站点</h3><p>安装 Docusaurus 的最简单方法是使用命令行工具，该工具会搭建 Docusaurus 网站骨架。</p>
+<p>在新的空存储库中或现有存储库中的任何位置运行此命令，将创建一个包含支架文件的新目录，并自动下载安装需要的库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx create-docusaurus@latest my-website classic</span><br><span class="line"><span class="comment"># `my-website` 为你想要创建的目录，`classic` 为你想要用的模板</span></span><br><span class="line"><span class="comment"># 也可以选择 `facebook`、`bootstrap` 等模板</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="运行站点"><a href="#运行站点" class="headerlink" title="运行站点"></a>运行站点</h3><p>要在编辑文件时预览更改，可以运行一个本地服务器并启动你的网站，最新更改就能立即反映出来了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> my-website</span><br><span class="line">npm start</span><br></pre></td></tr></table></figure>
 
+<p>默认情况下，浏览器将打开 <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://localhost:3000/" >http://localhost:3000<i class="fas fa-external-link-alt"></i></a> 网址。</p>
+<p>恭喜你！您刚刚创建了第一个 Docusaurus 网站！浏览网站以查看可用内容吧。</p>
+<h3 id="配置站点信息"><a href="#配置站点信息" class="headerlink" title="配置站点信息"></a>配置站点信息</h3><p>由于我只是想搭建个人知识库，因为已经搭建好了<a href="https://blog.felicx.eu.org/">个人博客</a>，所以修改了下 docusaurus.config.js 中的<code>presets</code>，删除了 blog 页面，只保留 Docs</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">presets</span>: [</span><br><span class="line">  [</span><br><span class="line">    <span class="string">&#x27;classic&#x27;</span>,</span><br><span class="line">    <span class="comment">/** <span class="doctag">@type</span> &#123;<span class="type">import(&#x27;@docusaurus/preset-classic&#x27;).Options</span>&#125; */</span></span><br><span class="line">    (&#123;</span><br><span class="line">      <span class="attr">docs</span>: &#123;</span><br><span class="line">        <span class="attr">sidebarPath</span>: <span class="string">&#x27;./sidebars.js&#x27;</span>,</span><br><span class="line">        <span class="comment">// Please change this to your repo.</span></span><br><span class="line">        <span class="comment">// Remove this to remove the &quot;edit this page&quot; links.</span></span><br><span class="line">        <span class="attr">editUrl</span>:</span><br><span class="line">          <span class="string">&#x27;https://github.com/FelicxFoster/WikiPage/tree/master&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">theme</span>: &#123;</span><br><span class="line">        <span class="attr">customCss</span>: <span class="string">&#x27;./src/css/custom.css&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h4 id="1、新建功能包"><a href="#1、新建功能包" class="headerlink" title="1、新建功能包"></a>1、新建功能包</h4><p>首先创建一个空的<code>package</code>单独存放<code>msg</code>类型（当然也可以在任意的<code>package</code>中自定义<code>msg</code>类型） 这里为便于说明，建立一个名为<code>usbcan_test</code>的包，用于对自定义<code>msg</code>类型的用法举例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> usbacn_ws/src</span><br><span class="line">$ catkin_create_pkg usbcan_test</span><br></pre></td></tr></table></figure>
+<p>找到 docusaurus.config.js 中的 <code>navbar</code>，注释掉 blog 那一行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">navbar</span>: &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;YOLOのWiki&#x27;</span>,</span><br><span class="line">  <span class="attr">logo</span>: &#123;</span><br><span class="line">    <span class="attr">alt</span>: <span class="string">&#x27;YOLOのWiki Logo&#x27;</span>,</span><br><span class="line">    <span class="attr">src</span>: <span class="string">&#x27;img/logo.svg&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">items</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;docSidebar&#x27;</span>,</span><br><span class="line">      <span class="attr">sidebarId</span>: <span class="string">&#x27;tutorialSidebar&#x27;</span>,</span><br><span class="line">      <span class="attr">position</span>: <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">      <span class="attr">label</span>: <span class="string">&#x27;Note&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// &#123;to: &#x27;/blog&#x27;, label: &#x27;Blog&#x27;, position: &#x27;left&#x27;&#125;,</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">href</span>: <span class="string">&#x27;https://github.com/FelicxFoster/&#x27;</span>,</span><br><span class="line">      <span class="attr">label</span>: <span class="string">&#x27;GitHub&#x27;</span>,</span><br><span class="line">      <span class="attr">position</span>: <span class="string">&#x27;right&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
+<h2 id="Docusaurus-部署"><a href="#Docusaurus-部署" class="headerlink" title="Docusaurus 部署"></a>Docusaurus 部署</h2><p>Vercel 有个好处，可以自动编译并部署，所以只需要把代码提交到 Github 仓库，并在 Vercel 里 import 该仓库就可以了。</p>
+<p>由于每次部署 Vercel 编译需要时间太久，所以尽量在本地调试好再推送到 Vercel。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm run build       <span class="comment"># 编译生成 build 文件</span></span><br><span class="line">npm run serve       <span class="comment"># 可视化编译的效果</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="Docusaurus-美化"><a href="#Docusaurus-美化" class="headerlink" title="Docusaurus 美化"></a>Docusaurus 美化</h2><h3 id="搜索插件"><a href="#搜索插件" class="headerlink" title="搜索插件"></a>搜索插件</h3><p>Docusaurus 默认是没有搜索功能的，这里使用 <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/easyops-cn/docusaurus-search-local" >docusaurus-search-local<i class="fas fa-external-link-alt"></i></a> 这款本地搜索插件来实现。</p>
+<h4 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @easyops-cn/docusaurus-search-local</span><br></pre></td></tr></table></figure>
 
-<h4 id="2、新建msg文件"><a href="#2、新建msg文件" class="headerlink" title="2、新建msg文件"></a>2、新建<code>msg</code>文件</h4><p>在<code>usbcan_test</code>中创建<code>msg</code>文件夹，在<code>msg</code>文件夹其中新建一个名为<code>test.msg</code>消息类型文件</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>cd usbcan_test</span><br><span class="line"><span class="variable">$ </span>mkdir msg</span><br><span class="line"><span class="variable">$ </span>gedit test.msg</span><br><span class="line"><span class="comment"># 内容如下：</span></span><br><span class="line">std_msgs/<span class="title class_">Header</span> header</span><br><span class="line">int16 id</span><br><span class="line">int16 len</span><br><span class="line">int32[<span class="number">8</span>] data</span><br></pre></td></tr></table></figure>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在 docusaurus.config.js 中的 config 内容中新增，与 themeConfig 同级</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">themes</span>: [</span><br><span class="line">  [</span><br><span class="line">    <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&quot;@easyops-cn/docusaurus-search-local&quot;</span>),</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">hashed</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">language</span>: [<span class="string">&quot;en&quot;</span>, <span class="string">&quot;zh&quot;</span>],</span><br><span class="line">      <span class="attr">highlightSearchTermsOnTargetPage</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">explicitSearchResultPath</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 
-
-
-<h4 id="3、修改package-xml"><a href="#3、修改package-xml" class="headerlink" title="3、修改package.xml"></a>3、修改<code>package.xml</code></h4><p>需要<code>message_generation</code>生成C++或Python能使用的代码，即将将<code>.msg</code>文件编译生成<code>.h</code>文件，需要<code>message_runtime</code>提供运行时的支持，所以<code>package.xml</code>中添加以下两句(一般生成的文件中都有了，去注释就行)</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;build_depend&gt;message_generation&lt;<span class="regexp">/build_depend&gt;</span></span><br><span class="line"><span class="regexp">&lt;run_depend&gt;message_runtime&lt;/run</span>_depend&gt;</span><br><span class="line"><span class="comment"># 或者这一句</span></span><br><span class="line">&lt;exec_depend&gt;message_runtime&lt;<span class="regexp">/exec_depend&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>如果还要<code>ros</code>支持，同样去注释</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;build_depend&gt;roscpp&lt;<span class="regexp">/build_depend&gt;</span></span><br><span class="line"><span class="regexp">&lt;exec_depend&gt;roscpp&lt;/exec</span>_depend&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="4、修改CMakeLists-txt"><a href="#4、修改CMakeLists-txt" class="headerlink" title="4、修改CMakeLists.txt"></a>4、修改<code>CMakeLists.txt</code></h4><p>这个<code>CMakeLists.txt</code>是功能包下的，有几点注意：<br>(1) 首先调用<code>find_package</code>查找依赖的包，必备的有<code>roscpp 、rospy 、message_generation</code>，其他根据具体类型添加，比如上面的<code>msg</code>文件中用到了<code>std_msgs/Header header</code>类型，那么必须查找<code>std_msgs</code></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">find_package(catkin <span class="variable constant_">REQUIRED</span> <span class="variable constant_">COMPONENTS</span></span><br><span class="line">   roscpp</span><br><span class="line">   rospy</span><br><span class="line">   std_msgs</span><br><span class="line">   message_generation</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>(2) 然后是<code>add_message_files</code>，指定msg文件</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add_message_files(</span><br><span class="line">    <span class="variable constant_">FILES</span></span><br><span class="line">    test.msg</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>(3) 然后是<code>generate_messages</code>，指定生成消息文件时的依赖项，比如上面嵌套了其他消息类型<code>std_msgs</code>，那么必须注明</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># generate_messages必须在catkin_package前面</span></span><br><span class="line">generate_messages(</span><br><span class="line">    <span class="variable constant_">DEPENDENCIES</span></span><br><span class="line">    std_msgs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>(4) 然后是<code>catkin_package</code>设置运行依赖</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">catkin_package(</span><br><span class="line"><span class="comment">#    INCLUDE_DIRS include</span></span><br><span class="line">    <span class="variable constant_">LIBRARIES</span> usbcan_test</span><br><span class="line">    <span class="variable constant_">CATKIN_DEPENDS</span> roscpp message_runtime</span><br><span class="line">    <span class="variable constant_">DEPENDS</span> system_lib</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>到这里新的msg类型<code>usbcan_test/test</code>就可以使用了，下面编译这个包，然后利用<code>rosmsg show</code>指令查看</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>cd catkin_ws</span><br><span class="line"><span class="variable">$ </span>catkin_make</span><br><span class="line"><span class="variable">$ </span>rosmsg show usbcan_test/test</span><br><span class="line">std_msgs/<span class="title class_">Header</span> header</span><br><span class="line">  uint32 seq</span><br><span class="line">  time stamp</span><br><span class="line">  string frame_id</span><br><span class="line">int16 id</span><br><span class="line">int16 len</span><br><span class="line">int32[<span class="number">8</span>] data</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="5、调用自定义msg类型"><a href="#5、调用自定义msg类型" class="headerlink" title="5、调用自定义msg类型"></a>5、调用自定义<code>msg</code>类型</h4><p>如果是在<code>usbcan_test</code>包内的节点中调用<code>usbcan_test/test</code>类型，只需要在<code>.cpp</code>文件中如下调用即可</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;usbcan_test/test.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">usbcan_test::test msg;</span><br><span class="line"><span class="comment">// (usbcan_test文件夹)::(test.msg) (随便一个名称)</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>然后修改<code>CMakeLists.txt</code></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add_executable($&#123;PROJECT_NAME&#125;_node src/usbcan_test_node.cpp)</span></span><br><span class="line">add_executable(cantest /home/fu/usbcan_ws/src/usbcan_test/main.cpp)</span><br><span class="line"><span class="comment"># add_dependencies($&#123;PROJECT_NAME&#125; $&#123;$&#123;PROJECT_NAME&#125;_EXPORTED_TARGETS&#125; $&#123;catkin_EXPORTED_TARGETS&#125;)</span></span><br><span class="line"><span class="comment"># 这个PROJECT_NAME就是你到时rosrun的节点名</span></span><br><span class="line">add_dependencies(cantest <span class="variable">$&#123;</span><span class="variable">$&#123;</span><span class="variable constant_">PROJECT_NAME</span>&#125;_EXPORTED_TARGETS&#125; <span class="variable">$&#123;</span>catkin_EXPORTED_TARGETS&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 动态库依赖(如果需要的话)</span></span><br><span class="line">target_link_libraries(cantest <span class="variable">$&#123;</span>catkin_LIBRARIES&#125;</span><br><span class="line">    /usr/lib/libECanVci.so</span><br><span class="line">    /usr/lib/libusb.so</span><br><span class="line">    /usr/lib/libusb-<span class="number">1.0</span>.so</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>因为还用到<code>include</code>文件夹里的头文件，所以<code>CMakeLists.txt</code>要去注释</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">include_directories(</span><br><span class="line">    <span class="keyword">include</span></span><br><span class="line">    <span class="variable">$&#123;</span>catkin_INCLUDE_DIRS&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="6、其他包调用自定义msg类型"><a href="#6、其他包调用自定义msg类型" class="headerlink" title="6、其他包调用自定义msg类型"></a>6、其他包调用自定义<code>msg</code>类型</h4><p>如果是在其他包调用<code>usbcan_test/test</code>类型则需要修改<code>package.xml</code>和<code>CMakeLists.txt</code>，比如同样在工作空间<code>usbacn_ws</code>内有一个名为<code>test</code>的包，我们可以在这个包内写一个节点，使用我们刚才自定义的消息类型<code>usbcan_test/test</code>，如下：<br> (1) 修改<code>package.xml</code> 养成好习惯，维护软件包清单的更新，以便于别人使用你的软件前安装各种依赖项，当然这个文件不影响程序编译</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;build_depend&gt;roscpp&lt;<span class="regexp">/build_depend&gt;</span></span><br><span class="line"><span class="regexp">&lt;run_depend&gt;roscpp&lt;/run</span>_depend&gt;</span><br><span class="line"></span><br><span class="line">&lt;build_depend&gt;usbcan_test&lt;<span class="regexp">/build_depend&gt;</span></span><br><span class="line"><span class="regexp">&lt;run_depend&gt;usbcan_test&lt;/run</span>_depend&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>(2) 修改<code>CMakeLists.txt</code>调用自定义消息类型主要修改两个地方，<strong>以下是重点</strong>： 一是<code>find_package</code>中需要声明查找包含该消息类型的包； 二是<code>add_dependencies</code>要注明该消息的依赖，其他地方和普通节点一样</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">find_package(catkin <span class="variable constant_">REQUIRED</span> <span class="variable constant_">COMPONENTS</span></span><br><span class="line">  roscpp</span><br><span class="line">  rospy</span><br><span class="line">  message_generation</span><br><span class="line">  usbcan_test</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">add_dependencies(test1 usbcan_test_gencpp)<span class="comment">#调用同一工作空间的自定义消息类型时注明依赖关系，防止发生头文件找不到的报错</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>完整工程<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster/ROS_learning/tree/master/src/usbcan_test" >参考<i class="fas fa-external-link-alt"></i></a></p>
+<p>配置完后，可能会报错，显示 <code>Module not found: Error: Can&#39;t resolve &#39;@theme/SearchPage&#39;</code>，不用担心，根据 <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/easyops-cn/docusaurus-search-local/issues/252" >issue<i class="fas fa-external-link-alt"></i></a>，只需要重新 <code>npm start</code> 即可。</p>
 
                 </div>
 
@@ -363,11 +317,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                ROS 之自定义 msg
+                Docusaurus 搭建个人知识库
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                921871846.html
+                2483129101.html
             </div>
         </div>
 
@@ -383,7 +337,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2019-08-10 14:13</div>
+                <div class="content">2024-01-13 23:24</div>
             </div>
 
 
@@ -417,7 +371,7 @@
                             <ul class="post-tags-box border-box">
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/ros/">ros</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/docusaurus/">docusaurus</a>
                                     </li>
                                 
                             </ul>
@@ -468,31 +422,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/2149880123.html"
-                                   title="ROS 之 topic 发布"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">ROS 之 topic 发布</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/1309878189.html"
-                                   title="ROS 之工作空间"
+                                   href="/3164120416.html"
+                                   title="Hexo 博客美化"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">ROS 之工作空间</span>
+                                        <span class="post-nav-title-item text-ellipsis">Hexo 博客美化</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -595,7 +533,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%B1%82%E7%BA%A7%E5%9B%BE"><span class="nav-text">代码层级图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%96%B0%E5%BB%BA%E5%8A%9F%E8%83%BD%E5%8C%85"><span class="nav-text">1、新建功能包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E6%96%B0%E5%BB%BAmsg%E6%96%87%E4%BB%B6"><span class="nav-text">2、新建msg文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9package-xml"><span class="nav-text">3、修改package.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E4%BF%AE%E6%94%B9CMakeLists-txt"><span class="nav-text">4、修改CMakeLists.txt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E8%B0%83%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89msg%E7%B1%BB%E5%9E%8B"><span class="nav-text">5、调用自定义msg类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E5%85%B6%E4%BB%96%E5%8C%85%E8%B0%83%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89msg%E7%B1%BB%E5%9E%8B"><span class="nav-text">6、其他包调用自定义msg类型</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docusaurus-%E5%AE%89%E8%A3%85"><span class="nav-text">Docusaurus 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%9C%80%E6%B1%82"><span class="nav-text">系统需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AB%99%E7%82%B9"><span class="nav-text">创建站点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%AB%99%E7%82%B9"><span class="nav-text">运行站点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%99%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="nav-text">配置站点信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docusaurus-%E9%83%A8%E7%BD%B2"><span class="nav-text">Docusaurus 部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docusaurus-%E7%BE%8E%E5%8C%96"><span class="nav-text">Docusaurus 美化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%8F%92%E4%BB%B6"><span class="nav-text">搜索插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">插件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
@@ -782,7 +720,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%B1%82%E7%BA%A7%E5%9B%BE"><span class="nav-text">代码层级图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%96%B0%E5%BB%BA%E5%8A%9F%E8%83%BD%E5%8C%85"><span class="nav-text">1、新建功能包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E6%96%B0%E5%BB%BAmsg%E6%96%87%E4%BB%B6"><span class="nav-text">2、新建msg文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9package-xml"><span class="nav-text">3、修改package.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E4%BF%AE%E6%94%B9CMakeLists-txt"><span class="nav-text">4、修改CMakeLists.txt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E8%B0%83%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89msg%E7%B1%BB%E5%9E%8B"><span class="nav-text">5、调用自定义msg类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E5%85%B6%E4%BB%96%E5%8C%85%E8%B0%83%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89msg%E7%B1%BB%E5%9E%8B"><span class="nav-text">6、其他包调用自定义msg类型</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docusaurus-%E5%AE%89%E8%A3%85"><span class="nav-text">Docusaurus 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%9C%80%E6%B1%82"><span class="nav-text">系统需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AB%99%E7%82%B9"><span class="nav-text">创建站点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%AB%99%E7%82%B9"><span class="nav-text">运行站点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%99%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="nav-text">配置站点信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docusaurus-%E9%83%A8%E7%BD%B2"><span class="nav-text">Docusaurus 部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docusaurus-%E7%BE%8E%E5%8C%96"><span class="nav-text">Docusaurus 美化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%8F%92%E4%BB%B6"><span class="nav-text">搜索插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">插件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
