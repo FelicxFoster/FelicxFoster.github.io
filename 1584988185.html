@@ -9,7 +9,7 @@
     
     <title>
         
-            CAN 报文录制格式 |
+            Python 解析 blf 文件.md |
         
         YOLOのBLOG
     </title>
@@ -201,7 +201,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        CAN 报文录制格式
+                        Python 解析 blf 文件.md
                     </div>
                 
 
@@ -229,13 +229,13 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2024 年 01 月 28 日 22:16</span>
-                <span class="mobile">2024-01-28 22:16</span>
+                <span class="pc">2024 年 01 月 29 日 22:04</span>
+                <span class="mobile">2024-01-29 22:04</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sun Jan 28 2024 23:07:10 GMT+0800">2024 年 01 月 28 日 23:07</span>
+                <span class="pc" data-updated="Mon Jan 29 2024 22:04:28 GMT+0800">2024 年 01 月 29 日 22:04</span>
             </span>
         
 
@@ -243,7 +243,7 @@
             <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
                 <ul class="post-category-ul">
                     
-                            <li class="category-item"><a href="/categories/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/">自动驾驶</a></li>
+                            <li class="category-item"><a href="/categories/%E5%B7%A5%E5%85%B7%E8%84%9A%E6%9C%AC/">工具脚本</a></li>
                         
                     
                 </ul>
@@ -258,6 +258,9 @@
                             <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/can/">can</a></li>
                         
                     
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/python/">python</a></li>
+                        
+                    
                 </ul>
             </span>
         
@@ -265,7 +268,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>721 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>638 字</span>
             </span>
         
         
@@ -291,18 +294,20 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>搞自驾，免不了要跟 CAN 数据打交道，那常见的 CAN 报文录制格式有哪些呢？</p>
-<h2 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h2><p>CSV（Comma-Separated Values）以纯文本形式存储表格数据（数字和文本）。</p>
-<p>多用于测试数据，全文本文件，可以用 notepad++，Excel 等软件直接打开。</p>
-<h2 id="ASC-BLF"><a href="#ASC-BLF" class="headerlink" title="ASC&#x2F;BLF"></a>ASC&#x2F;BLF</h2><p>ASC（ASCII）格式为可读的文本文件，该格式文件可以与外部程序进行数据交互，可读性强。<br>支持所有总线信息&#x2F;协议、系统变量、环境变量、内部事件、标记和注释的报文。</p>
-<p>BLF（Binary Logging Format）格式是基于报文的读写格式，是一种二进制日志格式。以二进制格式存储数据，在文件大小和读&#x2F;写性能方面非常高效。<br>支持所有总线信息&#x2F;协议、系统变量、环境变量、内部事件、标记和注释的报文。</p>
-<p>这两种文件主要用于 CANoe&#x2F;CANalyzer 等相关 Vector 软件，用于记录测试数据（ASC 可以用文本直接打开，BLF 需要用 CANoe 进行解析）。</p>
-<h2 id="MDF-MF4-dat"><a href="#MDF-MF4-dat" class="headerlink" title="MDF&#x2F;MF4&#x2F;dat"></a>MDF&#x2F;MF4&#x2F;dat</h2><p>MF4（Measurement Data Format version4）格式用于汽车行业以二进制文件格式存储测量数据。CAN、LIN 和 FlexRay 总线信息以 ASAM 标准存储，其他总线系统和协议以Vector-specific 标准存储。<br>支持所有总线信息&#x2F;协议和环境变量。</p>
-<p>MDF（Measurement Data Format）格式分为基于报文的和基于信号的，基于报文的格式只记录报文信息，基于信号的格式只记录信号信息。<br>支持环境变量、统计信息、CAN 信号、LIN 信号、FlexRay 信号、GPS 信号、J1939 信号和 J1587&#x2F;J1708 信号，但是不支持MOST 信号。</p>
-<p>这几种文件主要用于标定工具（如 CANape&#x2F;INCA 等）测试数据的记录。这些数据可以包含不同类型的数据，故在标定领域应用较多。</p>
-<h2 id="A2L-HEX-S19"><a href="#A2L-HEX-S19" class="headerlink" title="A2L&amp;HEX&#x2F;S19"></a>A2L&amp;HEX&#x2F;S19</h2><p>A2L 文件是基于 ASAP2 标准，采用 ASAP2 指定的一套类 XML 语言的描述性语言（采用开标签和关标签来描述信息）书写，描述 ECU 的通信等相关的参数，以及标定，观测变量的地址以及物理值计算公式等等的文本格式文件。HEX&#x2F;S19 文件则是对应的地址的参数和数据文件。</p>
-<p>这几种数据也多用于标定领域，从事标定工作的小伙伴肯定不陌生。</p>
-<p>打个不太恰当的比方，如果把车载 ECU 比作一个人，那么 A2L 就是他的骨架，HEX&#x2F;S19 文件就是他的血肉，两者缺一不可。<br>另外需要注意的是每一版软件的 A2L 和 HEX 里的地址是一一对应的，如果错用了HEX 文件就有可能出现数据紊乱的情况，需要特别注意。</p>
+                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>blf 数据是 CAN 数据录制的一种格式，以二进制格式存储数据，需要用 CANoe 等工具进行解析才能查看数据，下面介绍使用 Python 解析 blf 数据。</p>
+<h2 id="工具包安装"><a href="#工具包安装" class="headerlink" title="工具包安装"></a>工具包安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install cantools python-can</span><br></pre></td></tr></table></figure>
+
+<h2 id="解析blf文件"><a href="#解析blf文件" class="headerlink" title="解析blf文件"></a>解析blf文件</h2><p>一般情况下，解析 blf 需要 dbc 文件，当然其实不用 dbc 也可以，只不过解析比较麻烦，推荐还是配合 dbc 解析，这个也是我们最常用的办法。所以要用 dbc，需要先加载 dbc 文件，这里需要cantools。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cantools</span><br><span class="line"><span class="keyword">import</span> can</span><br><span class="line">dbc_file = <span class="string">r&quot;xxx.dbc&quot;</span></span><br><span class="line">dbc = cantools.db.load_file(dbc_file)</span><br></pre></td></tr></table></figure>
+<p>加载完 dbc 文件，就可以解析 blf 文件了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="string">r&quot;xxx.blf&quot;</span></span><br><span class="line">log_data = can.BLFReader(f)</span><br><span class="line"><span class="keyword">for</span> msg <span class="keyword">in</span> log_data:</span><br><span class="line">  <span class="built_in">print</span>(msg)</span><br></pre></td></tr></table></figure>
+<p>打印结果是这样的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Timestamp: 1673917200.026000    ID: 0301    S Rx    DL:  8    1d b0 41 54 07 02 00 00    Channel: 0</span><br><span class="line">Timestamp: 1673917200.026000    ID: 070b    S Rx    DL:  8    00 c8 0c b6 24 b8 24 b8    Channel: 0</span><br><span class="line">Timestamp: 1673917200.028000    ID: 0322    S Rx    DL:  8    00 00 00 00 00 00 03 00    Channel: 0</span><br><span class="line">Timestamp: 1673917200.126000    ID: 030d    S Rx    DL:  8    00 14 00 00 00 00 00 00    Channel: 0</span><br></pre></td></tr></table></figure>
+<p>可以发现，时间戳解析出来了，其它的数据都是 16 进制，没法直接看。当然我们如果熟悉 blf 格式，可以自己把数据还原出来，但是既然已经用第三方库，我们当然就不用自己解析了，而且仔细观察一下即可发现，之前的加载 dbc 并没有用上，所以这时一个重要的函数登场了，那就是<code>dbc.decode_message(id,data)</code>，具体代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">decoded = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> msg <span class="keyword">in</span> logdata:</span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">    dec = dbc.decode_message(msg.arbitration_id, msg.data)</span><br><span class="line">    <span class="keyword">if</span> dec:</span><br><span class="line">      <span class="keyword">for</span> key, data <span class="keyword">in</span> dec.items():</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> decoded:</span><br><span class="line">          decoded[key] = []</span><br><span class="line">          decoded[key].append([msg.timestamp, data])</span><br><span class="line">  <span class="keyword">except</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>因为我这里是最后把数据解析出来转成 mf4 了，所以构建了一个 decoded 字典，每个 key 里记一个信号，熟悉 mf4 的应该知道，mf4 里每个信号主要包含两部分，一个是时间戳，一个是数据，有了这两个，我们就可以创建 mf4 文件了，最后放上创建 mf4 的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> asammdf <span class="keyword">import</span> MDF,Signal</span><br><span class="line">sigs = []</span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> decoded.items():</span><br><span class="line">  timestamps = [i[<span class="number">0</span>] <span class="keyword">for</span> i <span class="keyword">in</span> v]</span><br><span class="line">  data = [i[<span class="number">1</span>] <span class="keyword">for</span> i <span class="keyword">in</span> v]</span><br><span class="line">  s = Signal(data, timestamps, name=k)</span><br><span class="line">  sigs.append(s)</span><br><span class="line"></span><br><span class="line">mdf = MDF()</span><br><span class="line">mdf.append(sigs)</span><br><span class="line">mdf.save(<span class="string">&quot;xx.mf4&quot;</span>, overwrite=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>这样就实现了 blf 文件的解析与转换，当然，转换的格式很自由，只要熟悉相应的格式，比如 csv，hdf5，xlsx，json，pickle 都可以，因为我们已经拿到原始数据了，保存成什么格式就很简单了。</p>
 
                 </div>
 
@@ -312,11 +317,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                CAN 报文录制格式
+                Python 解析 blf 文件.md
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2276434991.html
+                1584988185.html
             </div>
         </div>
 
@@ -332,7 +337,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-01-28 22:16</div>
+                <div class="content">2024-01-29 22:04</div>
             </div>
 
 
@@ -367,6 +372,10 @@
                                 
                                     <li class="tag-item border-box">
                                         <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/can/">can</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/python/">python</a>
                                     </li>
                                 
                             </ul>
@@ -417,31 +426,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/1584988185.html"
-                                   title="Python 解析 blf 文件.md"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Python 解析 blf 文件.md</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2483129101.html"
-                                   title="Docusaurus 搭建个人知识库"
+                                   href="/2276434991.html"
+                                   title="CAN 报文录制格式"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Docusaurus 搭建个人知识库</span>
+                                        <span class="post-nav-title-item text-ellipsis">CAN 报文录制格式</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -544,7 +537,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV"><span class="nav-text">CSV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASC-BLF"><span class="nav-text">ASC&#x2F;BLF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MDF-MF4-dat"><span class="nav-text">MDF&#x2F;MF4&#x2F;dat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A2L-HEX-S19"><span class="nav-text">A2L&amp;HEX&#x2F;S19</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-text">工具包安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90blf%E6%96%87%E4%BB%B6"><span class="nav-text">解析blf文件</span></a></li></ol>
     </div>
 </div>
 
@@ -731,7 +724,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV"><span class="nav-text">CSV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASC-BLF"><span class="nav-text">ASC&#x2F;BLF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MDF-MF4-dat"><span class="nav-text">MDF&#x2F;MF4&#x2F;dat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A2L-HEX-S19"><span class="nav-text">A2L&amp;HEX&#x2F;S19</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-text">工具包安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90blf%E6%96%87%E4%BB%B6"><span class="nav-text">解析blf文件</span></a></li></ol>
     </div>
 </div>
 
