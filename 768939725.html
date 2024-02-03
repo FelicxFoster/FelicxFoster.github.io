@@ -9,7 +9,7 @@
     
     <title>
         
-            CAN 之报文录制格式 |
+            CAN 之 DBC 文件解析 |
         
         YOLOのBLOG
     </title>
@@ -201,7 +201,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        CAN 之报文录制格式
+                        CAN 之 DBC 文件解析
                     </div>
                 
 
@@ -229,13 +229,13 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2024 年 01 月 28 日 22:16</span>
-                <span class="mobile">2024-01-28 22:16</span>
+                <span class="pc">2024 年 02 月 03 日 16:25</span>
+                <span class="mobile">2024-02-03 16:25</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sun Jan 28 2024 23:07:10 GMT+0800">2024 年 01 月 28 日 23:07</span>
+                <span class="pc" data-updated="Sat Feb 03 2024 16:25:44 GMT+0800">2024 年 02 月 03 日 16:25</span>
             </span>
         
 
@@ -255,6 +255,9 @@
                 <i class="icon fas fa-tags"></i>&nbsp;
                 <ul class="post-tag-ul">
                     
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/python/">python</a></li>
+                        
+                    
                             <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/can/">can</a></li>
                         
                     
@@ -265,12 +268,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>721 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.4k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>6 分钟</span>
             </span>
         
         
@@ -291,18 +294,88 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>搞自驾，免不了要跟 CAN 数据打交道，那常见的 CAN 报文录制格式有哪些呢？</p>
-<h2 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h2><p>CSV（Comma-Separated Values）以纯文本形式存储表格数据（数字和文本）。</p>
-<p>多用于测试数据，全文本文件，可以用 notepad++，Excel 等软件直接打开。</p>
-<h2 id="ASC-BLF"><a href="#ASC-BLF" class="headerlink" title="ASC&#x2F;BLF"></a>ASC&#x2F;BLF</h2><p>ASC（ASCII）格式为可读的文本文件，该格式文件可以与外部程序进行数据交互，可读性强。<br>支持所有总线信息&#x2F;协议、系统变量、环境变量、内部事件、标记和注释的报文。</p>
-<p>BLF（Binary Logging Format）格式是基于报文的读写格式，是一种二进制日志格式。以二进制格式存储数据，在文件大小和读&#x2F;写性能方面非常高效。<br>支持所有总线信息&#x2F;协议、系统变量、环境变量、内部事件、标记和注释的报文。</p>
-<p>这两种文件主要用于 CANoe&#x2F;CANalyzer 等相关 Vector 软件，用于记录测试数据（ASC 可以用文本直接打开，BLF 需要用 CANoe 进行解析）。</p>
-<h2 id="MDF-MF4-dat"><a href="#MDF-MF4-dat" class="headerlink" title="MDF&#x2F;MF4&#x2F;dat"></a>MDF&#x2F;MF4&#x2F;dat</h2><p>MF4（Measurement Data Format version4）格式用于汽车行业以二进制文件格式存储测量数据。CAN、LIN 和 FlexRay 总线信息以 ASAM 标准存储，其他总线系统和协议以Vector-specific 标准存储。<br>支持所有总线信息&#x2F;协议和环境变量。</p>
-<p>MDF（Measurement Data Format）格式分为基于报文的和基于信号的，基于报文的格式只记录报文信息，基于信号的格式只记录信号信息。<br>支持环境变量、统计信息、CAN 信号、LIN 信号、FlexRay 信号、GPS 信号、J1939 信号和 J1587&#x2F;J1708 信号，但是不支持MOST 信号。</p>
-<p>这几种文件主要用于标定工具（如 CANape&#x2F;INCA 等）测试数据的记录。这些数据可以包含不同类型的数据，故在标定领域应用较多。</p>
-<h2 id="A2L-HEX-S19"><a href="#A2L-HEX-S19" class="headerlink" title="A2L&amp;HEX&#x2F;S19"></a>A2L&amp;HEX&#x2F;S19</h2><p>A2L 文件是基于 ASAP2 标准，采用 ASAP2 指定的一套类 XML 语言的描述性语言（采用开标签和关标签来描述信息）书写，描述 ECU 的通信等相关的参数，以及标定，观测变量的地址以及物理值计算公式等等的文本格式文件。HEX&#x2F;S19 文件则是对应的地址的参数和数据文件。</p>
-<p>这几种数据也多用于标定领域，从事标定工作的小伙伴肯定不陌生。</p>
-<p>打个不太恰当的比方，如果把车载 ECU 比作一个人，那么 A2L 就是他的骨架，HEX&#x2F;S19 文件就是他的血肉，两者缺一不可。<br>另外需要注意的是每一版软件的 A2L 和 HEX 里的地址是一一对应的，如果错用了HEX 文件就有可能出现数据紊乱的情况，需要特别注意。</p>
+                    <h2 id="什么是-DBC-文件"><a href="#什么是-DBC-文件" class="headerlink" title="什么是 DBC 文件"></a>什么是 DBC 文件</h2><p>DBC 是Database Can的缩写，其代表的是CAN的数据库文件。简单地说，通过 CAN 总线通信的数据类型可以用 DBC 文件来读取和理解。一般通过 Vector CANdb++ 进行编辑和查看。</p>
+<h2 id="DBC-文件内容"><a href="#DBC-文件内容" class="headerlink" title="DBC 文件内容"></a>DBC 文件内容</h2><p>当我们打开一份 DBC 文件时，左侧树形目录对应</p>
+<ul>
+<li>Networks：从网络的视角来观察总线上存在的节点、报文和信号</li>
+<li>ECUs：每个 ECU 的 Network Node 和 Environment Variables<ul>
+<li>Environment Variables：在使用 CANoe 仿真节点时会用到</li>
+<li>Network nodes：从单个节点的视角来观察与节点相关的总线报文及信号<ul>
+<li>Tx Messages：节点发送报文</li>
+<li>Rx Messages：节点接收报文</li>
+<li>Mapped Tx Signals：节点发送信号</li>
+<li>Mapped Rx Signals：节点接收信号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Messages：CAN 总线上传输信息的最小单位</li>
+<li>Signals：Message 里最小的元素单位</li>
+</ul>
+<p>值得一提的是，Messages 与 Signals 下包含的报文信号比 Network nodes 下的收发报文信号要多，并且有可能会包含实际没用到的报文信号，因为所有创建的报文信号都会在 Messages 与 Signals 下显示，但只有映射到节点的报文信号才会在 Network nodes 下显示。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_autodriving/8.3u67ywb5l6g0.webp"
+                       
+                 ></p>
+<p>因此我们主要看 Network nodes 下里的网络节点，网络节点分为多个类，如下图，分为 SDE、sensor2、sensor3 三个类节点。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_autodriving/1.61mazo5befs0.webp"
+                       
+                 ></p>
+<p>当点开节点时，会看到类节点下的 TX 与 RX 下的多个 messages。</p>
+<ul>
+<li>ID：CAN message id，一般以16进制显示</li>
+<li>Name： CAN message name</li>
+<li>ID-Format：CAN 报文的类型（CAN Standard&#x2F;CAN FD Standard）</li>
+<li>DLC：数据长度代码，CAN 报文中数据的长度</li>
+</ul>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_autodriving/2.2jjluphrst80.webp"
+                       
+                 ></p>
+<p>每个 message 又包含了多个 signals。</p>
+<ul>
+<li>Name：信号的名称</li>
+<li>Multiplexing：多路复用</li>
+<li>Startbit：信号的起始位</li>
+<li>Byte Order：信号的位计数，分为 Motorols（大端字节序）和 Intel（小端字节序）</li>
+<li>Value Type：数据类型</li>
+<li>Factor：信号的转换系数</li>
+<li>Offset：信号的转换偏移</li>
+<li>Minimum &amp; Maximum：最小和最大的信号值</li>
+<li>Unit：信号中存在的物理数据的单位</li>
+<li>Comment：信号说明</li>
+</ul>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://felicxfoster.github.io/PicXImage/blog_autodriving/3.3sfawiu1lbg0.webp"
+                       
+                 ></p>
+<p>其中 factor 因数 与 offse 偏移量 定义了 physical 物理值（如vehicle speed，engine speed,water temperature）与 raw 原始值（总线上传输的值）的线性转换规则。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">physical_value = raw_value * <span class="built_in">factor</span> + offset</span><br><span class="line">raw_value = ( pysical_value - offset ) / <span class="built_in">factor</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="DBC-文件解析"><a href="#DBC-文件解析" class="headerlink" title="DBC 文件解析"></a>DBC 文件解析</h3><p>这里使用 Python。首先安装 cantools 这个库文件，可以直接解析 dbc 文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install cantools</span><br></pre></td></tr></table></figure>
+
+<p>使用时，直接 import cantools 即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cantools</span><br><span class="line">dbc_file = <span class="string">&quot;******&quot;</span></span><br><span class="line">dbc_info = cantools.db.load_file(dbc_file)    <span class="comment">#创建一个dbc数据库对象</span></span><br></pre></td></tr></table></figure>
+
+<p>直接使用时，下述附代码，可直接复制使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cantools</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DbcInfo</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    用于读取dbc文件，返回dbc信息</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, input_file</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        init</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.dbc_file = input_file</span><br><span class="line">        self.dbc_info = cantools.db.load_file(self.dbc_file)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_message</span>(<span class="params">self, frame_id</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return message，特别强调，frame_id输入10进制即可，同时必须是int型数据，不能是字符串</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id)   <span class="comment">#直接返回message的所有信息</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_message_name</span>(<span class="params">self, frame_id</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return message name</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_message_name_by_message_id</span>(<span class="params">self, frame_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return message id by message name</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_name(frame_name).frame_id</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_signals_list</span>(<span class="params">self, frame_id</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signals list</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).signal_tree    <span class="comment">#这里返回的是message中signal的list，包含一个message中所有的signal</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_signal</span>(<span class="params">self, frame_id, signal_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signal, 输入message id和signal name</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).get_signal_by_name(signal_name)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_signal_config_maximum</span>(<span class="params">self, frame_id, signal_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signal maximum</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).get_signal_by_name(signal_name).maximum</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_signal_config_minimum</span>(<span class="params">self, frame_id, signal_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signal minimum</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).get_signal_by_name(signal_name).minimum</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_signal_config_scale</span>(<span class="params">self, frame_id, signal_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signal scale，这里指的是signal定义中其取值范围的间隔，</span></span><br><span class="line"><span class="string">        比如从1到10，每个2取一个值，scale就是2</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).get_signal_by_name(signal_name).scale</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_signal_config_comment</span>(<span class="params">self, frame_id, signal_name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signal comment，signal说明</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).get_signal_by_name(signal_name).comment</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">signal_config_value_description_to_num</span>(<span class="params">self, frame_id, signal_name, value_str</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        return signal value description</span></span><br><span class="line"><span class="string">        这里需要特别说明下，有些signal取值不是正常的数值，而是文字描述，</span></span><br><span class="line"><span class="string">        这个在定义中是个表，比如1：open, 2:close, 4:ignore，</span></span><br><span class="line"><span class="string">        本函数的意思是当你取到这个字符串，比如close时，能够返回这个字符串在对应中的数字2，</span></span><br><span class="line"><span class="string">        这在解析和保存以及后续发送中是很有用的。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.dbc_info.get_message_by_frame_id(frame_id).get_signal_by_name(signal_name).\</span><br><span class="line">            choice_string_to_number(value_str)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    dbc_info = DbcInfo(<span class="string">&#x27;D:test.dbc&#x27;</span>)</span><br><span class="line">    <span class="comment">#test，根据自己需求使用上述函数即可</span></span><br><span class="line">    <span class="comment">#frame_id输入10进制即可，同时必须是int型数据，不能是字符串</span></span><br><span class="line">    <span class="built_in">print</span>(dbc_info.get_message_name(<span class="number">520</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果想进行 can 报文修改，需要注意的是，直接给的数据不一定符合要求，需要保证修改数值在 signal 的最大最小范围内，同时保证该值符合定义中的取值间隔，可采用下述函数进行 check，保证输入数值符合要求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">check_value_meet_norms</span>(<span class="params">self, frame_id, signal_name, value</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    check value meet norms and return closest value based on scale factor</span></span><br><span class="line"><span class="string">    检查输入是否符合规范，同时输出符合规范的最接近输入value值的value</span></span><br><span class="line"><span class="string">    如果你要用脚本修改can报文，但是修改的值如果不符合要求，给入会报错，</span></span><br><span class="line"><span class="string">    该函数保证修改值符合规范且接近用户期望值</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    max_value = self.get_signal_config_maximum(frame_id, signal_name)</span><br><span class="line">    min_value = self.get_signal_config_minimum(frame_id, signal_name)</span><br><span class="line">    scale_value = self.get_signal_config_scale(frame_id, signal_name)</span><br><span class="line">    <span class="keyword">if</span> value &gt; max_value:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(scale_value, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">int</span>(max_value)</span><br><span class="line">        <span class="keyword">return</span> max_value</span><br><span class="line">    <span class="keyword">elif</span> value &lt; min_value:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(scale_value, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">int</span>(max_value)</span><br><span class="line">        <span class="keyword">return</span> min_value</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        num = <span class="built_in">round</span>(value / scale_value)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(scale_value, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">int</span>(num * scale_value)</span><br><span class="line">        <span class="keyword">return</span> num * scale_value</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnpython.com/pypi/cantools" >cantools 官方包<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
 
                 </div>
 
@@ -312,11 +385,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                CAN 之报文录制格式
+                CAN 之 DBC 文件解析
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2276434991.html
+                768939725.html
             </div>
         </div>
 
@@ -332,7 +405,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-01-28 22:16</div>
+                <div class="content">2024-02-03 16:25</div>
             </div>
 
 
@@ -364,6 +437,10 @@
                     <div>
                         
                             <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/python/">python</a>
+                                    </li>
                                 
                                     <li class="tag-item border-box">
                                         <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/can/">can</a>
@@ -417,31 +494,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/1584988185.html"
-                                   title="CAN 之 BLF 文件解析.md"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">CAN 之 BLF 文件解析.md</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2483129101.html"
-                                   title="Docusaurus 搭建个人知识库"
+                                   href="/1584988185.html"
+                                   title="CAN 之 BLF 文件解析.md"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Docusaurus 搭建个人知识库</span>
+                                        <span class="post-nav-title-item text-ellipsis">CAN 之 BLF 文件解析.md</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -544,7 +605,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV"><span class="nav-text">CSV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASC-BLF"><span class="nav-text">ASC&#x2F;BLF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MDF-MF4-dat"><span class="nav-text">MDF&#x2F;MF4&#x2F;dat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A2L-HEX-S19"><span class="nav-text">A2L&amp;HEX&#x2F;S19</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-DBC-%E6%96%87%E4%BB%B6"><span class="nav-text">什么是 DBC 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBC-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-text">DBC 文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DBC-%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="nav-text">DBC 文件解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
     </div>
 </div>
 
@@ -731,7 +792,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV"><span class="nav-text">CSV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASC-BLF"><span class="nav-text">ASC&#x2F;BLF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MDF-MF4-dat"><span class="nav-text">MDF&#x2F;MF4&#x2F;dat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A2L-HEX-S19"><span class="nav-text">A2L&amp;HEX&#x2F;S19</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-DBC-%E6%96%87%E4%BB%B6"><span class="nav-text">什么是 DBC 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBC-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-text">DBC 文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DBC-%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="nav-text">DBC 文件解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
     </div>
 </div>
 
