@@ -346,8 +346,8 @@
 <li><code>Receiver</code> 表示该信号的接收节点，若该信号没有指定的接收节点，则必须设置为 “Vector__XXX”。</li>
 </ul>
 <p>如示下面的例中：<br>第一个信号 <code>SG_ S_Check : 45|10@0+ (0.00625,0) [0|160] &quot;M&quot; EL3160_60,ESC</code><br>表示定义了一个命名为 S_Check 的普通信号，其起始位是第 45 位，信号长度 10 bit；<br>信号是 Motorola 格式，数值类型为无符号类型数；因子为 0.00625，偏移量为 0；信号取值范围为 0 到 160；<br>信号物理单位为字符串 “M”，该信号接收节点为 EL3160_60 和 ESC 这两个节点。</p>
-<p>第二个信号 <code>SG_ Send_Mux M : 7|8@0+ (1,0) [0|0] &quot;&quot; EL3160_60,ESC</code><br>表示定义了一个命名为 Send_Mux 的多路选择器信号，其起始位是第 7 位，信号长度 8 bit；<br>信号是 Motorola 格式，数值类型为无符号类型数；因子为1，偏移量为 0；信号取值范围为 0 到 0；<br>信号物理单位为字符串 “”；该信号接收节点为 EL3160_60 和 ESC这两个节点。该信号做选择通道使用。</p>
-<p>第三个信号 <code>SG_ S_Level_A_Voltage m50 : 15|16@0+ (0.00625,0) [0|160] &quot;V&quot; EL3160_60,ESC</code><br>表示定义了一个命名为 S_Level_A_Voltage 的被选择信号，其起始位是第 15 位，信号长度 16 bit；<br>信号是 Motorola 格式，数值类型为无符号类型数；因子为 0.00625，偏移量为 0；信号取值范围为 0 到 160；<br>信号物理单位为字符串 “V”；该信号接收节点为 EL3160_60 和 ESC这两个节点。<br><img  
+<p>第二个信号 <code>SG_ Send_Mux M : 7|8@0+ (1,0) [0|0] &quot;&quot; EL3160_60,ESC</code><br>表示定义了一个命名为 Send_Mux 的多路选择器信号，其起始位是第 7 位，信号长度 8 bit；<br>信号是 Motorola 格式，数值类型为无符号类型数；因子为1，偏移量为 0；信号取值范围为 0 到 0；<br>信号物理单位为字符串 “”；该信号接收节点为 EL3160_60 和 ESC 这两个节点。该信号做选择通道使用。</p>
+<p>第三个信号 <code>SG_ S_Level_A_Voltage m50 : 15|16@0+ (0.00625,0) [0|160] &quot;V&quot; EL3160_60,ESC</code><br>表示定义了一个命名为 S_Level_A_Voltage 的被选择信号，其起始位是第 15 位，信号长度 16 bit；<br>信号是 Motorola 格式，数值类型为无符号类型数；因子为 0.00625，偏移量为 0；信号取值范围为 0 到 160；<br>信号物理单位为字符串 “V”；该信号接收节点为 EL3160_60 和 ESC 这两个节点。<br><img  
                        lazyload
                        alt="image"
                        data-src="https://felicxfoster.github.io/PicXImage/blog_autodriving/10.4eihxmqt4960.webp"
