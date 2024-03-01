@@ -265,7 +265,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>339 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>377 字</span>
             </span>
         
         
@@ -291,38 +291,33 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <p>发现知乎有人（<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/399798517" >不为谁而读的研<i class="fas fa-external-link-alt"></i></a>）盗用我文章<br><img  
-                       lazyload
-                       alt="image"
-                       data-src="https://felicxfoster.github.io/PicXImage/Tool/be_stolen.75p72pzymuw0.webp"
-                        alt="be_stolen"
-                 ><br>碎碎念：本来这篇文章是挂CSDN的，老说我翻墙不给我审核通过，没办法只好迁来自己的博客了。</p>
-<p>最近想看下coursera上的课程，却发现视频加载不出来，挂了VPN也不好用。</p>
-<p><strong>解决方法：</strong><br> 在浏览器上按<code>F12</code>调用console窗口查看发现<code>d3c33hcgiwev3.cloudfront.net</code>网站无法访问。只能想办法改hosts绕过去。</p>
-<p>以下是Windows修改<code>hosts</code>，其他系统类似：<br> 1、<strong>用管理员权限打开<code>hosts</code>文件</strong>(<code>C:\Windows\System32\drivers\etc</code>)<br> 2、<strong>将下面内容复制到文件末尾并保存：</strong></p>
+                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>碎碎念：本来这篇文章是挂 CSDN 的，老说我翻墙不给我审核通过，没办法只好迁来自己的博客了。</p>
+<p>最近想看下 coursera 上的课程，却发现视频加载不出来，挂了 VPN 也不好用。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在浏览器上按 <code>F12</code> 调用 console 窗口查看发现 <code>d3c33hcgiwev3.cloudfront.net</code> 网站无法访问。只能想办法改 hosts 绕过去。</p>
+<p>以下是 Windows 系统修改<code>hosts</code>，其他系统类似：</p>
+<ol>
+<li><strong>用管理员权限打开 <code>hosts</code> 文件</strong>(<code>C:\Windows\System32\drivers\etc</code>)</li>
+<li><strong>将下面内容复制到文件末尾并保存：</strong></li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coursera ip</span></span><br><span class="line">54.230.96.102			d3c33hcgiwev3.cloudfront.net</span><br><span class="line">54.230.96.174			d3c33hcgiwev3.cloudfront.net</span><br><span class="line">54.230.96.221			d3c33hcgiwev3.cloudfront.net</span><br><span class="line">54.230.96.57			d3c33hcgiwev3.cloudfront.net</span><br><span class="line"></span><br><span class="line">54.192.99.52			d3njjcbhbojbot.cloudfront.net</span><br><span class="line">54.192.99.85			d3njjcbhbojbot.cloudfront.net</span><br><span class="line">54.192.99.124			d3njjcbhbojbot.cloudfront.net</span><br><span class="line">54.192.99.42			d3njjcbhbojbot.cloudfront.net</span><br></pre></td></tr></table></figure>
 
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="
-                        alt="点击并拖拽以移动"
-                 ></p>
-<p>3、<strong>刷新DNS缓存</strong><br> 在<code>cmd</code>里面输入<code>ipconfig /flushdns</code>命令后按回车</p>
-<p>更新：<br> 有朋友说ip失效了。正常，因为coursera是动态ip，会经常变的。<br> 这里贴一个授之以渔的方法：<br> 用这个<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://ping.eu/nslookup/" >在线解析工具<i class="fas fa-external-link-alt"></i></a> 在输入框里输入域名 <code>d3c33hcgiwev3.cloudfront.net</code> （如果打不开这个在线解析工具，可以百度找其他的在线解析工具）他就会返回一连串的ip地址</p>
+<ol start="3">
+<li><strong>刷新 DNS 缓存</strong><br>在 <code>cmd</code> 里面输入 <code>ipconfig /flushdns</code> 命令后按回车</li>
+</ol>
+<p>更新：<br>有朋友说 ip 失效了。正常，因为 coursera 是动态 ip，会经常变的。<br>这里贴一个授之以渔的方法：<br>用这个<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://ping.eu/nslookup/" >在线解析工具<i class="fas fa-external-link-alt"></i></a> 在输入框里输入域名 <code>d3c33hcgiwev3.cloudfront.net</code> （如果打不开这个在线解析工具，可以百度找其他的在线解析工具）他就会返回一连串的 ip 地址</p>
 <p><img  
                        lazyload
                        alt="image"
                        data-src="https://felicxfoster.github.io/PicXImage/Tool/dns_lookup.4wq2kbm1b7k0.webp"
                         alt="img"
                  ></p>
-<p><img  
+<p>替换 <strong>hosts 文件</strong>里的 ip 即可。</p>
+<p>PS：发现知乎有人（<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/399798517" >不为谁而读的研<i class="fas fa-external-link-alt"></i></a>）盗用我文章，无所谓啦，这正好说明我这篇文章是对大家有帮助的，不然别人也不会抄。<br><img  
                        lazyload
                        alt="image"
-                       data-src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="
-                        alt="点击并拖拽以移动"
+                       data-src="https://felicxfoster.github.io/PicXImage/Tool/be_stolen.75p72pzymuw0.webp"
+                        alt="be_stolen"
                  ></p>
-<p>替换<strong>hosts文件</strong>里的ip即可。</p>
 
                 </div>
 
@@ -564,7 +559,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-text">解决方法</span></a></li></ol>
     </div>
 </div>
 
@@ -751,7 +746,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-text">解决方法</span></a></li></ol>
     </div>
 </div>
 
