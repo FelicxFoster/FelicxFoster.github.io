@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ROS,机器人,自动驾驶,算法,Linux,Python,LeetCode,建站,云服务器,Docker">
+    <meta name="description" content="You Only Live Once">
+    <meta name="author" content="felicx">
+    
+    <title>
+        
+            堆排序 |
+        
+        YOLOのBLOG
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/brands.min.css">
+    
+        
+            
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"blog.felicx.eu.org","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"YOLOのBLOG","author":"felicx","avatar":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","logo":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","favicon":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp"},"menu":{"archives":"/archives","tags":"/tags","categories":"/categories","links":"/links","Travellings":"https://www.travellings.cn/go.html","about":"/about"},"first_screen":{"enable":false,"background_img":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","background_img_dark":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","description":"You Only Live Once !","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/FelicxFoster","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"facebook":null,"email":null,"blogger":"https://blog.csdn.net/qq_37427972"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY 年 MM 月 DD 日 HH:mm","copyright_info":true,"share":true,"reward":{"enable":true,"img_link":"https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp","text":"请作者喝杯咖啡"}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"local_search":{"enable":true,"preload":true},"comment":{"enable":true,"use":"waline","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":"https://comment.felicx.eu.org/","reaction":true,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2018,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[null,"/css/custom.css"],"js":[null]},"root":"","source_data":{"links":[{"title":"小伙伴"},{"name":"Roozen 的小破站","link":"https://roozen.top","description":"技术宅男拯救世界！","avatar":"https://roozen.top/upload/touxiang.jpg"},{"name":"玖涯博客","link":"https://blog.nineya.com","description":"投资未来的人，是忠于现实的人","avatar":"https://blog.nineya.com/favicon.png"},{"name":"杜老师说","link":"https://dusays.com","description":"运维大佬","avatar":"https://cdn.dusays.com/avatar.png"},{"name":"张洪Heo","link":"https://blog.zhheo.com/","description":"分享设计与科技生活","avatar":"https://bu.dusays.com/2022/12/28/63ac2812183aa.png"},{"name":"LQBBY","link":"https://www.lqbby.com/","description":"成功是失败者的通行证，失败是成功者的墓志","avatar":"https://api.lqbby.com/api/qqimg?qq=1151581339"},{"name":"Carol 小屋","link":"https://blog.cnkj.site","description":"只想专心玩NAS","avatar":"https://blog.cnkj.site/upload/logo.png"},{"name":"Ariasakaの小窝","link":"https://yisous.xyz","description":"人有悲欢离合 月有阴晴圆缺","avatar":"https://bu.dusays.com/2023/06/30/649e9ec88cf47.png"},{"name":"GanSer","link":"https://www.gan1ser.top/","description":"紫箫吟断，素笺恨切","avatar":"https://pic.imgdb.cn/item/63f16cddf144a010070697c8.jpg"}]},"version":"4.1.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="YOLOのBLOG" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               YOLOのBLOG
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                            >
+                                
+                                TRAVELLINGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives"
+                    >ARCHIVES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags"
+                    >TAGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories"
+                    >CATEGORIES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links"
+                    >LINKS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                    >TRAVELLINGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about"
+                    >ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        堆排序
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">felicx</span>
+                                
+                                    <span class="author-badge">化神</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2022 年 08 月 10 日 16:21</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Wed Aug 10 2022 16:37:54 GMT+0800">2022 年 08 月 10 日 16:37</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%B5%81/">算法交流</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/">常见算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.9k Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>11 Mins</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    <h1 id="一、堆的概念"><a href="#一、堆的概念" class="headerlink" title="一、堆的概念"></a>一、堆的概念</h1><p>1、堆是一个完全二叉树，它的所有元素按照完全二叉树的顺序存储方式存储在一个一维数组中。<br>2、堆中某个节点的值总是不大于或不小于其父节点的值；堆总是一棵完全二叉树。<br>3、堆分为两种：大顶堆、小顶堆</p>
+<ul>
+<li>大顶堆：每一个父结点的值均大于等于其对应的子结点的值，而父结点的值就是最大的</li>
+<li>小顶堆：每一个父结点的值均小于等于其对应的子结点的值，而父结点的值就是最小的</li>
+</ul>
+<p>4、堆排序最后一个非叶子节点（父节点）的序号是<code>n/2-1</code>，<code>n</code>为数组的长度（具体分析见第四点）。</p>
+<h1 id="二、堆的实现"><a href="#二、堆的实现" class="headerlink" title="二、堆的实现"></a>二、堆的实现</h1><p>有两种方法，一种是自己写堆进行排序，一种是直接对数组建堆。</p>
+<h2 id="1、手动实现堆"><a href="#1、手动实现堆" class="headerlink" title="1、手动实现堆"></a>1、手动实现堆</h2><p>假设我们排升序，且堆为小顶堆。<br>首先，把数组的每个元素（HeapPush）插入到堆中；<br>其次，小顶堆的堆顶是最小的数字，依次遍历堆顶的元素，将堆顶元素赋值到数组里，从下标0开始，赋值后删除堆顶元素，++数组下标；<br>此时堆就会重新调整，最终堆顶依旧是最小的，再重复上述赋值堆顶到数组的操作，直到堆为空。<br>具体实现可以参考<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/bit_zyx/article/details/123969874?spm=1001.2014.3001.5502" >堆的实现<i class="fas fa-external-link-alt"></i></a>和<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/bit_zyx/article/details/124049536?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166023127916781790799977%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166023127916781790799977&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~hot_rank-14-124049536-null-null.142%5Ev40%5Enew_blog_pos_by_title,185%5Ev2%5Econtrol&utm_term=%E5%A0%86%E6%8E%92%E5%BA%8F%E6%B1%82top%20k&spm=1018.2226.3001.4187" >堆排序和Topk问题<i class="fas fa-external-link-alt"></i></a>。</p>
+<h2 id="2、数组建堆"><a href="#2、数组建堆" class="headerlink" title="2、数组建堆"></a>2、数组建堆</h2><p>堆的调整无非就两种，一种是向下调整，一种是向上调整。<br>向下调整：让调整的结点与其孩子节点进行比较<br>向上调整：让调整的结点与其父亲结点进行比较<br>简单区分就是，向下调整条件是孩子节点值比父节点小；而向上调整条件是父节点值比孩子节点小。<br>以数组<code>[9, 2, 7, 5, 6, 4, 3, 8, 9]</code>为例<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.staticaly.com/gh/FelicxFoster/PicXImage@master/Algorithm_learning_1/heap.3owdrq1pn9a0.webp"
+                        alt="heap"
+                 ></p>
+<h3 id="2-1、向下调整"><a href="#2-1、向下调整" class="headerlink" title="2-1、向下调整"></a>2-1、向下调整</h3><p>思路：选出左右孩子中小的那一个，跟父节点比较，如果父节点大，则父节点和子节点交换。<br>记住一点，<code>child = 2*parent + 1</code>，这里child是左子树<br>首先取左右child更小的那个跟parent节点比较，如果parent节点更大，就把child的值和parent的值互换，同时parent下移到child的位置，用公式<code>child = 2*parent + 1</code>更新child位置；然后换行，比较下一层的parent和child。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向下调整算法</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">adjust_down</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> i, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> parent = i;         <span class="comment">// 父节点下标</span></span><br><span class="line">  <span class="type">int</span> child = <span class="number">2</span> * i + <span class="number">1</span>;  <span class="comment">// 子节点下标</span></span><br><span class="line">  <span class="keyword">while</span> (child &lt; n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (child + <span class="number">1</span> &lt; n &amp;&amp; array[child] &gt; array[child + <span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="comment">// 选出左右child小的那个，与parent比较</span></span><br><span class="line">      child++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (array[child] &lt; array[parent]) &#123;</span><br><span class="line">      <span class="comment">// 如果child比parent小,交换parent和child,这样就保证parent比左右child都小</span></span><br><span class="line">      <span class="built_in">swap</span>(array, parent, child);  <span class="comment">// 交换parent和child</span></span><br><span class="line">      parent = child;              <span class="comment">// child下标赋给parent下标</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    child = child * <span class="number">2</span> + <span class="number">1</span>;  <span class="comment">// 换行,比较下一层的parent和child</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2、建小顶堆"><a href="#2-2、建小顶堆" class="headerlink" title="2-2、建小顶堆"></a>2-2、建小顶堆</h3><p>在向下调整中，要保证左子树和右子树均是堆，否则不能；按照这个思路，那采用向下调整建堆时，应该从下往上走，保证左右子树都是堆。<br>从最后一个非叶子节点开始，即<code>n/2-1</code>，调用一次向下调整；再找到前一个节点，调用一次向下调整，循环往复，直到对父节点向下调整（此时父节点的左右子树已是堆），堆就实现了。<br>举例：<br>1、对于数组<code>[9, 2, 7, 5, 6, 4, 3, 8, 9]</code>，<code>n/2-1</code>就是第3个节点，也就是5，取左右子树小的那个，即8，5小于8，不换，跳出循环；<br>2、下一个节点是7，取左右子树小的那个，即3，7大于3，互换，parent到3的位置，没有子树了，跳出调整。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建小顶堆</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">BuildMinHeap</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="comment">// 倒数第二排开始,对每一个三角形成的堆,创建小顶堆</span></span><br><span class="line">    <span class="built_in">adjust_down</span>(array, i, size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3、向上调整"><a href="#2-3、向上调整" class="headerlink" title="2-3、向上调整"></a>2-3、向上调整</h3><p>思路：选出左右孩子中大的那一个，跟父节点比较，如果父节点小，则父节点和子节点交换。<br>记住一点，<code>child = 2*parent + 1</code>，这里child是左子树<br>首先取左右child更大的那个跟parent节点比较，如果parent节点更小，就把child的值和parent的值互换，同时parent下移到child的位置，用公式<code>child = 2*parent + 1</code>更新child位置；然后换行，比较下一层的parent和child。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向上调整算法</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">adjust_up</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> i, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> parent = i;         <span class="comment">// 父节点下标</span></span><br><span class="line">  <span class="type">int</span> child = <span class="number">2</span> * i + <span class="number">1</span>;  <span class="comment">// 子节点下标</span></span><br><span class="line">  <span class="keyword">while</span> (child &lt; n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (child + <span class="number">1</span> &lt; n &amp;&amp; array[child] &lt; array[child + <span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="comment">// 选出左右child大的那个，与parent比较</span></span><br><span class="line">      child++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (array[parent] &lt; array[child]) &#123;</span><br><span class="line">      <span class="comment">// 如果parent比child小,交换parent和child,这样就保证parent比左右child都大</span></span><br><span class="line">      <span class="built_in">swap</span>(array, parent, child);  <span class="comment">// 交换parent和child</span></span><br><span class="line">      parent = child;              <span class="comment">// child下标赋给parent下标</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    child = child * <span class="number">2</span> + <span class="number">1</span>;  <span class="comment">// 换行,比较下一层的parent和child</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4、建大顶堆"><a href="#2-4、建大顶堆" class="headerlink" title="2-4、建大顶堆"></a>2-4、建大顶堆</h3><p>跟建小顶堆一样，在向上调整中，要保证左子树和右子树均是堆，否则不能；按照这个思路，那采用向上调整建堆时，应该从下往上走，保证左右子树都是堆。<br>从最后一个非叶子节点开始，即<code>n/2-1</code>，调用一次向下调整；再找到前一个节点，调用一次向上调整，循环往复，直到对父节点向上调整（此时父节点的左右子树已是堆），堆就实现了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建大顶堆</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">BuildMaxHeap</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="comment">// 倒数第二排开始,对每一个三角形成的堆,创建大顶堆</span></span><br><span class="line">    <span class="built_in">adjust_up</span>(array, i, size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、堆排序"><a href="#三、堆排序" class="headerlink" title="三、堆排序"></a>三、堆排序</h1><p>有了上面的建堆，就可以直接进行堆排序了。<br>对于降序，我们可以先创建小顶堆，此时顶点是最小值。从后面开始遍历数组，每次遍历就交换顶点和第i个数据，这样就可以把顶点的最小值存到尾部；然后在剩余的数字中再进行向下调整，重新建立小顶堆；再进行上面的互换操作。<br>对于升序，也是类似的，先创建大顶堆，此时顶点是最大值。从后面开始遍历数组，每次遍历就交换顶点和第i个数据，这样就可以把顶点的最大值存到尾部；然后在剩余的数字中再进行向上调整，重新建立大顶堆；再进行上面的互换操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 降序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MaxHeapSort</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">BuildMinHeap</span>(array, size);  <span class="comment">// 创建小顶堆</span></span><br><span class="line">  <span class="built_in">display</span>(array, size);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="built_in">swap</span>(array, <span class="number">0</span>, i);</span><br><span class="line">    <span class="comment">// 这里交换顶点和第i个数据,就是把顶点的最小值存到尾部,</span></span><br><span class="line">    <span class="comment">// 在剩余的数字中再进行向下调整,重新建立小顶堆</span></span><br><span class="line">    <span class="built_in">adjust_down</span>(array, <span class="number">0</span>, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 升序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MinHeapSort</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">BuildMaxHeap</span>(array, size);  <span class="comment">// 创建大顶堆</span></span><br><span class="line">  <span class="built_in">display</span>(array, size);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="comment">// 这里交换顶点和第i个数据,就是把顶点的最大值存到尾部,</span></span><br><span class="line">    <span class="comment">// 在剩余的数字中再进行向上调整,重新建立大顶堆</span></span><br><span class="line">    <span class="built_in">swap</span>(array, <span class="number">0</span>, i);</span><br><span class="line">    <span class="built_in">adjust_up</span>(array, <span class="number">0</span>, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、堆排序最后一个非叶子节点的序号"><a href="#四、堆排序最后一个非叶子节点的序号" class="headerlink" title="四、堆排序最后一个非叶子节点的序号"></a>四、堆排序最后一个非叶子节点的序号</h1><p>堆排序是基于完全二叉树实现的，在将一个数组调整成一个堆的时候，关键之一的是确定最后一个非叶子节点的序号，这个序号为<code>n/2-1</code>，<code>n</code>为数组的长度。但是为什么呢？</p>
+<p>可以分两种情况考虑：<br>1、堆的最后一个非叶子节点只有左孩子<br>2、堆的最后一个非叶子节点有左右两个孩子<br>完全二叉树的性质之一是：如果节点序号为 <code>i</code>，则它的左孩子序号为<code>2i+1</code>，右孩子序号为 <code>2i+2</code>。</p>
+<p>对于情况1，左孩子(最后一个元素)的序号为 <code>n-1</code>，则 <code>n-1=2i+1</code>，推出 <code>i=n/2-1</code>；<br>对于情况2，左孩子(倒数第二个元素)的序号为 <code>n-2</code>，则<code> n-2=2i+1</code>，推出<code>i=(n-1)/2-1</code>；右孩子(最后一个元素)的序号为<code>n-1</code>，则<code>n-1=2i+2</code>，推出（这里跟左孩子推出的一样）<code>i=(n-1)/2-1</code>。</p>
+<p>很显然，当完全二叉树最后一个节点是其父节点的左孩子时，树的节点数（数组元素数）为偶数；当完全二叉树最后一个节点是其父节点的右孩子时（满二叉树），树的节点数（数组元素数）为奇数。</p>
+<p>根据一般编程语言的特性，整数除不尽时向下取整，则若<code>n</code>为奇数时<code>(n-1)/2-1=n/2-1</code>。</p>
+<p>因此对于情况2，最后一个非叶子节点的序号也是<code>n/2-1</code>。</p>
+<h1 id="五、完整代码"><a href="#五、完整代码" class="headerlink" title="五、完整代码"></a>五、完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, array[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> temp = array[x];</span><br><span class="line">  array[x] = array[y];</span><br><span class="line">  array[y] = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向下调整算法</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">adjust_down</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> i, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> parent = i;         <span class="comment">// 父节点下标</span></span><br><span class="line">  <span class="type">int</span> child = <span class="number">2</span> * i + <span class="number">1</span>;  <span class="comment">// 子节点下标</span></span><br><span class="line">  <span class="keyword">while</span> (child &lt; n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (child + <span class="number">1</span> &lt; n &amp;&amp; array[child] &gt; array[child + <span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="comment">// 选出左右child小的那个，与parent比较</span></span><br><span class="line">      child++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (array[parent] &gt; array[child]) &#123;</span><br><span class="line">      <span class="comment">// 如果parent比child大,交换parent和child,这样就保证parent比左右child都小</span></span><br><span class="line">      <span class="built_in">swap</span>(array, parent, child);  <span class="comment">// 交换parent和child</span></span><br><span class="line">      parent = child;              <span class="comment">// child下标赋给parent下标</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    child = child * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向上调整算法</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">adjust_up</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> i, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> parent = i;         <span class="comment">// 父节点下标</span></span><br><span class="line">  <span class="type">int</span> child = <span class="number">2</span> * i + <span class="number">1</span>;  <span class="comment">// 子节点下标</span></span><br><span class="line">  <span class="keyword">while</span> (child &lt; n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (child + <span class="number">1</span> &lt; n &amp;&amp; array[child] &lt; array[child + <span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="comment">// 选出左右child大的那个，与parent比较</span></span><br><span class="line">      child++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (array[parent] &lt; array[child]) &#123;</span><br><span class="line">      <span class="comment">// 如果parent比child小,交换parent和child,这样就保证parent比左右child都大</span></span><br><span class="line">      <span class="built_in">swap</span>(array, parent, child);  <span class="comment">// 交换parent和child</span></span><br><span class="line">      parent = child;              <span class="comment">// child下标赋给parent下标</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    child = child * <span class="number">2</span> + <span class="number">1</span>;  <span class="comment">// 换行,比较下一层的parent和child</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建小顶堆</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">BuildMinHeap</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="comment">// 倒数第二排开始,对每一个三角形成的堆,创建小顶堆</span></span><br><span class="line">    <span class="built_in">adjust_down</span>(array, i, size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建大顶堆</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">BuildMaxHeap</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="comment">// 倒数第二排开始,对每一个三角形成的堆,创建大顶堆</span></span><br><span class="line">    <span class="built_in">adjust_up</span>(array, i, size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 降序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MaxHeapSort</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">BuildMinHeap</span>(array, size);  <span class="comment">// 创建小顶堆</span></span><br><span class="line">  <span class="built_in">display</span>(array, size);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="built_in">swap</span>(array, <span class="number">0</span>, i);</span><br><span class="line">    <span class="comment">// 这里交换顶点和第i个数据,就是把顶点的最小值存到尾部,</span></span><br><span class="line">    <span class="comment">// 在剩余的数字中再进行向下调整,重新建立小顶堆</span></span><br><span class="line">    <span class="built_in">adjust_down</span>(array, <span class="number">0</span>, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 升序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MinHeapSort</span><span class="params">(<span class="type">int</span> array[], <span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">BuildMaxHeap</span>(array, size);  <span class="comment">// 创建大顶堆</span></span><br><span class="line">  <span class="built_in">display</span>(array, size);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = size - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="comment">// 这里交换顶点和第i个数据,就是把顶点的最大值存到尾部,</span></span><br><span class="line">    <span class="comment">// 在剩余的数字中再进行向上调整,重新建立大顶堆</span></span><br><span class="line">    <span class="built_in">swap</span>(array, <span class="number">0</span>, i);</span><br><span class="line">    <span class="built_in">adjust_up</span>(array, <span class="number">0</span>, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> array[] = &#123;<span class="number">9</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line">  <span class="type">int</span> size = <span class="built_in">sizeof</span>(array) / <span class="built_in">sizeof</span>(<span class="type">int</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 打印数据</span></span><br><span class="line">  <span class="built_in">display</span>(array, size);</span><br><span class="line">  <span class="built_in">MinHeapSort</span>(array, size);</span><br><span class="line">  <span class="built_in">display</span>(array, size);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                堆排序
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                3265658309.html
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    Author
+                </div>
+                <div class="content">felicx</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    Published
+                </div>
+                <div class="content">2022-08-10 16:21</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    License
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed" rel="external nofollow noreferrer" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="Copy copyright info" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/">常见算法</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+                    <div class="reward-author-container border-box flex-center">
+    <div class="reward-btn keep-button border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="请作者喝杯咖啡"
+            data-tooltip-img-url="https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp"
+            data-tooltip-img-trigger="click"
+            data-tooltip-img-style="top: -8px;"
+    >
+        <i class="fa-solid fa-hand-holding-heart"></i>
+    </div>
+</div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2819424305.html"
+                                   title="动态规划"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">动态规划</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/3741772592.html"
+                                   title="Python 处理错误的 json 文件"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Python 处理错误的 json 文件</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;Comments
+        </div>
+        <div class="comment-plugin-fail border-box">
+    <span class="fail-tip">Comment plugin failed to load</span>
+    <button class="reload keep-button">Click to reload</button>
+</div>
+<div class="comment-plugin-loading flex-center border-box">
+    <i class="loading-icon fa-solid fa-spinner fa-spin"></i>
+    <span class="load-tip">Loading comment plugin</span>
+</div>
+<script data-pjax>
+  window.KeepCommentPlugin = {}
+  window.KeepCommentPlugin.hideLoading = () => {
+    const cplDom = document.querySelector('.comments-container .comment-plugin-loading')
+    cplDom.style.display = 'none'
+  }
+  window.KeepCommentPlugin.loadFailHandle = () => {
+    window.KeepCommentPlugin.hideLoading()
+    const cpfDom = document.querySelector('.comments-container .comment-plugin-fail')
+    cpfDom.style.display = 'flex'
+    cpfDom.querySelector('.reload').addEventListener('click', () => {
+      window.location.reload()
+    })
+  }
+</script>
+
+        
+            
+
+    <div class="waline-comment-container">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline-meta.css"/>
+        <div id="waline-comment"></div>
+        <script data-pjax>
+          window.KeepCommentPlugin.walineOptions = JSON.parse('{}'.replace(/&#34;/g, '"'))
+          window.KeepCommentPlugin.walineOptions.el = '#waline-comment'
+          window.KeepCommentPlugin.walineOptions.comment = '.post-comments-count'
+          window.KeepCommentPlugin.walineOptions.serverURL = 'https://comment.felicx.eu.org/'
+          window.KeepCommentPlugin.walineOptions.lang = 'en' || 'zh-CN'
+          window.KeepCommentPlugin.walineOptions.reaction = 'true' === 'true'
+        </script>
+
+        
+
+        
+            <script data-pjax
+                    async
+                    type="module"
+            >
+              import { init } from 'https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.js'
+              window.KeepCommentPlugin.initWaline = () => {
+                if (init) {
+                  init(window.KeepCommentPlugin.walineOptions)
+                  window.KeepCommentPlugin.hideLoading()
+                } else {
+                  setTimeout(() => {
+                    window.KeepCommentPlugin.initWaline()
+                  }, 1000)
+                }
+              }
+
+              if ('true' === 'true') {
+                setTimeout(() => {
+                  window.KeepCommentPlugin.initWaline()
+                }, 1200)
+              } else {
+                window.addEventListener('DOMContentLoaded', window.KeepCommentPlugin.initWaline)
+              }
+            </script>
+        
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-text">一、堆的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%A0%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">二、堆的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E5%A0%86"><span class="nav-text">1、手动实现堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%95%B0%E7%BB%84%E5%BB%BA%E5%A0%86"><span class="nav-text">2、数组建堆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E3%80%81%E5%90%91%E4%B8%8B%E8%B0%83%E6%95%B4"><span class="nav-text">2-1、向下调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E3%80%81%E5%BB%BA%E5%B0%8F%E9%A1%B6%E5%A0%86"><span class="nav-text">2-2、建小顶堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E3%80%81%E5%90%91%E4%B8%8A%E8%B0%83%E6%95%B4"><span class="nav-text">2-3、向上调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4%E3%80%81%E5%BB%BA%E5%A4%A7%E9%A1%B6%E5%A0%86"><span class="nav-text">2-4、建大顶堆</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="nav-text">三、堆排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A0%86%E6%8E%92%E5%BA%8F%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%8F%E5%8F%B7"><span class="nav-text">四、堆排序最后一个非叶子节点的序号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-text">五、完整代码</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2018</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">felicx</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep" rel="external nofollow noreferrer">Keep</a>
+    </div>
+
+    
+
+    
+        <div class="count-info info-item">
+            
+
+            
+                <span class="count-item border-box uv">
+                    <span class="item-type border-box">Unique Visitor</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-item border-box pv">
+                    <span class="item-type border-box">Page View</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-text">一、堆的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%A0%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">二、堆的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E5%A0%86"><span class="nav-text">1、手动实现堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%95%B0%E7%BB%84%E5%BB%BA%E5%A0%86"><span class="nav-text">2、数组建堆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E3%80%81%E5%90%91%E4%B8%8B%E8%B0%83%E6%95%B4"><span class="nav-text">2-1、向下调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E3%80%81%E5%BB%BA%E5%B0%8F%E9%A1%B6%E5%A0%86"><span class="nav-text">2-2、建小顶堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E3%80%81%E5%90%91%E4%B8%8A%E8%B0%83%E6%95%B4"><span class="nav-text">2-3、向上调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4%E3%80%81%E5%BB%BA%E5%A4%A7%E9%A1%B6%E5%A0%86"><span class="nav-text">2-4、建大顶堆</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="nav-text">三、堆排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A0%86%E6%8E%92%E5%BA%8F%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%8F%E5%8F%B7"><span class="nav-text">四、堆排序最后一个非叶子节点的序号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-text">五、完整代码</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+    
+<script src="//cdn.jsdelivr.net/npm/mermaid@10.5.0/dist/mermaid.min.js"></script>
+
+    <script data-pjax>
+      if (window.mermaid) {
+        mermaid.init()
+      }
+    </script>
+
+
+
+
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>

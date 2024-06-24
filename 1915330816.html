@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ROS,机器人,自动驾驶,算法,Linux,Python,LeetCode,建站,云服务器,Docker">
+    <meta name="description" content="You Only Live Once">
+    <meta name="author" content="felicx">
+    
+    <title>
+        
+            Pyinstaller 反编译 |
+        
+        YOLOのBLOG
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/brands.min.css">
+    
+        
+            
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"blog.felicx.eu.org","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"YOLOのBLOG","author":"felicx","avatar":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","logo":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","favicon":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp"},"menu":{"archives":"/archives","tags":"/tags","categories":"/categories","links":"/links","Travellings":"https://www.travellings.cn/go.html","about":"/about"},"first_screen":{"enable":false,"background_img":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","background_img_dark":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","description":"You Only Live Once !","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/FelicxFoster","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"facebook":null,"email":null,"blogger":"https://blog.csdn.net/qq_37427972"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY 年 MM 月 DD 日 HH:mm","copyright_info":true,"share":true,"reward":{"enable":true,"img_link":"https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp","text":"请作者喝杯咖啡"}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"local_search":{"enable":true,"preload":true},"comment":{"enable":true,"use":"waline","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":"https://comment.felicx.eu.org/","reaction":true,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2018,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[null,"/css/custom.css"],"js":[null]},"root":"","source_data":{"links":[{"title":"小伙伴"},{"name":"Roozen 的小破站","link":"https://roozen.top","description":"技术宅男拯救世界！","avatar":"https://roozen.top/upload/touxiang.jpg"},{"name":"玖涯博客","link":"https://blog.nineya.com","description":"投资未来的人，是忠于现实的人","avatar":"https://blog.nineya.com/favicon.png"},{"name":"杜老师说","link":"https://dusays.com","description":"运维大佬","avatar":"https://cdn.dusays.com/avatar.png"},{"name":"张洪Heo","link":"https://blog.zhheo.com/","description":"分享设计与科技生活","avatar":"https://bu.dusays.com/2022/12/28/63ac2812183aa.png"},{"name":"LQBBY","link":"https://www.lqbby.com/","description":"成功是失败者的通行证，失败是成功者的墓志","avatar":"https://api.lqbby.com/api/qqimg?qq=1151581339"},{"name":"Carol 小屋","link":"https://blog.cnkj.site","description":"只想专心玩NAS","avatar":"https://blog.cnkj.site/upload/logo.png"},{"name":"Ariasakaの小窝","link":"https://yisous.xyz","description":"人有悲欢离合 月有阴晴圆缺","avatar":"https://bu.dusays.com/2023/06/30/649e9ec88cf47.png"},{"name":"GanSer","link":"https://www.gan1ser.top/","description":"紫箫吟断，素笺恨切","avatar":"https://pic.imgdb.cn/item/63f16cddf144a010070697c8.jpg"}]},"version":"4.1.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="YOLOのBLOG" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               YOLOのBLOG
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                            >
+                                
+                                TRAVELLINGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives"
+                    >ARCHIVES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags"
+                    >TAGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories"
+                    >CATEGORIES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links"
+                    >LINKS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                    >TRAVELLINGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about"
+                    >ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Pyinstaller 反编译
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">felicx</span>
+                                
+                                    <span class="author-badge">化神</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2023 年 03 月 02 日 20:19</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Thu Mar 02 2023 20:39:40 GMT+0800">2023 年 03 月 02 日 20:39</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/">开发运维</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/python/">python</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.2k Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>6 Mins</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://121.196.169.103:8090/archives/python5-python-wen-jian-zhi-qt-jie-mian-da-bao" >上一篇<i class="fas fa-external-link-alt"></i></a>介绍了如何用Pyinstaller打包python文件成bin文件，那问题来了，我们拿到一个Pyinstaller打包的bin文件，想看代码怎么办，这就要用到Pyinstaller反编译了。</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="一、获取pyc文件"><a href="#一、获取pyc文件" class="headerlink" title="一、获取pyc文件"></a>一、获取pyc文件</h2><p>我们第一步采用的工具是<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/extremecoders-re/pyinstxtractor" >pyinstxtractor.py<i class="fas fa-external-link-alt"></i></a>，可以将Pyinstaller生成的bin文件解包成<code>pyc</code>文件。<br>之后把这个文件复制到bin文件同级目录下，运行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python pyinstxtractor.py xxbin</span><br></pre></td></tr></table></figure>
+
+<p>运行后生成<code>xxbin.extracted</code>文件夹 ，里面有一堆<code>so</code> ,<code>pyc</code>等文件；</p>
+<p>我们还注意到此目录下还有一个<code>PYZ-00.pyz_extracted</code>文件夹，里面都是引入的<strong>依赖库</strong>，但是注意，里面文件都是<code>.pyc.extracted</code>格式，是加密的，需要进一步反编译</p>
+<h2 id="二、pyc文件解密"><a href="#二、pyc文件解密" class="headerlink" title="二、pyc文件解密"></a>二、pyc文件解密</h2><p>在反编译python生成可执行文件bin时，引用的类库文件经常遇到使用Crypto 模块AES算法加密，解包生成的并不是pyc文件，而是加密的<code>pyc. encrypted</code>文件，当然它也无法查看编译。当然，它也是可以解密的。</p>
+<p>第一步，获取Crypto的key，这是打包时由开发者指定的。解包完成后将在根目录形成名为<code>&quot;pyimod00_crypto_key.pyc&quot;</code>的文件，将它转为py文件即可查看key文件。key是必须文件，否则无法进行解密;</p>
+<p>第二步，对于不同pyton版本头文件（header）也不相同，2.7~3.10如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Python 2.7: \x03\xf3\x0d\x0a\0\0\0\0</span><br><span class="line">Python 3.0: \x3b\x0c\x0d\x0a\0\0\0\0</span><br><span class="line">Python 3.1: \x4f\x0c\x0d\x0a\0\0\0\0</span><br><span class="line">Python 3.2: \x6c\x0c\x0d\x0a\0\0\0\0</span><br><span class="line">Python 3.3: \x9e\x0c\x0d\x0a\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.4: \xee\x0c\x0d\x0a\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.5: \x17\x0d\x0d\x0a\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.6: \x33\x0d\x0d\x0a\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.7: \x42\x0d\x0d\x0a\0\0\0\0\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.8: \x55\x0d\x0d\x0a\0\0\0\0\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.9: \x61\x0d\x0d\x0a\0\0\0\0\0\0\0\0\0\0\0\0</span><br><span class="line">Python 3.10: \x6f\x0d\x0d\x0a\0\0\0\0\0\0\0\0\0\0\0\0</span><br></pre></td></tr></table></figure>
+
+<p>第三步，编写解密处理的脚本代码，将加密的pyc. encrypted文件转成不加密的pyc文件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">import</span> tinyaes</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line">CRYPT_BLOCK_SIZE = <span class="number">16</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># key obtained from pyimod00_crypto_key</span></span><br><span class="line">key = <span class="built_in">bytes</span>(<span class="string">&#x27;0000000000013983&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> Path(<span class="string">&quot;PYZ-00.pyz_extracted&quot;</span>).glob(<span class="string">&quot;**/*.pyc.encrypted&quot;</span>):</span><br><span class="line">    inf = <span class="built_in">open</span>(p, <span class="string">&#x27;rb&#x27;</span>) <span class="comment"># encrypted file input</span></span><br><span class="line">    outf = <span class="built_in">open</span>(p.with_name(p.stem), <span class="string">&#x27;wb&#x27;</span>) <span class="comment"># output file</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Initialization vector</span></span><br><span class="line">    iv = inf.read(CRYPT_BLOCK_SIZE)</span><br><span class="line"></span><br><span class="line">    cipher = tinyaes.AES(key, iv)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Decrypt and decompress</span></span><br><span class="line">    plaintext = zlib.decompress(cipher.CTR_xcrypt_buffer(inf.read()))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Write pyc header</span></span><br><span class="line">    <span class="comment"># The header below is for Python 3.8</span></span><br><span class="line">    outf.write(<span class="string">b&#x27;\x42\x0d\x0d\x0a\0\0\0\0\0\0\0\0\0\0\0\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Write decrypted data</span></span><br><span class="line">    outf.write(plaintext)</span><br><span class="line"></span><br><span class="line">    inf.close()</span><br><span class="line">    outf.close()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Delete .pyc.encrypted file</span></span><br><span class="line">    p.unlink()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、pyc反编译为py"><a href="#三、pyc反编译为py" class="headerlink" title="三、pyc反编译为py"></a>三、pyc反编译为py</h2><p>Linux下可以使用<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/rocky/python-uncompyle6" >uncompyle6<i class="fas fa-external-link-alt"></i></a>或者<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/siways/decompyle3-3.7.6" >decompyle3<i class="fas fa-external-link-alt"></i></a>来将pyc文件转成py文件，这里使用decompyle3，直接<code>decompyle3 xx.pyc &gt; xx.py</code>即可。</p>
+<p>当然，有个在线<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://tools.bugscaner.com/decompyle/" >工具<i class="fas fa-external-link-alt"></i></a>可以直接pyc转py。</p>
+<h2 id="四、Code"><a href="#四、Code" class="headerlink" title="四、Code"></a>四、Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> pyinstxtractor</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">import</span> tinyaes</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, parent=<span class="literal">None</span></span>):</span><br><span class="line">        self.exe_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">        self.pyc_dir = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.key = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.files = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">exe2pyc</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 将exe转化为pyc文件</span></span><br><span class="line">        sys.argv = [<span class="string">&#x27;pyinstxtractor.py&#x27;</span>, self.exe_file]</span><br><span class="line">        pyinstxtractor.main()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_pyc_dir</span>(<span class="params">self</span>):</span><br><span class="line">        self.pyc_dir = os.path.basename(self.exe_file) + <span class="string">&quot;_extracted&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypted2pyc</span>(<span class="params">self, root</span>):</span><br><span class="line">        CRYPT_BLOCK_SIZE = <span class="number">16</span></span><br><span class="line">        <span class="comment"># key obtained from pyimod00_crypto_key</span></span><br><span class="line">        key = <span class="built_in">bytes</span>(self.key[<span class="number">0</span>], <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="comment"># key = bytes(&#x27;0000000000013983&#x27;, &#x27;utf-8&#x27;)</span></span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> Path(root).glob(<span class="string">&quot;**/*.pyc.encrypted&quot;</span>):</span><br><span class="line">            inf = <span class="built_in">open</span>(p, <span class="string">&#x27;rb&#x27;</span>) <span class="comment"># encrypted file input</span></span><br><span class="line">            outf = <span class="built_in">open</span>(p.with_name(p.stem), <span class="string">&#x27;wb&#x27;</span>) <span class="comment"># output file</span></span><br><span class="line">            <span class="comment"># Initialization vector</span></span><br><span class="line">            iv = inf.read(CRYPT_BLOCK_SIZE)</span><br><span class="line">            cipher = tinyaes.AES(key, iv)</span><br><span class="line">            <span class="comment"># Decrypt and decompress</span></span><br><span class="line">            plaintext = zlib.decompress(cipher.CTR_xcrypt_buffer(inf.read()))</span><br><span class="line">            <span class="comment"># Write pyc header</span></span><br><span class="line">            <span class="comment"># The header below is for Python 3.7</span></span><br><span class="line">            outf.write(<span class="string">b&#x27;\x42\x0d\x0d\x0a\0\0\0\0\0\0\0\0\0\0\0\0&#x27;</span>)</span><br><span class="line">            <span class="comment"># Write decrypted data</span></span><br><span class="line">            outf.write(plaintext)</span><br><span class="line">            inf.close()</span><br><span class="line">            outf.close()</span><br><span class="line">            <span class="comment"># Delete .pyc.encrypted file</span></span><br><span class="line">            <span class="comment"># p.unlink()</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;change %s ---&gt; %s&quot;</span>%(p, p.with_name(p.stem)))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pyc2py</span>(<span class="params">self, root, files</span>):</span><br><span class="line">        <span class="keyword">for</span> file_name <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> file_name.endswith(<span class="string">&#x27;.pyc&#x27;</span>):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> self.check_if_file_exists(file_name):</span><br><span class="line">                    <span class="keyword">if</span> file_name.endswith(<span class="string">&#x27;.pyc&#x27;</span>):</span><br><span class="line">                        part_name = file_name[<span class="number">0</span>:-<span class="number">4</span>]</span><br><span class="line">                        part_file_name = os.path.join(root, part_name).replace(<span class="string">&quot;\\&quot;</span>,<span class="string">&quot;/&quot;</span>)</span><br><span class="line">                        os.system(<span class="string">&quot;decompyle3 %s.pyc &gt; %s.py&quot;</span>%(part_file_name, part_file_name))</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">&quot;change %s.pyc ---&gt; %s.py&quot;</span>%(part_file_name, part_file_name))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;%s already exist, skip&quot;</span>%(file_name[<span class="number">0</span>:-<span class="number">4</span>]+<span class="string">&#x27;.py&#x27;</span>))</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_key_from_crypto_key</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(self.pyc_dir, <span class="literal">True</span>):</span><br><span class="line">            <span class="keyword">for</span> file_name <span class="keyword">in</span> files:</span><br><span class="line">                <span class="keyword">if</span> file_name == <span class="string">&quot;pyimod00_crypto_key.pyc&quot;</span>:</span><br><span class="line">                    part_name = file_name[<span class="number">0</span>:-<span class="number">4</span>]</span><br><span class="line">                    part_file_name = os.path.join(root, part_name).replace(<span class="string">&quot;\\&quot;</span>,<span class="string">&quot;/&quot;</span>)</span><br><span class="line">                    os.system(<span class="string">&quot;decompyle3 %s.pyc &gt; %s.py&quot;</span>%(part_file_name, part_file_name))</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;change %s.pyc ---&gt; %s.py&quot;</span>%(part_file_name, part_file_name))</span><br><span class="line">                    <span class="keyword">with</span> <span class="built_in">open</span>(part_file_name+<span class="string">&#x27;.py&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">                            <span class="keyword">if</span> <span class="string">&quot;key = &quot;</span> <span class="keyword">in</span> line:</span><br><span class="line">                                self.key = re.findall(<span class="string">r&quot;&#x27;([^&#x27;]*)&#x27;&quot;</span>, line)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check_if_file_exists</span>(<span class="params">self, file_name</span>):</span><br><span class="line">        part_name = file_name[<span class="number">0</span>:-<span class="number">4</span>] + <span class="string">&#x27;.py&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> part_name <span class="keyword">in</span> self.files:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">exe2py</span>(<span class="params">self</span>):</span><br><span class="line">        self.exe2pyc()</span><br><span class="line">        <span class="comment"># 恢复当前目录位置</span></span><br><span class="line">        os.chdir(<span class="string">&quot;..&quot;</span>)</span><br><span class="line">        self.get_pyc_dir()</span><br><span class="line">        self.get_key_from_crypto_key()</span><br><span class="line">        pyz_file = self.pyc_dir+<span class="string">&quot;/PYZ-00.pyz_extracted&quot;</span></span><br><span class="line">        self.encrypted2pyc(pyz_file)</span><br><span class="line">        <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(self.pyc_dir, <span class="literal">True</span>):</span><br><span class="line">            self.files = files</span><br><span class="line">            self.pyc2py(root, files)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;[+] Usage: exe2py.py &lt;filename&gt;&#x27;</span>)</span><br><span class="line">    mainFunc = Main()</span><br><span class="line">    magic = mainFunc.exe2py()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                Pyinstaller 反编译
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                1915330816.html
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    Author
+                </div>
+                <div class="content">felicx</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    Published
+                </div>
+                <div class="content">2023-03-02 20:19</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    License
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed" rel="external nofollow noreferrer" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="Copy copyright info" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/python/">python</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+                    <div class="reward-author-container border-box flex-center">
+    <div class="reward-btn keep-button border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="请作者喝杯咖啡"
+            data-tooltip-img-url="https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp"
+            data-tooltip-img-trigger="click"
+            data-tooltip-img-style="top: -8px;"
+    >
+        <i class="fa-solid fa-hand-holding-heart"></i>
+    </div>
+</div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2727742723.html"
+                                   title="双指针问题"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">双指针问题</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/3716413998.html"
+                                   title="Ubuntu20 安装 NVIDIA 驱动-Cuda-cuDNN"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Ubuntu20 安装 NVIDIA 驱动-Cuda-cuDNN</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;Comments
+        </div>
+        <div class="comment-plugin-fail border-box">
+    <span class="fail-tip">Comment plugin failed to load</span>
+    <button class="reload keep-button">Click to reload</button>
+</div>
+<div class="comment-plugin-loading flex-center border-box">
+    <i class="loading-icon fa-solid fa-spinner fa-spin"></i>
+    <span class="load-tip">Loading comment plugin</span>
+</div>
+<script data-pjax>
+  window.KeepCommentPlugin = {}
+  window.KeepCommentPlugin.hideLoading = () => {
+    const cplDom = document.querySelector('.comments-container .comment-plugin-loading')
+    cplDom.style.display = 'none'
+  }
+  window.KeepCommentPlugin.loadFailHandle = () => {
+    window.KeepCommentPlugin.hideLoading()
+    const cpfDom = document.querySelector('.comments-container .comment-plugin-fail')
+    cpfDom.style.display = 'flex'
+    cpfDom.querySelector('.reload').addEventListener('click', () => {
+      window.location.reload()
+    })
+  }
+</script>
+
+        
+            
+
+    <div class="waline-comment-container">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline-meta.css"/>
+        <div id="waline-comment"></div>
+        <script data-pjax>
+          window.KeepCommentPlugin.walineOptions = JSON.parse('{}'.replace(/&#34;/g, '"'))
+          window.KeepCommentPlugin.walineOptions.el = '#waline-comment'
+          window.KeepCommentPlugin.walineOptions.comment = '.post-comments-count'
+          window.KeepCommentPlugin.walineOptions.serverURL = 'https://comment.felicx.eu.org/'
+          window.KeepCommentPlugin.walineOptions.lang = 'en' || 'zh-CN'
+          window.KeepCommentPlugin.walineOptions.reaction = 'true' === 'true'
+        </script>
+
+        
+
+        
+            <script data-pjax
+                    async
+                    type="module"
+            >
+              import { init } from 'https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.js'
+              window.KeepCommentPlugin.initWaline = () => {
+                if (init) {
+                  init(window.KeepCommentPlugin.walineOptions)
+                  window.KeepCommentPlugin.hideLoading()
+                } else {
+                  setTimeout(() => {
+                    window.KeepCommentPlugin.initWaline()
+                  }, 1000)
+                }
+              }
+
+              if ('true' === 'true') {
+                setTimeout(() => {
+                  window.KeepCommentPlugin.initWaline()
+                }, 1200)
+              } else {
+                window.addEventListener('DOMContentLoaded', window.KeepCommentPlugin.initWaline)
+              }
+            </script>
+        
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%8E%B7%E5%8F%96pyc%E6%96%87%E4%BB%B6"><span class="nav-text">一、获取pyc文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81pyc%E6%96%87%E4%BB%B6%E8%A7%A3%E5%AF%86"><span class="nav-text">二、pyc文件解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81pyc%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%BApy"><span class="nav-text">三、pyc反编译为py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Code"><span class="nav-text">四、Code</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2018</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">felicx</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep" rel="external nofollow noreferrer">Keep</a>
+    </div>
+
+    
+
+    
+        <div class="count-info info-item">
+            
+
+            
+                <span class="count-item border-box uv">
+                    <span class="item-type border-box">Unique Visitor</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-item border-box pv">
+                    <span class="item-type border-box">Page View</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%8E%B7%E5%8F%96pyc%E6%96%87%E4%BB%B6"><span class="nav-text">一、获取pyc文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81pyc%E6%96%87%E4%BB%B6%E8%A7%A3%E5%AF%86"><span class="nav-text">二、pyc文件解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81pyc%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%BApy"><span class="nav-text">三、pyc反编译为py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Code"><span class="nav-text">四、Code</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+    
+<script src="//cdn.jsdelivr.net/npm/mermaid@10.5.0/dist/mermaid.min.js"></script>
+
+    <script data-pjax>
+      if (window.mermaid) {
+        mermaid.init()
+      }
+    </script>
+
+
+
+
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>

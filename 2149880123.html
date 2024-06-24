@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ROS,机器人,自动驾驶,算法,Linux,Python,LeetCode,建站,云服务器,Docker">
+    <meta name="description" content="You Only Live Once">
+    <meta name="author" content="felicx">
+    
+    <title>
+        
+            ROS 之 topic 发布 |
+        
+        YOLOのBLOG
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/brands.min.css">
+    
+        
+            
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"blog.felicx.eu.org","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"YOLOのBLOG","author":"felicx","avatar":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","logo":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","favicon":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp"},"menu":{"archives":"/archives","tags":"/tags","categories":"/categories","links":"/links","Travellings":"https://www.travellings.cn/go.html","about":"/about"},"first_screen":{"enable":false,"background_img":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","background_img_dark":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","description":"You Only Live Once !","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/FelicxFoster","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"facebook":null,"email":null,"blogger":"https://blog.csdn.net/qq_37427972"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY 年 MM 月 DD 日 HH:mm","copyright_info":true,"share":true,"reward":{"enable":true,"img_link":"https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp","text":"请作者喝杯咖啡"}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"local_search":{"enable":true,"preload":true},"comment":{"enable":true,"use":"waline","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":"https://comment.felicx.eu.org/","reaction":true,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2018,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[null,"/css/custom.css"],"js":[null]},"root":"","source_data":{"links":[{"title":"小伙伴"},{"name":"Roozen 的小破站","link":"https://roozen.top","description":"技术宅男拯救世界！","avatar":"https://roozen.top/upload/touxiang.jpg"},{"name":"玖涯博客","link":"https://blog.nineya.com","description":"投资未来的人，是忠于现实的人","avatar":"https://blog.nineya.com/favicon.png"},{"name":"杜老师说","link":"https://dusays.com","description":"运维大佬","avatar":"https://cdn.dusays.com/avatar.png"},{"name":"张洪Heo","link":"https://blog.zhheo.com/","description":"分享设计与科技生活","avatar":"https://bu.dusays.com/2022/12/28/63ac2812183aa.png"},{"name":"LQBBY","link":"https://www.lqbby.com/","description":"成功是失败者的通行证，失败是成功者的墓志","avatar":"https://api.lqbby.com/api/qqimg?qq=1151581339"},{"name":"Carol 小屋","link":"https://blog.cnkj.site","description":"只想专心玩NAS","avatar":"https://blog.cnkj.site/upload/logo.png"},{"name":"Ariasakaの小窝","link":"https://yisous.xyz","description":"人有悲欢离合 月有阴晴圆缺","avatar":"https://bu.dusays.com/2023/06/30/649e9ec88cf47.png"},{"name":"GanSer","link":"https://www.gan1ser.top/","description":"紫箫吟断，素笺恨切","avatar":"https://pic.imgdb.cn/item/63f16cddf144a010070697c8.jpg"}]},"version":"4.1.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="YOLOのBLOG" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               YOLOのBLOG
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                            >
+                                
+                                TRAVELLINGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives"
+                    >ARCHIVES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags"
+                    >TAGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories"
+                    >CATEGORIES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links"
+                    >LINKS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                    >TRAVELLINGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about"
+                    >ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        ROS 之 topic 发布
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">felicx</span>
+                                
+                                    <span class="author-badge">化神</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2019 年 08 月 10 日 17:12</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Sat Aug 10 2019 17:49:41 GMT+0800">2019 年 08 月 10 日 17:49</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/ros/">ros</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.3k Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>11 Mins</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    <h2 id="Ros使用topic发布array："><a href="#Ros使用topic发布array：" class="headerlink" title="Ros使用topic发布array："></a>Ros使用topic发布array：</h2><h4 id="C-实现publish这里只需要数据data数据"><a href="#C-实现publish这里只需要数据data数据" class="headerlink" title="C++实现publish这里只需要数据data数据"></a>C++实现publish这里只需要数据data数据</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Float32MultiArray.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;Array_pub&quot;</span>);</span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">    ros::Publisher chatter_pub = nh.<span class="built_in">advertise</span>&lt;std_msgs::Float32MultiArray&gt;(<span class="string">&quot;chatter&quot;</span>, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function">ros::Rate <span class="title">loop_rate</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="keyword">while</span> (ros::<span class="built_in">ok</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        std_msgs::Float32MultiArray msg;</span><br><span class="line">        msg.data.<span class="built_in">push_back</span>(<span class="number">1.0</span>);<span class="comment">//自己写的，可行</span></span><br><span class="line">        msg.data.<span class="built_in">push_back</span>(<span class="number">2.0</span>);</span><br><span class="line">        msg.data.<span class="built_in">push_back</span>(<span class="number">3.0</span>);</span><br><span class="line">        msg.data.<span class="built_in">push_back</span>(<span class="number">4.0</span>);</span><br><span class="line"></span><br><span class="line">        chatter_pub.<span class="built_in">publish</span>(msg);</span><br><span class="line">        ros::<span class="built_in">spinOnce</span>();</span><br><span class="line">        loop_rate.<span class="built_in">sleep</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 订阅</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Float32MultiArray.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">chatterCallback</span><span class="params">(<span class="type">const</span> std_msgs::Float32MultiArray::ConstPtr&amp; msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;I heard: [%f],[%f],[%f],[%f]&quot;</span>, msg-&gt;data.<span class="built_in">at</span>(<span class="number">0</span>),msg-&gt;data.<span class="built_in">at</span>(<span class="number">1</span>),msg-&gt;data.<span class="built_in">at</span>(<span class="number">2</span>),msg-&gt;data.<span class="built_in">at</span>(<span class="number">3</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;Array_sub&quot;</span>);</span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line">    ros::Subscriber sub = nh.<span class="built_in">subscribe</span>(<span class="string">&quot;chatter&quot;</span>, <span class="number">1000</span>, chatterCallback);</span><br><span class="line">    ros::<span class="built_in">spin</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="python实现"><a href="#python实现" class="headerlink" title="python实现"></a>python实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> Float32MultiArray</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">talker</span>():</span><br><span class="line">    pub_p = rospy.Publisher(<span class="string">&#x27;lefttop_point&#x27;</span>, Float32MultiArray, queue_size=<span class="number">1</span>)</span><br><span class="line">    rospy.init_node(<span class="string">&#x27;talker&#x27;</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line">    rate = rospy.Rate(<span class="number">10</span>) <span class="comment"># 10hz</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">    array = [<span class="number">521</span>,<span class="number">1314</span>]</span><br><span class="line">    left_top = Float32MultiArray(data=array)</span><br><span class="line">        <span class="comment">#也可以采用下面的形式赋值</span></span><br><span class="line">        <span class="comment">#left_top = Float32MultiArray()</span></span><br><span class="line">        <span class="comment">#left_top.data = [521,1314]</span></span><br><span class="line">        <span class="comment">#left_top.label = &#x27;love&#x27;</span></span><br><span class="line">        rospy.loginfo(left_top)</span><br><span class="line">    pub_p.publish(left_top)</span><br><span class="line">        rate.sleep()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        talker()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="ROS-Publish-Subscribe-Arrays-Example"><a href="#ROS-Publish-Subscribe-Arrays-Example" class="headerlink" title="ROS Publish&#x2F;Subscribe Arrays Example"></a>ROS Publish&#x2F;Subscribe Arrays Example</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Publish.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/MultiArrayLayout.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/MultiArrayDimension.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Int32MultiArray.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;arrayPublisher&quot;</span>);</span><br><span class="line">    ros::NodeHandle n;</span><br><span class="line">    ros::Publisher pub = n.<span class="built_in">advertise</span>&lt;std_msgs::Int32MultiArray&gt;(<span class="string">&quot;array&quot;</span>, <span class="number">100</span>);</span><br><span class="line">    <span class="keyword">while</span> (ros::<span class="built_in">ok</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        std_msgs::Int32MultiArray array;</span><br><span class="line">        <span class="comment">//Clear array</span></span><br><span class="line">        array.data.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="comment">//for loop, pushing data in the size of the array</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">90</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//assign array a random number between 0 and 255.</span></span><br><span class="line">            array.data.<span class="built_in">push_back</span>(<span class="built_in">rand</span>() % <span class="number">255</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//Publish array</span></span><br><span class="line">        pub.<span class="built_in">publish</span>(array);</span><br><span class="line">        <span class="comment">//Let the world know</span></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;I published something!&quot;</span>);</span><br><span class="line">        <span class="comment">//Do this.</span></span><br><span class="line">        ros::<span class="built_in">spinOnce</span>();</span><br><span class="line">        <span class="comment">//Added a delay so not to spam</span></span><br><span class="line">        <span class="built_in">sleep</span>(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subscribe.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/MultiArrayLayout.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/MultiArrayDimension.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/Int32MultiArray.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> Arr[<span class="number">90</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">arrayCallback</span><span class="params">(<span class="type">const</span> std_msgs::Int32MultiArray::ConstPtr&amp; array)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;arraySubscriber&quot;</span>);</span><br><span class="line">    ros::NodeHandle n;</span><br><span class="line">    ros::Subscriber sub3 = n.<span class="built_in">subscribe</span>(<span class="string">&quot;array&quot;</span>, <span class="number">100</span>, arrayCallback);</span><br><span class="line">    ros::<span class="built_in">spinOnce</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">1</span>; j &lt; <span class="number">90</span>; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d, &quot;</span>, Arr[j]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">arrayCallback</span><span class="params">(<span class="type">const</span> std_msgs::Int32MultiArray::ConstPtr&amp; array)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// print all the remaining numbers</span></span><br><span class="line">    <span class="keyword">for</span>(std::vector&lt;<span class="type">int</span>&gt;::const_iterator it = array-&gt;data.<span class="built_in">begin</span>(); it != array-&gt;data.<span class="built_in">end</span>(); ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        Arr[i] = *it;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="std-msgs、geometry-msgs"><a href="#std-msgs、geometry-msgs" class="headerlink" title="std_msgs、geometry_msgs"></a><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://wiki.ros.org/std_msgs" >std_msgs<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://wiki.ros.org/geometry_msgs" >geometry_msgs<i class="fas fa-external-link-alt"></i></a></h4><p>这些直接搜ros wiki，都有用法的。</p>
+<h2 id="Ros使用topic发布LaserScan和PointCloud："><a href="#Ros使用topic发布LaserScan和PointCloud：" class="headerlink" title="Ros使用topic发布LaserScan和PointCloud："></a>Ros使用topic发布LaserScan和PointCloud：</h2><p><strong>消息类型：</strong>sensor_msgs&#x2F;LaserScan和 sensor_msgs&#x2F;PointCloud跟其他的消息一样，包括tf帧和与时间相关的信息。为了标准化发送这些信息，消息类型Header被用于所有此类消息的一个字段。 <strong>Header类型：</strong>Header包括是哪个字段。字段seq对应一个标识符，随着消息被发布，它会自动增加。字段stamp存储与数据相关联的时间信息。以激光扫描为例，stamp可能对应每次扫描开始的时间。字段frame_id存储与数据相关联的tf帧信息。以激光扫描为例，它将是激光数据所在帧。</p>
+<h4 id="sensor-msgs-LaserScan-Message："><a href="#sensor-msgs-LaserScan-Message：" class="headerlink" title="sensor_msgs&#x2F;LaserScan Message："></a><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/LaserScan.html" >sensor_msgs&#x2F;LaserScan Message<i class="fas fa-external-link-alt"></i></a>：</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里有啥就填啥,就相当一个结构体X，然后(X.参数)即可</span></span><br><span class="line"><span class="comment"># 测量的激光扫描角度，逆时针为正</span></span><br><span class="line"><span class="comment"># 设备坐标帧的0度面向前（沿着X轴方向）</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="title class_">Header</span> header</span><br><span class="line">float32 angle_min        <span class="comment"># scan的开始角度 [弧度]</span></span><br><span class="line">float32 angle_max        <span class="comment"># scan的结束角度 [弧度]</span></span><br><span class="line">float32 angle_increment  <span class="comment"># 测量的角度间的距离 [弧度]</span></span><br><span class="line">float32 time_increment   <span class="comment"># 测量间的时间 [秒]</span></span><br><span class="line">float32 scan_time        <span class="comment"># 扫描间的时间 [秒]</span></span><br><span class="line">float32 range_min        <span class="comment"># 最小的测量距离 [米]</span></span><br><span class="line">float32 range_max        <span class="comment"># 最大的测量距离 [米]</span></span><br><span class="line">float32[] ranges         <span class="comment"># 测量的距离数据 [米] (注意: 值 &lt; range_min 或 &gt; range_max 应当被丢弃)</span></span><br><span class="line">float32[] intensities    <span class="comment"># 强度数据 [device-specific units]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sensor_msgs/LaserScan.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;laser_scan_publisher&quot;</span>);</span><br><span class="line"></span><br><span class="line">  ros::NodeHandle n;</span><br><span class="line">  ros::Publisher scan_pub = n.<span class="built_in">advertise</span>&lt;sensor_msgs::LaserScan&gt;(<span class="string">&quot;scan&quot;</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> num_readings = <span class="number">100</span>;</span><br><span class="line">  <span class="type">double</span> laser_frequency = <span class="number">40</span>;</span><br><span class="line">  <span class="type">double</span> ranges[num_readings];</span><br><span class="line">  <span class="type">double</span> intensities[num_readings];</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">  <span class="function">ros::Rate <span class="title">r</span><span class="params">(<span class="number">1.0</span>)</span></span>;</span><br><span class="line">  <span class="keyword">while</span>(n.<span class="built_in">ok</span>())&#123;</span><br><span class="line">    <span class="comment">//generate some fake data for our laser scan</span></span><br><span class="line">    <span class="comment">//设置消息的长度，便于填充一些虚拟数据。真正的应用程序将从他们的激光扫描仪中获取数据</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; num_readings; ++i)&#123;</span><br><span class="line">      ranges[i] = count;</span><br><span class="line">      intensities[i] = <span class="number">100</span> + count;</span><br><span class="line">    &#125;</span><br><span class="line">    ros::Time scan_time = ros::Time::<span class="built_in">now</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//populate the LaserScan message</span></span><br><span class="line">    sensor_msgs::LaserScan scan;</span><br><span class="line">    scan.header.stamp = scan_time;</span><br><span class="line">    scan.header.frame_id = <span class="string">&quot;laser_frame&quot;</span>;</span><br><span class="line">    scan.angle_min = <span class="number">-1.57</span>;</span><br><span class="line">    scan.angle_max = <span class="number">1.57</span>;</span><br><span class="line">    scan.angle_increment = <span class="number">3.14</span> / num_readings;</span><br><span class="line">    scan.time_increment = (<span class="number">1</span> / laser_frequency) / (num_readings);</span><br><span class="line">    scan.range_min = <span class="number">0.0</span>;</span><br><span class="line">    scan.range_max = <span class="number">100.0</span>;</span><br><span class="line"></span><br><span class="line">    scan.ranges.<span class="built_in">resize</span>(num_readings);   <span class="comment">//使用resize设定激光点的多少</span></span><br><span class="line">    scan.intensities.<span class="built_in">resize</span>(num_readings);</span><br><span class="line">    <span class="comment">//用每秒增加1的值填充虚拟激光数据</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; num_readings; ++i)&#123;</span><br><span class="line">      scan.ranges[i] = ranges[i];</span><br><span class="line">      scan.intensities[i] = intensities[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    scan_pub.<span class="built_in">publish</span>(scan);</span><br><span class="line">    ++count;</span><br><span class="line">    r.<span class="built_in">sleep</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="sensor-msgs-PointCloud-Message：-可参考这篇"><a href="#sensor-msgs-PointCloud-Message：-可参考这篇" class="headerlink" title="sensor_msgs&#x2F;PointCloud Message： 可参考这篇"></a><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud.html" >sensor_msgs&#x2F;PointCloud Message<i class="fas fa-external-link-alt"></i></a>： 可参考<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/li-yao7758258/p/6651326.html" >这篇<i class="fas fa-external-link-alt"></i></a></h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#This message holds a collection of 3d points, plus optional additional information about each point.</span></span><br><span class="line"><span class="comment">#Each Point32 should be interpreted as a 3d point in the frame given in the header</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Header</span> header</span><br><span class="line">geometry_msgs/<span class="title class_">Point32</span>[] points  <span class="comment">#Array of 3d points</span></span><br><span class="line"><span class="title class_">ChannelFloat32</span>[] channels       <span class="comment">#Each channel should have the same number of elements as points array, and the data in each channel should correspond 1:1 with each point</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sensor_msgs/PointCloud.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;point_cloud_publisher&quot;</span>);</span><br><span class="line"></span><br><span class="line">  ros::NodeHandle n;</span><br><span class="line">  ros::Publisher cloud_pub = n.<span class="built_in">advertise</span>&lt;sensor_msgs::PointCloud&gt;(<span class="string">&quot;cloud&quot;</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> num_points = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">  <span class="function">ros::Rate <span class="title">r</span><span class="params">(<span class="number">1.0</span>)</span></span>;</span><br><span class="line">  <span class="keyword">while</span>(n.<span class="built_in">ok</span>())&#123;</span><br><span class="line">    sensor_msgs::PointCloud cloud;</span><br><span class="line">    cloud.header.stamp = ros::Time::<span class="built_in">now</span>();</span><br><span class="line">    cloud.header.frame_id = <span class="string">&quot;sensor_frame&quot;</span>;<span class="comment">//填充 PointCloud 消息的头：frame 和 timestamp．</span></span><br><span class="line"></span><br><span class="line">    cloud.points.<span class="built_in">resize</span>(num_points);<span class="comment">//设置点云的数量．</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//增加信道 &quot;intensity&quot; 并设置其大小，使与点云数量相匹配．</span></span><br><span class="line">    cloud.channels.<span class="built_in">resize</span>(<span class="number">1</span>);</span><br><span class="line">    cloud.channels[<span class="number">0</span>].name = <span class="string">&quot;intensities&quot;</span>;</span><br><span class="line">    cloud.channels[<span class="number">0</span>].values.<span class="built_in">resize</span>(num_points);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用虚拟数据填充 PointCloud 消息．同时，使用虚拟数据填充 intensity 信道．</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; num_points; ++i)&#123;</span><br><span class="line">      cloud.points[i].x = <span class="number">1</span> + count;</span><br><span class="line">      cloud.points[i].y = <span class="number">2</span> + count;</span><br><span class="line">      cloud.points[i].z = <span class="number">3</span> + count;</span><br><span class="line">      cloud.channels[<span class="number">0</span>].values[i] = <span class="number">100</span> + count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cloud_pub.<span class="built_in">publish</span>(cloud);</span><br><span class="line">    ++count;</span><br><span class="line">    r.<span class="built_in">sleep</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="ros订阅velodyne激光的点云数据"><a href="#ros订阅velodyne激光的点云数据" class="headerlink" title="ros订阅velodyne激光的点云数据"></a>ros订阅velodyne激光的点云数据</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import rospy</span><br><span class="line">from sensor_msgs.msg import PointCloud2</span><br><span class="line">import sensor_msgs.point_cloud2 as pc2</span><br><span class="line">import scipy.misc</span><br><span class="line">import os</span><br><span class="line">def point_cloud_2_birdseye(points):</span><br><span class="line">    x_points = points[:, 0]</span><br><span class="line">    y_points = points[:, 1]</span><br><span class="line">    z_points = points[:, 2]</span><br><span class="line"></span><br><span class="line">    f_filt = np.logical_and((x_points &gt; -50), (x_points &lt; 50))</span><br><span class="line">    # logical_and（逻辑与）</span><br><span class="line">    s_filt = np.logical_and((y_points &gt; -50), (y_points &lt; 50))</span><br><span class="line">    filter = np.logical_and(f_filt, s_filt)</span><br><span class="line">    indices = np.argwhere(filter)	# 筛选符合范围的points</span><br><span class="line">    # 返回符合filter条件的位置索引，即第几个位置</span><br><span class="line"></span><br><span class="line">    x_points = x_points[indices]</span><br><span class="line">    y_points = y_points[indices]</span><br><span class="line">    z_points = z_points[indices]</span><br><span class="line"></span><br><span class="line">    x_img = (-y_points*10).astype(np.int32)+500</span><br><span class="line">    # 转换数组的数据类型</span><br><span class="line">    # 点云数据通常是浮点数，而图像数据通常是整数，所以要float映射到int</span><br><span class="line">    y_img = (-x_points *10).astype(np.int32)+500</span><br><span class="line"></span><br><span class="line">    pixel_values = np.clip(z_points,-2,2)</span><br><span class="line">    # numpy.clip(a, a_min, a_max, out=None)</span><br><span class="line">    # 将数组中的元素限制在-2和2之间，大于2的就使得它等于2，小于-2,的就使得它等于-2</span><br><span class="line">    pixel_values = ((pixel_values +2) / 4.0) * 255</span><br><span class="line"></span><br><span class="line">    im = np.zeros([1001, 1001], dtype=np.uint8)</span><br><span class="line">    im[y_img, x_img] = pixel_values</span><br><span class="line">    return im</span><br><span class="line"></span><br><span class="line">def callback(lidar):</span><br><span class="line">    lidar = pc2.read_points(lidar)</span><br><span class="line">    # 函数 point_cloud2.read_points(data, field_names=(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;), skip_nans=True)</span><br><span class="line">    # 这个函数返回值是一个generator（python中的生成器，属于Iterator迭代器的一种）</span><br><span class="line">    points = np.array(list(lidar))</span><br><span class="line">    # 如果需要一次获得全部点，可以用list()转换为列表</span><br><span class="line">    im = point_cloud_2_birdseye(points)</span><br><span class="line">    scipy.misc.imsave(&#x27;./lidar.png&#x27;, im)	# 将数组保存成图像</span><br><span class="line">    os._exit(0)		# python无错误退出程序</span><br><span class="line"></span><br><span class="line">def cloud_subscribe():</span><br><span class="line">    rospy.init_node(&#x27;cloud_subscribe_node&#x27;)</span><br><span class="line">    rospy.Subscriber(&quot;/velodyne_points&quot;, PointCloud2, callback)</span><br><span class="line">    rospy.spin()</span><br><span class="line">cloud_subscribe()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Ros将回调函数写成类的形式："><a href="#Ros将回调函数写成类的形式：" class="headerlink" title="Ros将回调函数写成类的形式："></a>Ros将回调函数写成类的形式：</h4><p><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers" >wiki<i class="fas fa-external-link-alt"></i></a> 上介绍，在ROS中，想在回调函数中发布消息，有两个思路：<br>1、把函数写成类的形式，把需要的一些变量在类中声明为全局变量。【推荐，模块化好】<br>2、在函数中，把回调函数需要调用的变量声明为全局变量。也可以解决这个问题。【不好，不符合面向对象的风格】 下面的例子是在同一个节点中实现订阅一个消息，然后在该消息的回调函数中处理一下这些数据后再发布到另一个topic上。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SubscribeAndPublish</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">SubscribeAndPublish</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//Topic you want to publish</span></span><br><span class="line">        pub_ = n_.<span class="built_in">advertise</span>&lt;PUBLISHED_MESSAGE_TYPE&gt;(<span class="string">&quot;/published_topic&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//PUBLISHED_MESSAGE_TYPE例如std_msgs::String</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Topic you want to subscribe</span></span><br><span class="line">        sub_ = n_.<span class="built_in">subscribe</span>(<span class="string">&quot;/subscribed_topic&quot;</span>, <span class="number">1</span>, &amp;SubscribeAndPublish::callback, <span class="keyword">this</span>);  <span class="comment">//注意这里，和wiki上不一样。&amp;SubscribeAndPublish这个是类名</span></span><br><span class="line">        <span class="comment">//之所以用this，是因为第四个参数是一个指向【回调函数所在对象】的指针，官方文档例子里把sub定义在了类外面，我们把sub定义在了类的构造函数里面，所以this就是在实例化对象的时候指向对象的指针。（关于this：当调用成员函数a.volume 时，编译系统就把对象a的起始地址赋给this指针；构造函数：建立对象时自动执行。结合两者，在本例中建立类对象时，自动生成指向本对象的指针。）</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//SUBSCRIBED_MESSAGE_TYPE例如std_msgs::String,记得&amp;要保留</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(<span class="type">const</span> SUBSCRIBED_MESSAGE_TYPE&amp; input)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        PUBLISHED_MESSAGE_TYPE output;</span><br><span class="line">        <span class="comment">//.... do something with the input and generate the output...</span></span><br><span class="line">        <span class="comment">//output = ...</span></span><br><span class="line">        pub_.<span class="built_in">publish</span>(output);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    ros::NodeHandle n_;</span><br><span class="line">    ros::Publisher pub_;</span><br><span class="line">    ros::Subscriber sub_;</span><br><span class="line"></span><br><span class="line">&#125;;<span class="comment">//End of class SubscribeAndPublish</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//Initiate ROS</span></span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;subscribe_and_publish&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Create an object of class SubscribeAndPublish that will take care of everything</span></span><br><span class="line">    SubscribeAndPublish SAPObject;</span><br><span class="line"></span><br><span class="line">    ros::<span class="built_in">spin</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                ROS 之 topic 发布
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2149880123.html
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    Author
+                </div>
+                <div class="content">felicx</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    Published
+                </div>
+                <div class="content">2019-08-10 17:12</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    License
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed" rel="external nofollow noreferrer" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="Copy copyright info" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/ros/">ros</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+                    <div class="reward-author-container border-box flex-center">
+    <div class="reward-btn keep-button border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="请作者喝杯咖啡"
+            data-tooltip-img-url="https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp"
+            data-tooltip-img-trigger="click"
+            data-tooltip-img-style="top: -8px;"
+    >
+        <i class="fa-solid fa-hand-holding-heart"></i>
+    </div>
+</div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/768008996.html"
+                                   title="ROS 之 TF 理解"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">ROS 之 TF 理解</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/921871846.html"
+                                   title="ROS 之自定义 msg"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">ROS 之自定义 msg</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;Comments
+        </div>
+        <div class="comment-plugin-fail border-box">
+    <span class="fail-tip">Comment plugin failed to load</span>
+    <button class="reload keep-button">Click to reload</button>
+</div>
+<div class="comment-plugin-loading flex-center border-box">
+    <i class="loading-icon fa-solid fa-spinner fa-spin"></i>
+    <span class="load-tip">Loading comment plugin</span>
+</div>
+<script data-pjax>
+  window.KeepCommentPlugin = {}
+  window.KeepCommentPlugin.hideLoading = () => {
+    const cplDom = document.querySelector('.comments-container .comment-plugin-loading')
+    cplDom.style.display = 'none'
+  }
+  window.KeepCommentPlugin.loadFailHandle = () => {
+    window.KeepCommentPlugin.hideLoading()
+    const cpfDom = document.querySelector('.comments-container .comment-plugin-fail')
+    cpfDom.style.display = 'flex'
+    cpfDom.querySelector('.reload').addEventListener('click', () => {
+      window.location.reload()
+    })
+  }
+</script>
+
+        
+            
+
+    <div class="waline-comment-container">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline-meta.css"/>
+        <div id="waline-comment"></div>
+        <script data-pjax>
+          window.KeepCommentPlugin.walineOptions = JSON.parse('{}'.replace(/&#34;/g, '"'))
+          window.KeepCommentPlugin.walineOptions.el = '#waline-comment'
+          window.KeepCommentPlugin.walineOptions.comment = '.post-comments-count'
+          window.KeepCommentPlugin.walineOptions.serverURL = 'https://comment.felicx.eu.org/'
+          window.KeepCommentPlugin.walineOptions.lang = 'en' || 'zh-CN'
+          window.KeepCommentPlugin.walineOptions.reaction = 'true' === 'true'
+        </script>
+
+        
+
+        
+            <script data-pjax
+                    async
+                    type="module"
+            >
+              import { init } from 'https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.js'
+              window.KeepCommentPlugin.initWaline = () => {
+                if (init) {
+                  init(window.KeepCommentPlugin.walineOptions)
+                  window.KeepCommentPlugin.hideLoading()
+                } else {
+                  setTimeout(() => {
+                    window.KeepCommentPlugin.initWaline()
+                  }, 1000)
+                }
+              }
+
+              if ('true' === 'true') {
+                setTimeout(() => {
+                  window.KeepCommentPlugin.initWaline()
+                }, 1200)
+              } else {
+                window.addEventListener('DOMContentLoaded', window.KeepCommentPlugin.initWaline)
+              }
+            </script>
+        
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ros%E4%BD%BF%E7%94%A8topic%E5%8F%91%E5%B8%83array%EF%BC%9A"><span class="nav-text">Ros使用topic发布array：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%AE%9E%E7%8E%B0publish%E8%BF%99%E9%87%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E6%95%B0%E6%8D%AEdata%E6%95%B0%E6%8D%AE"><span class="nav-text">C++实现publish这里只需要数据data数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E5%AE%9E%E7%8E%B0"><span class="nav-text">python实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ROS-Publish-Subscribe-Arrays-Example"><span class="nav-text">ROS Publish&#x2F;Subscribe Arrays Example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#std-msgs%E3%80%81geometry-msgs"><span class="nav-text">std_msgs、geometry_msgs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ros%E4%BD%BF%E7%94%A8topic%E5%8F%91%E5%B8%83LaserScan%E5%92%8CPointCloud%EF%BC%9A"><span class="nav-text">Ros使用topic发布LaserScan和PointCloud：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sensor-msgs-LaserScan-Message%EF%BC%9A"><span class="nav-text">sensor_msgs&#x2F;LaserScan Message：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sensor-msgs-PointCloud-Message%EF%BC%9A-%E5%8F%AF%E5%8F%82%E8%80%83%E8%BF%99%E7%AF%87"><span class="nav-text">sensor_msgs&#x2F;PointCloud Message： 可参考这篇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ros%E8%AE%A2%E9%98%85velodyne%E6%BF%80%E5%85%89%E7%9A%84%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE"><span class="nav-text">ros订阅velodyne激光的点云数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ros%E5%B0%86%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%86%99%E6%88%90%E7%B1%BB%E7%9A%84%E5%BD%A2%E5%BC%8F%EF%BC%9A"><span class="nav-text">Ros将回调函数写成类的形式：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2018</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">felicx</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep" rel="external nofollow noreferrer">Keep</a>
+    </div>
+
+    
+
+    
+        <div class="count-info info-item">
+            
+
+            
+                <span class="count-item border-box uv">
+                    <span class="item-type border-box">Unique Visitor</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-item border-box pv">
+                    <span class="item-type border-box">Page View</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ros%E4%BD%BF%E7%94%A8topic%E5%8F%91%E5%B8%83array%EF%BC%9A"><span class="nav-text">Ros使用topic发布array：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%AE%9E%E7%8E%B0publish%E8%BF%99%E9%87%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E6%95%B0%E6%8D%AEdata%E6%95%B0%E6%8D%AE"><span class="nav-text">C++实现publish这里只需要数据data数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E5%AE%9E%E7%8E%B0"><span class="nav-text">python实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ROS-Publish-Subscribe-Arrays-Example"><span class="nav-text">ROS Publish&#x2F;Subscribe Arrays Example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#std-msgs%E3%80%81geometry-msgs"><span class="nav-text">std_msgs、geometry_msgs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ros%E4%BD%BF%E7%94%A8topic%E5%8F%91%E5%B8%83LaserScan%E5%92%8CPointCloud%EF%BC%9A"><span class="nav-text">Ros使用topic发布LaserScan和PointCloud：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sensor-msgs-LaserScan-Message%EF%BC%9A"><span class="nav-text">sensor_msgs&#x2F;LaserScan Message：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sensor-msgs-PointCloud-Message%EF%BC%9A-%E5%8F%AF%E5%8F%82%E8%80%83%E8%BF%99%E7%AF%87"><span class="nav-text">sensor_msgs&#x2F;PointCloud Message： 可参考这篇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ros%E8%AE%A2%E9%98%85velodyne%E6%BF%80%E5%85%89%E7%9A%84%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE"><span class="nav-text">ros订阅velodyne激光的点云数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ros%E5%B0%86%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%86%99%E6%88%90%E7%B1%BB%E7%9A%84%E5%BD%A2%E5%BC%8F%EF%BC%9A"><span class="nav-text">Ros将回调函数写成类的形式：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+    
+<script src="//cdn.jsdelivr.net/npm/mermaid@10.5.0/dist/mermaid.min.js"></script>
+
+    <script data-pjax>
+      if (window.mermaid) {
+        mermaid.init()
+      }
+    </script>
+
+
+
+
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>

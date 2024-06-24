@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ROS,机器人,自动驾驶,算法,Linux,Python,LeetCode,建站,云服务器,Docker">
+    <meta name="description" content="You Only Live Once">
+    <meta name="author" content="felicx">
+    
+    <title>
+        
+            ROS 使用 move_base 做4个点循环跑的导航 |
+        
+        YOLOのBLOG
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/font/css/brands.min.css">
+    
+        
+            
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"blog.felicx.eu.org","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"YOLOのBLOG","author":"felicx","avatar":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","logo":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp","favicon":"https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp"},"menu":{"archives":"/archives","tags":"/tags","categories":"/categories","links":"/links","Travellings":"https://www.travellings.cn/go.html","about":"/about"},"first_screen":{"enable":false,"background_img":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","background_img_dark":"https://FelicxFoster.github.io/picx-images-hosting/WallPaper/jay-kim-20161119-1.1n5lgpfg2u68.webp","description":"You Only Live Once !","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/FelicxFoster","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"facebook":null,"email":null,"blogger":"https://blog.csdn.net/qq_37427972"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY 年 MM 月 DD 日 HH:mm","copyright_info":true,"share":true,"reward":{"enable":true,"img_link":"https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp","text":"请作者喝杯咖啡"}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"local_search":{"enable":true,"preload":true},"comment":{"enable":true,"use":"waline","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.36"},"waline":{"server_url":"https://comment.felicx.eu.org/","reaction":true,"version":"3.2.1"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2018,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[null,"/css/custom.css"],"js":[null]},"root":"","source_data":{"links":[{"title":"小伙伴"},{"name":"Roozen 的小破站","link":"https://roozen.top","description":"技术宅男拯救世界！","avatar":"https://roozen.top/upload/touxiang.jpg"},{"name":"玖涯博客","link":"https://blog.nineya.com","description":"投资未来的人，是忠于现实的人","avatar":"https://blog.nineya.com/favicon.png"},{"name":"杜老师说","link":"https://dusays.com","description":"运维大佬","avatar":"https://cdn.dusays.com/avatar.png"},{"name":"张洪Heo","link":"https://blog.zhheo.com/","description":"分享设计与科技生活","avatar":"https://bu.dusays.com/2022/12/28/63ac2812183aa.png"},{"name":"LQBBY","link":"https://www.lqbby.com/","description":"成功是失败者的通行证，失败是成功者的墓志","avatar":"https://api.lqbby.com/api/qqimg?qq=1151581339"},{"name":"Carol 小屋","link":"https://blog.cnkj.site","description":"只想专心玩NAS","avatar":"https://blog.cnkj.site/upload/logo.png"},{"name":"Ariasakaの小窝","link":"https://yisous.xyz","description":"人有悲欢离合 月有阴晴圆缺","avatar":"https://bu.dusays.com/2023/06/30/649e9ec88cf47.png"},{"name":"GanSer","link":"https://www.gan1ser.top/","description":"紫箫吟断，素笺恨切","avatar":"https://pic.imgdb.cn/item/63f16cddf144a010070697c8.jpg"}]},"version":"4.1.3"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="YOLOのBLOG" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               YOLOのBLOG
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                            >
+                                
+                                TRAVELLINGS
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives"
+                    >ARCHIVES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags"
+                    >TAGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories"
+                    >CATEGORIES</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links"
+                    >LINKS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"
+                    >TRAVELLINGS</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about"
+                    >ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        ROS 使用 move_base 做4个点循环跑的导航
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">felicx</span>
+                                
+                                    <span class="author-badge">化神</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2021 年 03 月 06 日 10:27</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Sat Mar 06 2021 10:47:20 GMT+0800">2021 年 03 月 06 日 10:47</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/ros/">ros</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.9k Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>14 Mins</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录一下用<code>move_base</code>跑4个目标点的程序。</p>
+<p>首先<code>《ros by example 1》</code>里有个用<code>move_base</code>跑4个目标点的程序，先去看了下源码，发现它仅仅是把目标点发送出去，然后等待<code>move_base</code> <code>60s</code>，如果这段时间内成功完成导航任务，则继续发布下个目标点，否则退出。代码如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">move</span>(<span class="params">self, goal</span>):</span><br><span class="line">    <span class="comment"># Send the goal pose to the MoveBaseAction server</span></span><br><span class="line">    self.move_base.send_goal(goal)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Allow 1 minute to get there</span></span><br><span class="line">    finished_within_time = self.move_base.wait_for_result(rospy.Duration(<span class="number">60</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># If we don&#x27;t get there in time, abort the goal</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> finished_within_time:</span><br><span class="line">        self.move_base.cancel_goal()</span><br><span class="line">        rospy.loginfo(<span class="string">&quot;Timed out achieving goal&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># We made it!</span></span><br><span class="line">            state = self.move_base.get_state()</span><br><span class="line">            <span class="keyword">if</span> state == GoalStatus.SUCCEEDED:</span><br><span class="line">                rospy.loginfo(<span class="string">&quot;Goal succeeded!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当时觉得好无语，哪有做控制是靠等待时间来判断的啊，通过当前位姿与目标点位姿的距离才能判断出导航任务是否完成啊。所以，只要把这段代码中添加一个距离的判断就可以实现基于<code>move_base</code>的循环导航了。即：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> distance &lt; <span class="number">1.0</span>:</span><br><span class="line">    move_base.send_goal(goal)</span><br></pre></td></tr></table></figure>
+
+<p>只要当前位姿与目标点位姿的距离小于1米了，我就重新发送一个目标点给<code>move_base</code>，这样就可以实现循环导航了（在实验时试过：在导航过程中重新发送目标点，机器人会重新规划处一条到新目标点的路径及轨迹）。那当前时刻的位姿怎么确定呢？有2种方式，一种是订阅<code>定位</code>节点发布的<code>位姿</code>话题；感觉这种有点<code>low</code>，就<code>pass</code>掉了，更优越的方法就是用<code>Actionlib</code>。</p>
+<h3 id="Actionlib"><a href="#Actionlib" class="headerlink" title="Actionlib"></a>Actionlib</h3><p>为了寻找这种更优的方法，只有去看<code>move_base</code>的源码了！看了代码发现<code>move_base</code>其实是<code>actionlib</code>的服务端的实现，好吧，不知道<code>actionlib</code>是啥。后来又去看<code>actionlib</code>的概念。<code>action</code>也是一种类似于~的问答通讯机制，不一样的地方是<code>action</code>还带有一个反馈机制，可以不断反馈任务的实施进度，而且可以在任务实施过程中，中止运行。哇，带反馈，这不就是我要的更优越的方法么。之后通过下面2位大神的文章以及ROS官网中的教程简单学习了一下<code>actionlib</code>的使用。<br><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.guyuehome.com/908" >ROS探索总结（三十二）——action<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/cv-pr/p/6005013.html" >ROS知识（15）—-Actionlib的使用（一）<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://wiki.ros.org/actionlib/Tutorials" >actionlib&#x2F; Tutorials<i class="fas fa-external-link-alt"></i></a></p>
+<p>如下图可以看出，<code>action</code>分为服务端和客户端，服务端会不断的向客服端发送反馈信息，而<code>move_base</code>为服务端，上述<code>《ros by example 1 》</code>中的例子为客服端。所以只需要在客户端中使用这个反馈就可以了。那么，怎么实现呢？</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_1/Action_Interface.2oedoydz3km0.webp"
+                        alt="Action_Interface"
+                 ></p>
+<h3 id="问题1：是否发出了反馈消息"><a href="#问题1：是否发出了反馈消息" class="headerlink" title="问题1：是否发出了反馈消息"></a>问题1：是否发出了反馈消息</h3><p>我们先从第一个问题开始：通过这篇<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/shhu1993/p/6323699.html" >文章<i class="fas fa-external-link-alt"></i></a>，知道了<code>move_base</code>确实是发布了反馈信息，而且反馈信息就是当前的位姿。ok，成功解决第一个问题。注意，这个反馈消息不是<code>move_base</code>发出来的，而是<code>actionlib</code>发出来的！</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MoveBase::executeCycle</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    geometry_msgs::PoseStamped&amp; goal,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::vector&lt;geometry_msgs::PoseStamped&gt;&amp; global_plan)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//发布速度topic</span></span><br><span class="line">  geometry_msgs::Twist cmd_vel;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// push the feedback out</span></span><br><span class="line">  <span class="comment">//发布一些反馈信息</span></span><br><span class="line">  move_base_msgs::MoveBaseFeedback feedback;</span><br><span class="line">  feedback.base_position = current_position;</span><br><span class="line">  as_-&gt;<span class="built_in">publishFeedback</span>(feedback);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//省略。。。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MoveBase::executeCb</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> move_base_msgs::MoveBaseGoalConstPtr&amp; move_base_goal)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// we have a goal so start the planner(通知planner线程进行路径规划)</span></span><br><span class="line">  <span class="function">boost::unique_lock&lt;boost::mutex&gt; <span class="title">lock</span><span class="params">(planner_mutex_)</span></span>;</span><br><span class="line">  planner_goal_ = goal;</span><br><span class="line">  runPlanner_ = <span class="literal">true</span>;</span><br><span class="line">  <span class="comment">// 通知规划路径线程</span></span><br><span class="line">  planner_cond_.<span class="built_in">notify_one</span>();</span><br><span class="line">  lock.<span class="built_in">unlock</span>();</span><br><span class="line"></span><br><span class="line">  ros::NodeHandle n;</span><br><span class="line">  <span class="keyword">while</span> (n.<span class="built_in">ok</span>()) &#123;</span><br><span class="line">    <span class="comment">// 被抢占了(可能是发出新的goal，也可能是取消了)</span></span><br><span class="line">    <span class="keyword">if</span> (as_-&gt;<span class="built_in">isPreemptRequested</span>()) &#123;</span><br><span class="line">      <span class="keyword">if</span> (as_-&gt;<span class="built_in">isNewGoalAvailable</span>()) &#123;</span><br><span class="line">        <span class="comment">// 发布新的goal，通知planner线程工作。</span></span><br><span class="line">        planner_cond_.<span class="built_in">notify_one</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// if we&#x27;ve been preempted explicitly we need to shut things down</span></span><br><span class="line">        <span class="comment">//强制退出</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//省略。。。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>与此同时，我也看到了在新的目标点到来时，新的任务抢占了之前的任务，<code>move_base</code>会将新的目标点发送到<code>actionlib</code>中并重新规划路径。</p>
+<h3 id="问题2：消息类型"><a href="#问题2：消息类型" class="headerlink" title="问题2：消息类型"></a>问题2：消息类型</h3><p><code>move_base</code>的<code>action</code>通讯的消息类型在安装<code>move_base</code>时会自动安装，ROS中的<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://wiki.ros.org/move_base_msgs" >move_base_msgs<i class="fas fa-external-link-alt"></i></a>提供了这个消息的说明。简单说明一下，消息类型是由2个“—”分隔开的三种数据类型组成。第一条为目标点的消息类型；第二条为当此次动作执行完成时向客户端发送的消息类型，仅在动作结束时发送一次；第三条为反馈的消息类型，这个是在动作执行过程中一直发送的。</p>
+<p>在这里可以看到，<code>move_base</code>的反馈消息类型为 <code>geometry_msgs/PoseStamped</code> ，消息的名字为 <code>base_position</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#goal definition</span></span><br><span class="line">geometry_msgs/PoseStamped target_pose</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"><span class="comment">#result definition</span></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"><span class="comment">#feedback</span></span><br><span class="line">geometry_msgs/PoseStamped base_position</span><br></pre></td></tr></table></figure>
+
+<p> 这个反馈消息是发送在<code>/move_base</code>命名空间下的<code>/feedback</code>话题上，也就是<code>/move_base/feedback</code>。通过接收这个话题得到的消息如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">header:</span><br><span class="line">  <span class="built_in">seq</span>: 640</span><br><span class="line">  stamp:</span><br><span class="line">    secs: 1547635103</span><br><span class="line">    nsecs: 592393429</span><br><span class="line">  frame_id: <span class="string">&#x27;&#x27;</span></span><br><span class="line">status:</span><br><span class="line">  goal_id:</span><br><span class="line">    stamp:</span><br><span class="line">      secs: 1547635097</span><br><span class="line">      nsecs: 258239984</span><br><span class="line">    <span class="built_in">id</span>: <span class="string">&quot;/nav_test-4-1547635097.258&quot;</span></span><br><span class="line">  status: 1</span><br><span class="line">  text: <span class="string">&quot;This goal has been accepted by the simple action server&quot;</span></span><br><span class="line">feedback:</span><br><span class="line">  base_position:</span><br><span class="line">    header:</span><br><span class="line">      <span class="built_in">seq</span>: 0</span><br><span class="line">      stamp:</span><br><span class="line">        secs: 1547635103</span><br><span class="line">        nsecs: 550548076</span><br><span class="line">      frame_id: <span class="string">&quot;map&quot;</span></span><br><span class="line">    pose:</span><br><span class="line">      position:</span><br><span class="line">        x: 0.00729128714117</span><br><span class="line">        y: 0.0192558593724</span><br><span class="line">        z: 0.0</span><br><span class="line">      orientation:</span><br><span class="line">        x: 0.0</span><br><span class="line">        y: 0.0</span><br><span class="line">        z: -0.0199257022983</span><br><span class="line">        w: 0.999801463486</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>OK，第二个问题成功解决掉。</p>
+<h3 id="问题3：怎么接收反馈消息"><a href="#问题3：怎么接收反馈消息" class="headerlink" title="问题3：怎么接收反馈消息"></a>问题3：怎么接收反馈消息</h3><p>在学习<code>actionlib</code>时知道了<code>actionlib</code>的使用方式，即，一方为服务端，负责发送动作执行的状态与结果；一方为客户端，负责发送动作目标并监听动作状态。反馈消息是从服务端按照着自己定义的消息类型向客户端发出。所以，反馈消息的处理是在客服端内进行，通过回调函数的方式进行处理。ROS中有<a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Callback%20Based%20Simple%20Action%20Client" >例子<i class="fas fa-external-link-alt"></i></a>如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;actionlib/client/simple_action_client.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;actionlib_tutorials/FibonacciAction.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> actionlib_tutorials;</span><br><span class="line"><span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;FibonacciAction&gt; Client;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Called once when the goal completes</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">doneCb</span><span class="params">(<span class="type">const</span> actionlib::SimpleClientGoalState&amp; state,</span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="type">const</span> FibonacciResultConstPtr&amp; result)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Finished in state [%s]&quot;</span>, state.<span class="built_in">toString</span>().<span class="built_in">c_str</span>());</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Answer: %i&quot;</span>, result-&gt;sequence.<span class="built_in">back</span>());</span><br><span class="line">  ros::<span class="built_in">shutdown</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Called once when the goal becomes active</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">activeCb</span><span class="params">()</span> </span>&#123; <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Goal just went active&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Called every time feedback is received for the goal</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">feedbackCb</span><span class="params">(<span class="type">const</span> FibonacciFeedbackConstPtr&amp; feedback)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Got Feedback of length %lu&quot;</span>, feedback-&gt;sequence.<span class="built_in">size</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;test_fibonacci_callback&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Create the action client</span></span><br><span class="line">  <span class="function">Client <span class="title">ac</span><span class="params">(<span class="string">&quot;fibonacci&quot;</span>, <span class="literal">true</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Waiting for action server to start.&quot;</span>);</span><br><span class="line">  ac.<span class="built_in">waitForServer</span>();</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Action server started, sending goal.&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Send Goal</span></span><br><span class="line">  FibonacciGoal goal;</span><br><span class="line">  goal.order = <span class="number">20</span>;</span><br><span class="line">  ac.<span class="built_in">sendGoal</span>(goal, &amp;doneCb, &amp;activeCb, &amp;feedbackCb);</span><br><span class="line"></span><br><span class="line">  ros::<span class="built_in">spin</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，通过在发送目标点时将回调函数注册进去，从而在每次反馈消息到来时将自动调用回调函数，也就是上文中的<code>feedbackCb()</code>函数。在<code>actionlib</code>的源码中可以找到<code>sendGoal()</code>的声明，它为后面三个回调函数给了默认的初始值，一个指向空函数的函数指针。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \brief Sends a goal to the ActionServer, and also registers callbacks</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If a previous goal is already active when this is called. We simply forget</span></span><br><span class="line"><span class="comment"> * about that goal and start tracking the new goal. No cancel requests are made.</span></span><br><span class="line"><span class="comment"> * \param done_cb     Callback that gets called on transitions to Done</span></span><br><span class="line"><span class="comment"> * \param active_cb   Callback that gets called on transitions to Active</span></span><br><span class="line"><span class="comment"> * \param feedback_cb Callback that gets called whenever feedback for this goal</span></span><br><span class="line"><span class="comment"> * is received</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sendGoal</span><span class="params">(<span class="type">const</span> Goal&amp; goal,</span></span></span><br><span class="line"><span class="params"><span class="function">              SimpleDoneCallback done_cb = SimpleDoneCallback(),</span></span></span><br><span class="line"><span class="params"><span class="function">              SimpleActiveCallback active_cb = SimpleActiveCallback(),</span></span></span><br><span class="line"><span class="params"><span class="function">              SimpleFeedbackCallback feedback_cb = SimpleFeedbackCallback())</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>知道了回调函数的使用方式就可以接受反馈消息了。不完整的几行代码如下：在下面的代码中，每次反馈消息的到来都会调用<code>feedbackCb()</code>，并将<code>base_position</code>赋值到全局变量<code>current_point</code>当中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;move_base_msgs::MoveBaseAction&gt; Client;</span><br><span class="line"></span><br><span class="line">geometry_msgs::Point current_point;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Called once when the goal becomes active</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">activeCb</span><span class="params">()</span> </span>&#123; <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Goal Received&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Called every time feedback is received for the goal</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">feedbackCb</span><span class="params">(<span class="type">const</span> move_base_msgs::MoveBaseFeedbackConstPtr&amp; feedback)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//	ROS_INFO(&quot;Got base_position of Feedback&quot;);</span></span><br><span class="line">  current_point.x = feedback-&gt;base_position.pose.position.x;</span><br><span class="line">  current_point.y = feedback-&gt;base_position.pose.position.y;</span><br><span class="line">  current_point.z = feedback-&gt;base_position.pose.position.z;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;nav_move_base&quot;</span>);</span><br><span class="line">  ros::NodeHandle node;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Subscribe to the move_base action server</span></span><br><span class="line">  <span class="function">Client <span class="title">ac</span><span class="params">(<span class="string">&quot;move_base&quot;</span>, <span class="literal">true</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Publisher to manually control the robot (e.g. to stop it, queue_size=5)</span></span><br><span class="line">  cmdVelPub = node.<span class="built_in">advertise</span>&lt;geometry_msgs::Twist&gt;(<span class="string">&quot;/cmd_vel&quot;</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">  move_base_msgs::MoveBaseGoal goal;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Use the map frame to define goal poses</span></span><br><span class="line">  goal.target_pose.header.frame_id = <span class="string">&quot;map&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Set the time stamp to &quot;now&quot;</span></span><br><span class="line">  goal.target_pose.header.stamp = ros::Time::<span class="built_in">now</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Set the goal pose to the i-th waypoint</span></span><br><span class="line">  goal.target_pose.pose = pose_list[count];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Start the robot moving toward the goal</span></span><br><span class="line">  ac.<span class="built_in">sendGoal</span>(goal, Client::<span class="built_in">SimpleDoneCallback</span>(), &amp;activeCb, &amp;feedbackCb);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，在<code>sendGoal()</code>函数中，第一个回调函数按照默认的声明给定了空值，并将在客户端中实现的后两个回调函数注册到<code>actionlib</code>中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ac.<span class="built_in">sendGoal</span>(goal, Client::<span class="built_in">SimpleDoneCallback</span>(), &amp;activeCb, &amp;feedbackCb);</span><br></pre></td></tr></table></figure>
+
+<p>这个方法使用了全局函数，但是假如我想使用类该怎么做呢？这就需要boost库中的bind了，用法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">actionlib::SimpleActionClient&lt;FibonacciAction&gt; ac;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Need boost::bind to pass in the &#x27;this&#x27; pointer</span></span><br><span class="line">ac.<span class="built_in">sendGoal</span>(goal, boost::<span class="built_in">bind</span>(&amp;MyNode::doneCb, <span class="keyword">this</span>, _1, _2),</span><br><span class="line">            Client::<span class="built_in">SimpleActiveCallback</span>(), Client::<span class="built_in">SimpleFeedbackCallback</span>());</span><br></pre></td></tr></table></figure>
+
+<p>OK，至此，我们已经成功解决上述3个问题并且成功的接受到了作为反馈消息的当前位姿。有了当前位姿我们就可以做很多事情了，包括编写一个基于<code>move_base</code>的循环跑的小程序。</p>
+<p>完整程序如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> actionlib</span><br><span class="line"><span class="keyword">from</span> actionlib_msgs.msg <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> Pose, Point, Quaternion, Twist</span><br><span class="line"><span class="keyword">from</span> move_base_msgs.msg <span class="keyword">import</span> MoveBaseAction, MoveBaseGoal</span><br><span class="line"><span class="keyword">from</span> tf.transformations <span class="keyword">import</span> quaternion_from_euler</span><br><span class="line"><span class="keyword">from</span> visualization_msgs.msg <span class="keyword">import</span> Marker</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> radians, pi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MoveBaseSquare</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        rospy.init_node(<span class="string">&#x27;nav_test&#x27;</span>, anonymous=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">        rospy.on_shutdown(self.shutdown)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># How big is the square we want the robot to navigate?</span></span><br><span class="line">        square_size = rospy.get_param(<span class="string">&quot;~square_size&quot;</span>, <span class="number">1.0</span>)  <span class="comment"># meters</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Create a list to hold the target quaternions (orientations)</span></span><br><span class="line">        quaternions = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># First define the corner orientations as Euler angles</span></span><br><span class="line">        euler_angles = (pi/<span class="number">2</span>, pi, <span class="number">3</span>*pi/<span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Then convert the angles to quaternions</span></span><br><span class="line">        <span class="keyword">for</span> angle <span class="keyword">in</span> euler_angles:</span><br><span class="line">            q_angle = quaternion_from_euler(<span class="number">0</span>, <span class="number">0</span>, angle, axes=<span class="string">&#x27;sxyz&#x27;</span>)</span><br><span class="line">            q = Quaternion(*q_angle)</span><br><span class="line">            quaternions.append(q)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Create a list to hold the waypoint poses</span></span><br><span class="line">        waypoints = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Append each of the four waypoints to the list.  Each waypoint</span></span><br><span class="line">        <span class="comment"># is a pose consisting of a position and orientation in the map frame.</span></span><br><span class="line">        waypoints.append(Pose(Point(square_size, <span class="number">0.0</span>, <span class="number">0.0</span>), quaternions[<span class="number">0</span>]))</span><br><span class="line">        waypoints.append(</span><br><span class="line">            Pose(Point(square_size, square_size, <span class="number">0.0</span>), quaternions[<span class="number">1</span>]))</span><br><span class="line">        waypoints.append(Pose(Point(<span class="number">0.0</span>, square_size, <span class="number">0.0</span>), quaternions[<span class="number">2</span>]))</span><br><span class="line">        waypoints.append(Pose(Point(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>), quaternions[<span class="number">3</span>]))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize the visualization markers for RViz</span></span><br><span class="line">        self.init_markers()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Set a visualization marker at each waypoint</span></span><br><span class="line">        <span class="keyword">for</span> waypoint <span class="keyword">in</span> waypoints:</span><br><span class="line">            p = Point()</span><br><span class="line">            p = waypoint.position</span><br><span class="line">            self.markers.points.append(p)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Publisher to manually control the robot (e.g. to stop it, queue_size=5)</span></span><br><span class="line">        self.cmd_vel_pub = rospy.Publisher(<span class="string">&#x27;cmd_vel&#x27;</span>, Twist, queue_size=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Subscribe to the move_base action server</span></span><br><span class="line">        self.move_base = actionlib.SimpleActionClient(</span><br><span class="line">            <span class="string">&quot;move_base&quot;</span>, MoveBaseAction)</span><br><span class="line"></span><br><span class="line">        rospy.loginfo(<span class="string">&quot;Waiting for move_base action server...&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Wait 60 seconds for the action server to become available</span></span><br><span class="line">        self.move_base.wait_for_server(rospy.Duration(<span class="number">60</span>))</span><br><span class="line"></span><br><span class="line">        rospy.loginfo(<span class="string">&quot;Connected to move base server&quot;</span>)</span><br><span class="line">        rospy.loginfo(<span class="string">&quot;Starting navigation test&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize a counter to track waypoints</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Cycle through the four waypoints</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; <span class="number">4</span> <span class="keyword">and</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">            <span class="comment"># Update the marker display</span></span><br><span class="line">            self.marker_pub.publish(self.markers)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Intialize the waypoint goal</span></span><br><span class="line">            goal = MoveBaseGoal()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Use the map frame to define goal poses</span></span><br><span class="line">            goal.target_pose.header.frame_id = <span class="string">&#x27;map&#x27;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># Set the time stamp to &quot;now&quot;</span></span><br><span class="line">            goal.target_pose.header.stamp = rospy.Time.now()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Set the goal pose to the i-th waypoint</span></span><br><span class="line">            goal.target_pose.pose = waypoints[i]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Start the robot moving toward the goal</span></span><br><span class="line">            self.move(goal)</span><br><span class="line"></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">move</span>(<span class="params">self, goal</span>):</span><br><span class="line">            <span class="comment"># Send the goal pose to the MoveBaseAction server</span></span><br><span class="line">        self.move_base.send_goal(goal)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Allow 1 minute to get there</span></span><br><span class="line">        finished_within_time = self.move_base.wait_for_result(</span><br><span class="line">            rospy.Duration(<span class="number">60</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># If we don&#x27;t get there in time, abort the goal</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> finished_within_time:</span><br><span class="line">            self.move_base.cancel_goal()</span><br><span class="line">            rospy.loginfo(<span class="string">&quot;Timed out achieving goal&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># We made it!</span></span><br><span class="line">            state = self.move_base.get_state()</span><br><span class="line">            <span class="keyword">if</span> state == GoalStatus.SUCCEEDED:</span><br><span class="line">                rospy.loginfo(<span class="string">&quot;Goal succeeded!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">init_markers</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># Set up our waypoint markers</span></span><br><span class="line">        marker_scale = <span class="number">0.2</span></span><br><span class="line">        marker_lifetime = <span class="number">0</span>  <span class="comment"># 0 is forever</span></span><br><span class="line">        marker_ns = <span class="string">&#x27;waypoints&#x27;</span></span><br><span class="line">        marker_id = <span class="number">0</span></span><br><span class="line">        marker_color = &#123;<span class="string">&#x27;r&#x27;</span>: <span class="number">1.0</span>, <span class="string">&#x27;g&#x27;</span>: <span class="number">0.7</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">1.0</span>, <span class="string">&#x27;a&#x27;</span>: <span class="number">1.0</span>&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Define a marker publisher.</span></span><br><span class="line">        self.marker_pub = rospy.Publisher(</span><br><span class="line">            <span class="string">&#x27;waypoint_markers&#x27;</span>, Marker, queue_size=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize the marker points list.</span></span><br><span class="line">        self.markers = Marker()</span><br><span class="line">        self.markers.ns = marker_ns</span><br><span class="line">        self.markers.<span class="built_in">id</span> = marker_id</span><br><span class="line">        self.markers.<span class="built_in">type</span> = Marker.CUBE_LIST</span><br><span class="line">        self.markers.action = Marker.ADD</span><br><span class="line">        self.markers.lifetime = rospy.Duration(marker_lifetime)</span><br><span class="line">        self.markers.scale.x = marker_scale</span><br><span class="line">        self.markers.scale.y = marker_scale</span><br><span class="line">        self.markers.color.r = marker_color[<span class="string">&#x27;r&#x27;</span>]</span><br><span class="line">        self.markers.color.g = marker_color[<span class="string">&#x27;g&#x27;</span>]</span><br><span class="line">        self.markers.color.b = marker_color[<span class="string">&#x27;b&#x27;</span>]</span><br><span class="line">        self.markers.color.a = marker_color[<span class="string">&#x27;a&#x27;</span>]</span><br><span class="line"></span><br><span class="line">        self.markers.header.frame_id = <span class="string">&#x27;odom&#x27;</span></span><br><span class="line">        self.markers.header.stamp = rospy.Time.now()</span><br><span class="line">        self.markers.points = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">shutdown</span>(<span class="params">self</span>):</span><br><span class="line">        rospy.loginfo(<span class="string">&quot;Stopping the robot...&quot;</span>)</span><br><span class="line">        <span class="comment"># Cancel any active goals</span></span><br><span class="line">        self.move_base.cancel_goal()</span><br><span class="line">        rospy.sleep(<span class="number">2</span>)</span><br><span class="line">        <span class="comment"># Stop the robot</span></span><br><span class="line">        self.cmd_vel_pub.publish(Twist())</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        MoveBaseSquare()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        rospy.loginfo(<span class="string">&quot;Navigation test finished.&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                ROS 使用 move_base 做4个点循环跑的导航
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2024475831.html
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    Author
+                </div>
+                <div class="content">felicx</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    Published
+                </div>
+                <div class="content">2021-03-06 10:27</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    License
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed" rel="external nofollow noreferrer" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="Copy copyright info" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/ros/">ros</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+                    <div class="reward-author-container border-box flex-center">
+    <div class="reward-btn keep-button border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="请作者喝杯咖啡"
+            data-tooltip-img-url="https://FelicxFoster.github.io/picx-images-hosting/web_logo/wechat_money.6hhe9tz6pxs0.webp"
+            data-tooltip-img-trigger="click"
+            data-tooltip-img-style="top: -8px;"
+    >
+        <i class="fa-solid fa-hand-holding-heart"></i>
+    </div>
+</div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/1673567539.html"
+                                   title="SLAM 之拟合直线"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">SLAM 之拟合直线</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/817441275.html"
+                                   title="Apollo 之 Canbus 解析"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Apollo 之 Canbus 解析</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;Comments
+        </div>
+        <div class="comment-plugin-fail border-box">
+    <span class="fail-tip">Comment plugin failed to load</span>
+    <button class="reload keep-button">Click to reload</button>
+</div>
+<div class="comment-plugin-loading flex-center border-box">
+    <i class="loading-icon fa-solid fa-spinner fa-spin"></i>
+    <span class="load-tip">Loading comment plugin</span>
+</div>
+<script data-pjax>
+  window.KeepCommentPlugin = {}
+  window.KeepCommentPlugin.hideLoading = () => {
+    const cplDom = document.querySelector('.comments-container .comment-plugin-loading')
+    cplDom.style.display = 'none'
+  }
+  window.KeepCommentPlugin.loadFailHandle = () => {
+    window.KeepCommentPlugin.hideLoading()
+    const cpfDom = document.querySelector('.comments-container .comment-plugin-fail')
+    cpfDom.style.display = 'flex'
+    cpfDom.querySelector('.reload').addEventListener('click', () => {
+      window.location.reload()
+    })
+  }
+</script>
+
+        
+            
+
+    <div class="waline-comment-container">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline-meta.css"/>
+        <div id="waline-comment"></div>
+        <script data-pjax>
+          window.KeepCommentPlugin.walineOptions = JSON.parse('{}'.replace(/&#34;/g, '"'))
+          window.KeepCommentPlugin.walineOptions.el = '#waline-comment'
+          window.KeepCommentPlugin.walineOptions.comment = '.post-comments-count'
+          window.KeepCommentPlugin.walineOptions.serverURL = 'https://comment.felicx.eu.org/'
+          window.KeepCommentPlugin.walineOptions.lang = 'en' || 'zh-CN'
+          window.KeepCommentPlugin.walineOptions.reaction = 'true' === 'true'
+        </script>
+
+        
+
+        
+            <script data-pjax
+                    async
+                    type="module"
+            >
+              import { init } from 'https://cdnjs.cloudflare.com/ajax/libs/waline/3.2.1/waline.js'
+              window.KeepCommentPlugin.initWaline = () => {
+                if (init) {
+                  init(window.KeepCommentPlugin.walineOptions)
+                  window.KeepCommentPlugin.hideLoading()
+                } else {
+                  setTimeout(() => {
+                    window.KeepCommentPlugin.initWaline()
+                  }, 1000)
+                }
+              }
+
+              if ('true' === 'true') {
+                setTimeout(() => {
+                  window.KeepCommentPlugin.initWaline()
+                }, 1200)
+              } else {
+                window.addEventListener('DOMContentLoaded', window.KeepCommentPlugin.initWaline)
+              }
+            </script>
+        
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actionlib"><span class="nav-text">Actionlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%981%EF%BC%9A%E6%98%AF%E5%90%A6%E5%8F%91%E5%87%BA%E4%BA%86%E5%8F%8D%E9%A6%88%E6%B6%88%E6%81%AF"><span class="nav-text">问题1：是否发出了反馈消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B"><span class="nav-text">问题2：消息类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A%E6%80%8E%E4%B9%88%E6%8E%A5%E6%94%B6%E5%8F%8D%E9%A6%88%E6%B6%88%E6%81%AF"><span class="nav-text">问题3：怎么接收反馈消息</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+        &copy;&nbsp;<span>2018</span>&nbsp;-&nbsp;2024
+        
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">felicx</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep" rel="external nofollow noreferrer">Keep</a>
+    </div>
+
+    
+
+    
+        <div class="count-info info-item">
+            
+
+            
+                <span class="count-item border-box uv">
+                    <span class="item-type border-box">Unique Visitor</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-item border-box pv">
+                    <span class="item-type border-box">Page View</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <!-- use hexo-blog-encrypt -->
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actionlib"><span class="nav-text">Actionlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%981%EF%BC%9A%E6%98%AF%E5%90%A6%E5%8F%91%E5%87%BA%E4%BA%86%E5%8F%8D%E9%A6%88%E6%B6%88%E6%81%AF"><span class="nav-text">问题1：是否发出了反馈消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B"><span class="nav-text">问题2：消息类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A%E6%80%8E%E4%B9%88%E6%8E%A5%E6%94%B6%E5%8F%8D%E9%A6%88%E6%B6%88%E6%81%AF"><span class="nav-text">问题3：怎么接收反馈消息</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+    
+<script src="//cdn.jsdelivr.net/npm/mermaid@10.5.0/dist/mermaid.min.js"></script>
+
+    <script data-pjax>
+      if (window.mermaid) {
+        mermaid.init()
+      }
+    </script>
+
+
+
+
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.3/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>
