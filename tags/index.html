@@ -242,7 +242,7 @@
   });
 </script>
 </center>
-<span class="totalcount">共发表 76 篇Blog · </span><span class="post-count">总计 121.1k 字</span></div></footer>
+<span class="totalcount">共发表 76 篇Blog · </span><span class="post-count">总计 121.6k 字</span></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 <widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">🎉欢迎</span></div><div class="widget-body fs14"><p>本站托管于Vercel, 可能会出现加载缓慢或丢失问题，欢迎在评论区交流技术知识。</p>
@@ -577,7 +577,7 @@
 
 <script defer>
   window.addEventListener('DOMContentLoaded', (event) => {
-    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"waline":{"js":"/js/services/waline_new_comment.js"}}`));
     for (let id of Object.keys(ctx.services)) {
       const js = ctx.services[id].js;
       if (id == 'siteinfo') {
