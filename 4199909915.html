@@ -174,7 +174,8 @@
 <h2 id="jsDelivr-加速-GitHub-文件访问"><a href="#jsDelivr-加速-GitHub-文件访问" class="headerlink" title="jsDelivr 加速 GitHub 文件访问"></a>jsDelivr 加速 GitHub 文件访问</h2><p>上面部署友链和朋友圈文章，使用的都是github仓库的json文件，国内环境大家都懂，指定是无法访问，这里介绍一种蠢方法，使用 jsDelivr 来加速这些 Github 文件的访问。</p>
 <ul>
 <li>在要加速的 Github 仓库里，点击 Releases -&gt; Create a new release -&gt; Choose a tag -&gt; 随便起个名比如 0.01 -&gt; 点击 Publish release；</li>
-<li>即可使用如下规则访问 CDN 资源：<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">https://cdn.jsdelivr.net/gh/&lt;username&gt;/&lt;repo</span> <span class="string">name&gt;@&lt;tag&gt;/&lt;resource</span> <span class="string">name&gt;</span></span><br><span class="line"><span class="comment"># 比如 https://cdn.jsdelivr.net/gh/FelicxFoster/friends@0.0.1/v2/data.json</span></span><br></pre></td></tr></table></figure></li>
+<li>在使用时 tag 标签直接写 latest 就行；</li>
+<li>使用如下规则访问 CDN 资源；<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">https://cdn.jsdelivr.net/gh/&lt;username&gt;/&lt;repo</span> <span class="string">name&gt;@&lt;tag&gt;/&lt;resource</span> <span class="string">name&gt;</span></span><br><span class="line"><span class="comment"># 比如 https://cdn.jsdelivr.net/gh/FelicxFoster/friends@latest/v2/data.json</span></span><br></pre></td></tr></table></figure></li>
 <li>然后替换掉上面的 api，现在就可以在国内愉快地访问友链和朋友圈了；</li>
 </ul>
 
