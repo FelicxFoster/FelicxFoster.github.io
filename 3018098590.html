@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="YOLOのBLOG">
 <meta property="og:description" content="本文介绍了ROS中常见的坐标系。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Ground_Axis_System.5g5d1xgk6dw0.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Body_Axis_System_1.655ma7lzio40.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Body_Axis_System_2.3prhwa09g4e0.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Euler_Angle_1.3t6kryqd0oq0.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Euler_Angle_2.12vvnjzfubao.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Couse_Angle_1.6ozoh7oslzs0.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Couse_Angle_2.5efx5p187240.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_9iX2hn5g.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_Ni7aFgIq.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_TjVHhR8g.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_YQHFdSPS.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_1JmGVSLb.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_bCpM0xX2.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_6zPvm0eX.webp">
 <meta property="article:published_time" content="2018-09-25T08:25:56.000Z">
 <meta property="article:modified_time" content="2018-09-25T08:43:33.000Z">
 <meta property="article:author" content="felicx">
 <meta property="article:tag" content="ros">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Ground_Axis_System.5g5d1xgk6dw0.webp">
+<meta name="twitter:image" content="https://blog.felicx.eu.org/assets/post/20240714_9iX2hn5g.webp">
   
   
   
@@ -63,7 +63,7 @@
 <div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
 
 
-<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">YOLOのBLOG</div><div class="sub normal cap">You Only Live Once</div><div class="sub hover cap" style="opacity:0"> Designed by Felicx</div></a></div></header>
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/assets/icon/20240713_rtEVzmVj.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">YOLOのBLOG</div><div class="sub normal cap">You Only Live Once</div><div class="sub hover cap" style="opacity:0"> Designed by Felicx</div></a></div></header>
 
 <div class="nav-area">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
@@ -101,19 +101,19 @@
   </div><article class="md-text content"><p>﻿### <em><strong>地理坐标系</strong></em></p>
 <p>北东地。北为X轴、东为Y轴、地为Z轴。</p>
 <h3 id="地面坐标系（earth-surface-inertial-reference-frame）"><a href="#地面坐标系（earth-surface-inertial-reference-frame）" class="headerlink" title="地面坐标系（earth-surface inertial reference frame）"></a><em><strong>地面坐标系</strong></em>（<em>earth-surface inertial reference frame</em>）</h3><p>①在地面上选一点<em>Og</em><br>②使<em>xg</em>轴在水平面内并指向某一方向<br>③<em>zg</em>轴垂直于地面并指向地心<br>④<em>yg</em>轴在水平面内垂直于<em>xg</em>轴，其指向按右手定则确定</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Ground_Axis_System.5g5d1xgk6dw0.webp" alt="地面坐标系"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_9iX2hn5g.webp" alt="地面坐标系"></p>
 <h3 id="机体坐标系-Aircraft-body-coordinate-frame"><a href="#机体坐标系-Aircraft-body-coordinate-frame" class="headerlink" title="机体坐标系(Aircraft-body coordinate frame)"></a><em><strong>机体坐标系</strong></em>(<em>Aircraft-body coordinate frame</em>)</h3><p>①原点O取在飞机质心处，坐标系与飞机固连<br>②x轴在飞机对称平面内并平行于飞机的设计轴线指向机头<br>③y轴垂直于飞机对称平面指向机身右方<br>④z轴在飞机对称平面内，与x轴垂直并指向机身下方</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Body_Axis_System_1.655ma7lzio40.webp" alt="机体坐标系1"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Body_Axis_System_2.3prhwa09g4e0.webp" alt="机体坐标系2"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_Ni7aFgIq.webp" alt="机体坐标系1"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_TjVHhR8g.webp" alt="机体坐标系2"></p>
 <p><em><strong>姿态角</strong></em>（<em>Euler角</em>）：机体坐标系与地面坐标系的关系是三个Euler角：yaw，pitch，roll，<br>反应了飞机相对地面的姿态。<br>我的理解是，roll角是Zb在ZOY平面与Z轴的夹角。pitch角是Zb在ZOX平面与Z轴的夹角。yaw角是Xb在XOY平面与X轴的夹角。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Euler_Angle_1.3t6kryqd0oq0.webp" alt="姿态角1"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Euler_Angle_2.12vvnjzfubao.webp" alt="姿态角2"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_YQHFdSPS.webp" alt="姿态角1"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_1JmGVSLb.webp" alt="姿态角2"></p>
 <p><em>roll</em>（横滚角）ϕ：飞机对称平面与通过飞机机体纵轴的铅垂平面间的夹角，右滚为正；<br><em>pitch</em>（俯仰角）θ：机体轴与地平面（水平面 ）之间的夹角，飞机抬头为正；<br><em>yaw</em>（偏航角）ψ：机体轴在水平面上的投影与地轴之间的夹角，以机头右偏为正。</p>
 <p><em><strong>旋转矩阵</strong></em>：地理坐标系到机体坐标系的转换矩阵。旋转矩阵为正交阵，逆即转置。</p>
 <p><em><strong>传感器</strong></em>：都是基于机体坐标系的。加速度计测三轴的加速度，磁力计测三轴的磁感应强度，陀螺仪测三轴的角速度。注意角速度的定义，方向是沿着三轴的。得到姿态角主要靠陀螺仪测得的角速度积分，但存在漂移误差，因此要用加速度计和磁力计随时校正。</p>
 <p>很重要的：在地理坐标系下，重力加速度坐标始终为（0,0,1g），磁场坐标为（M,0,D）。在地球表面，磁场始终是沿着磁感应线指北的，某点的磁场强度为磁感应线在该点的切线，它在北方有个分量，在垂直方向有个分量，在Y轴是没有分量的，即（M,0，D）。这里还有一点，地理的北极和磁场的北极是不重合的，有一定的夹角，即磁偏角。根据经纬度是可以查到这个夹角的大小的。我们定义的地理坐标系的北当然是地理的北。但用磁力计求得实际是Xb与地磁的北的夹角，我们最后会加上磁偏角，这样就是Xb与地理北的夹角了，就是真正的航向角啦。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Couse_Angle_1.6ozoh7oslzs0.webp" alt="航向角1"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/ROS_6/Couse_Angle_2.5efx5p187240.webp" alt="航向角2"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_bCpM0xX2.webp" alt="航向角1"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_6zPvm0eX.webp" alt="航向角2"></p>
 <h3 id="惯性坐标系"><a href="#惯性坐标系" class="headerlink" title="惯性坐标系"></a><em><strong>惯性坐标系</strong></em></h3><p>地心惯性坐标系（earth-centered inertial frame, ECI）</p>
 
 <div class="article-footer fs14">
@@ -213,7 +213,7 @@
   });
 </script>
 </center>
-<span class="totalcount">共发表 77 篇Blog · </span><span class="post-count">总计 123.7k 字</span></div></footer>
+<span class="totalcount">共发表 76 篇Blog · </span><span class="post-count">总计 108.4k 字</span></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 

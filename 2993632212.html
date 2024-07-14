@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="YOLOのBLOG">
 <meta property="og:description" content="VirtualBox设置共享文件夹，实现Windows和Ubuntu两个系统文件互换">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_1.26k74s0hkv6o.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_2.45m3gghkqso0.webp">
-<meta property="og:image" content="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_3.65if3fd6h1k0.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_16rRw0JU.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_wDbmElm8.webp">
+<meta property="og:image" content="https://blog.felicx.eu.org/assets/post/20240714_MI2PUsTL.webp">
 <meta property="article:published_time" content="2022-09-18T09:22:48.000Z">
 <meta property="article:modified_time" content="2022-09-18T09:53:50.000Z">
 <meta property="article:author" content="felicx">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_1.26k74s0hkv6o.webp">
+<meta name="twitter:image" content="https://blog.felicx.eu.org/assets/post/20240714_16rRw0JU.webp">
   
   
   
@@ -59,7 +59,7 @@
 <div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
 
 
-<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">YOLOのBLOG</div><div class="sub normal cap">You Only Live Once</div><div class="sub hover cap" style="opacity:0"> Designed by Felicx</div></a></div></header>
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/assets/icon/20240713_rtEVzmVj.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">YOLOのBLOG</div><div class="sub normal cap">You Only Live Once</div><div class="sub hover cap" style="opacity:0"> Designed by Felicx</div></a></div></header>
 
 <div class="nav-area">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
@@ -95,7 +95,7 @@
     
   </div>
   </div><article class="md-text content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自己的开发环境在Ubuntu下，但是工作环境在Windows，又不想装双系统，所以用了VirtualBox虚拟机。<br>在使用虚拟机时，有时希望将Windows的目录挂载到虚拟机Ubuntu里，实现两个系统之间的文件交换（当然，要是你觉得双向拖放就满足了，当我没说）。</p>
-<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>1、在Windows主机里创建一个要共享的文件夹，比如我的是<code>E:\VM\share</code><br>2、点击VirtualBox的设置-&gt;共享文件夹<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_1.26k74s0hkv6o.webp" alt="virtualbox_1"><br>设置被共享的文件夹是<code>E:\VM\share</code>。命名为<code>Share</code>。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_2.45m3gghkqso0.webp" alt="virtualbox_2"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://felicxfoster.github.io/picx-images-hosting/Linux_5/virtualbox_3.65if3fd6h1k0.webp" alt="virtualbox_3"><br>3、进入虚拟机的Ubuntu，创建一个共享文件夹<code>share_dir</code></p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>1、在Windows主机里创建一个要共享的文件夹，比如我的是<code>E:\VM\share</code><br>2、点击VirtualBox的设置-&gt;共享文件夹<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_16rRw0JU.webp" alt="virtualbox_1"><br>设置被共享的文件夹是<code>E:\VM\share</code>。命名为<code>Share</code>。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_wDbmElm8.webp" alt="virtualbox_2"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/post/20240714_MI2PUsTL.webp" alt="virtualbox_3"><br>3、进入虚拟机的Ubuntu，创建一个共享文件夹<code>share_dir</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> share_dir</span><br></pre></td></tr></table></figure>
 <p>4、进入共享文件夹<code>share_dir</code>所在目录，将Windows的<code>Share</code>挂载到<code>share_dir</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -t vboxsf Share share_dir</span><br></pre></td></tr></table></figure>
@@ -198,7 +198,7 @@
   });
 </script>
 </center>
-<span class="totalcount">共发表 77 篇Blog · </span><span class="post-count">总计 123.7k 字</span></div></footer>
+<span class="totalcount">共发表 76 篇Blog · </span><span class="post-count">总计 108.4k 字</span></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
