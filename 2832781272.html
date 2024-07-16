@@ -299,6 +299,34 @@ mjx-container[display="true"] + br {
         
       </div>
     </section>
+    
+    <section id="donate">
+      <div class="header"><span>Donate</span></div>
+      <div class="body">
+        <p>请作者喝杯咖啡吧
+          <span class="donate-icon" onmouseover="showElement('donate-wechat')" onmouseout="hideElement('donate-wechat')" style="display: inline-block;">
+            <i class="fa-solid fa-gift" style="font-size: 20px;"></i>
+          </span>
+        </p>
+        
+        <div class="donate-image" id="donate-wechat" style="display:none; position:absolute; z-index:1000; transform: translateY(-100%); left: 50%; transform: translateX(-50%) translateY(-100%);">
+          <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/icon/20240714_r7siFim9.webp" alt="Donate with WeChat" style="width: 150px; height: auto;" />
+        </div>
+        
+      </div>
+    </section>
+    
+    <script>
+      const showElement = (id) => {
+        const element = document.getElementById(id);
+        element.style.display = 'block';
+      };
+
+      const hideElement = (id) => {
+        const element = document.getElementById(id);
+        element.style.display = 'none';
+      };
+    </script>
     </div>
 </article>
 <div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/3513594645.html">二叉树遍历问题</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2662471910.html">滑动窗口问题</a></div></section></div>
