@@ -2,36 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.felicx.eu.org/4199909915.html</loc>
-    
-    <lastmod>2024-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.felicx.eu.org/bb/index.html</loc>
-    
-    <lastmod>2024-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.felicx.eu.org/categories/index.html</loc>
     
-    <lastmod>2024-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.felicx.eu.org/friends/index.html</loc>
-    
-    <lastmod>2024-07-18</lastmod>
+    <lastmod>2024-07-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -40,7 +13,7 @@
   <url>
     <loc>https://blog.felicx.eu.org/links/index.html</loc>
     
-    <lastmod>2024-07-18</lastmod>
+    <lastmod>2024-07-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -49,16 +22,7 @@
   <url>
     <loc>https://blog.felicx.eu.org/tags/index.html</loc>
     
-    <lastmod>2024-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.felicx.eu.org/friends/rss/index.html</loc>
-    
-    <lastmod>2024-07-18</lastmod>
+    <lastmod>2024-07-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -66,6 +30,24 @@
   
   <url>
     <loc>https://blog.felicx.eu.org/about/index.html</loc>
+    
+    <lastmod>2024-07-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/940241892.html</loc>
+    
+    <lastmod>2024-07-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/4199909915.html</loc>
     
     <lastmod>2024-07-18</lastmod>
     
@@ -77,6 +59,33 @@
     <loc>https://blog.felicx.eu.org/1037199537.html</loc>
     
     <lastmod>2024-07-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/bb/index.html</loc>
+    
+    <lastmod>2024-06-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/friends/index.html</loc>
+    
+    <lastmod>2024-06-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/friends/rss/index.html</loc>
+    
+    <lastmod>2024-06-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -751,7 +760,7 @@
 
   <url>
     <loc>https://blog.felicx.eu.org/</loc>
-    <lastmod>2024-07-18</lastmod>
+    <lastmod>2024-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
