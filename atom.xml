@@ -6,7 +6,7 @@
   <link href="https://blog.felicx.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.felicx.eu.org/"/>
-  <updated>2024-07-21T14:34:00.000Z</updated>
+  <updated>2024-07-25T13:24:32.000Z</updated>
   <id>https://blog.felicx.eu.org/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>零成本部署网站统计系统</title>
+    <link href="https://blog.felicx.eu.org/2224651331.html"/>
+    <id>https://blog.felicx.eu.org/2224651331.html</id>
+    <published>2024-07-25T13:02:32.000Z</published>
+    <updated>2024-07-25T13:24:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有了个人博客，想统计博客的访问流量数据该怎么办？本着一分钱不花的原则，使用 Supabase 免费数据库服务，通过 Vercel 搭建一个替代 Google Analytics 的网站数据统计。</p><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><ol><li>首先在 GitHub 的 <a href="https://github.com/umami-software/umami">Umami</a> 项目 Fork 到自己的账号下；</li><li>在 <a href="https://supabase.com/">Supabase</a> 中创建一个项目，需要记住所设置的密码，之后会用到;<br><img src="/assets/post/20240725_qRoX27iU.webp" alt="img"></li><li>等待初始化完成点击右上角 connect 复制出需要之后使用的连接链接;<br><img src="/assets/post/20240725_6Wam74ik.webp" alt="img"><br><img src="/assets/post/20240725_6awSseWG.webp" alt="img"><br>其中 postgres:&#x2F;&#x2F;postgres.vzhpxlcldnemfwtfztfh:[YOUR-PASSWORD]@aws-0-us-west-1.pooler.supabase.com:5432&#x2F;postgres 需要将 [YOUR-PASSWORD] 调整为上一步中设置的密码;</li><li>在 <a href="https://vercel.com/">Vercel</a> 创建项目，选择自己 Fork 的 Umami;<br><img src="/assets/post/20240725_DOVJU7Nk.webp" alt="img"></li><li>添加环境变量后点击 Deploy 进行部署;<br><img src="/assets/post/20240725_V9YKa5vl.webp" alt="img"><br>其中 HASH_SALT 是你在键盘上随机输入的字符串，DATABASE_URL 为替换了密码的数据库连接地址</li><li>等待部署完成，通过项目地址或者自己绑定的域名可以进入具体的设置页面，账号是 admin，密码是 umami；<br><img src="/assets/post/20240725_Ky5NKtX8.webp" alt="img"><br>登录后可以修改密码，设置自己要统计访问的网站并获取到监听代码，之后就是在目标网站上进行部署操作了；<br><img src="/assets/post/20240725_ttp29hUS.webp" alt="img"></li><li>最后就是在 Hexo 中使用 Umami；</li></ol><ul><li>如果主题没有适配 Umami 的话，可以使用 <a href="https://hexo.io/zh-cn/api/injector">hexo injector</a> 直接注入;</li><li>在博客项目根目录，创建 scripts 文件夹;</li><li>在 scripts 文件夹下，创建 injector.js 文件并填入；<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo.<span class="property">extend</span>.<span class="property">injector</span>.<span class="title function_">register</span>(<span class="string">&#x27;head_end&#x27;</span>, <span class="string">&#x27;&lt;script async defer data-website-id=&quot;&lt;data-website-id&gt;&quot; src=&quot;&lt;src&gt;&quot;&gt;&lt;/script&gt;&#x27;</span>);</span><br><span class="line"><span class="comment">// 把 &lt;data-website-id&gt; 和 &lt;src&gt; 替换成在 Umami 中获取到的信息</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    
+    <summary type="html">用 Supabase 和 Umami 在 Vercel 上搭建个人网站数据统计</summary>
+    
+    
+    
+    <category term="折腾系列" scheme="https://blog.felicx.eu.org/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/"/>
+    
+    
+    <category term="umami" scheme="https://blog.felicx.eu.org/tags/umami/"/>
+    
+    <category term="supabase" scheme="https://blog.felicx.eu.org/tags/supabase/"/>
+    
+  </entry>
   
   <entry>
     <title>天涯神贴 KK 三部曲之第一部</title>
@@ -34,8 +57,6 @@
     
     
     <category term="天涯神贴" scheme="https://blog.felicx.eu.org/tags/%E5%A4%A9%E6%B6%AF%E7%A5%9E%E8%B4%B4/"/>
-    
-    <category term="KK" scheme="https://blog.felicx.eu.org/tags/KK/"/>
     
   </entry>
   
@@ -424,27 +445,6 @@
     
     
     <category term="windows" scheme="https://blog.felicx.eu.org/tags/windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx Proxy Manager 实现公网访问家庭 NAS</title>
-    <link href="https://blog.felicx.eu.org/2431342973.html"/>
-    <id>https://blog.felicx.eu.org/2431342973.html</id>
-    <published>2023-11-17T09:15:18.000Z</published>
-    <updated>2023-11-17T09:47:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有些小伙伴建站没有用云服务器，而是移到了自己的 NAS 上。但是运营商是封堵我们的 80，443端口的，那如何实现公网 IP 无 443 和 80 端口外网访问呢？</p><p>我们可以用 Nginx Proxy Manager 里自带一个端口转发功能，绕过封堵的 80，443端口，实现从公网对家里服务器的访问，在此记录一下。</p><h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><p>在 Nginx Proxy Manager 面板里点击<code>Dashboard-Streams-Add Streams</code>，分别填入以下信息：</p><p><code>Incoming Port</code>：入站端口，填一个你要用来代替 80&#x2F;443 的端口<br><code>Forward Host</code>：转发主机，填本机 ip：127.0.0.1<br><code>Forward Port</code>：转发端口，填被封堵的端口，80 或者 443</p><p>然后点保存。设置以后，从外网访问你部署在家庭服务器上的网站需要在域名后加上你设置的入站端口。</p><p>比如原来你访问在地址栏输入的 url 是<code>https://www.domain.cn</code>，443 端口被封了访问不了了，按上图设置之后，在浏览器地址栏输入<code>https://www.domain.cn:9443</code>就能访问了。</p><p>同理，如果你没有上 https，要绕过被封堵的 http 的默认端口 80，就把转发端口设置为 80 即可。然后访问的时候在域名后加上你设置的入站端口即可绕过运营商对 80 端口的封堵访问。</p>]]></content>
-    
-    
-    <summary type="html">用 Nginx Proxy Manager 端口转发功能，实现从公网对家里服务器的访问</summary>
-    
-    
-    
-    <category term="折腾系列" scheme="https://blog.felicx.eu.org/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/"/>
-    
-    
-    <category term="建站" scheme="https://blog.felicx.eu.org/tags/%E5%BB%BA%E7%AB%99/"/>
     
   </entry>
   
