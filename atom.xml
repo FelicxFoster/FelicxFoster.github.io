@@ -6,7 +6,7 @@
   <link href="https://blog.felicx.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.felicx.eu.org/"/>
-  <updated>2024-09-09T15:32:26.000Z</updated>
+  <updated>2024-09-23T15:30:21.000Z</updated>
   <id>https://blog.felicx.eu.org/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>技术岗位如何写简历（转）</title>
+    <link href="https://blog.felicx.eu.org/1589846811.html"/>
+    <id>https://blog.felicx.eu.org/1589846811.html</id>
+    <published>2024-09-23T15:15:21.000Z</published>
+    <updated>2024-09-23T15:30:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在搜东西，无意中来到一位大佬的<a href="https://www.paincker.com/">博客</a>，看到了这篇<a href="https://www.paincker.com/how-to-write-a-resume/">技术岗位如何写简历</a>，这里做个转载，方便日后反复学习。</p><h2 id="明确目标"><a href="#明确目标" class="headerlink" title="明确目标"></a>明确目标</h2><p><strong>求职是一个双向选择的过程</strong>。投简历面试的过程应该尽可能<strong>充分且实事求是</strong>的展示个人能力和特点，让 HR 和面试官在最短的时间里了解你，判断是否适合岗位需要。</p><ul><li><p>能力问题。简历应该尽力展示自己的能力，但是如果目前能力还不够，抱着侥幸心理刻意夸大个人实力、隐瞒欺骗方式通过面试的做法不可取。即使通过面试了，如果个人能力差太多，工作业绩很不好，一样会被淘汰。</p></li><li><p>时机与合适问题。如果对自己的认知不够清晰，不了解自己喜欢和擅长什么，强行拿到并不适合自己的岗位，和自己擅长或者感兴趣的事情差异太大，每天上班都很难受，也没意思。反过来看，面试失败并不一定是因为能力不够，可能是因为目前招人的意愿不强，或者只是因为个人能力和岗位需求不匹配。</p></li></ul><p>双向选择的过程通常都可以拿谈恋爱来类比。</p><ul><li>为了追到对自己并不感兴趣的异性，一直努力迎合对方，从一开始身份就是不公平的，即使追到了也容易会被嫌弃。学习PUA技术欺骗女生的做法也不可取。</li><li>强行改变自己甚至迷失自我的做法也是不好的。被一个女生拒绝并不一定是不够优秀，可能是因为对方目前没心思谈恋爱，或者是因为不合适。例如某个女生就喜欢家庭条件一般能吃苦的人，而你偏偏是个富二代 (●ﾟωﾟ●)</li></ul><h2 id="换位思考"><a href="#换位思考" class="headerlink" title="换位思考"></a>换位思考</h2><p>多进行换位思考，站在面试官的角度想问题。很多有工作经验的人包括我自己也做过面试官，对面试官的处境有所了解。在短短几个小时的时间里了解一个候选人其实很困难，有时候面试完了也拿不定主意，不确定候选人到底合适不合适。面试官挖掘候选人的能力很重要，候选人自我展示的能力也很重要。</p><p>应聘岗位的关注点：</p><ul><li>大公司、负责成熟产品的团队，分工更加明确，招聘实际干活的开发人员时，通常比较注重基础知识，关注技术深度，希望求职者在某些领域有较为深入的研究（当然不可能所有领域都很深入），一方面这种技能可以解决团队遇到的该领域的疑难问题，另一方面也体现了候选人的钻研能力。</li><li>高职级的岗位，或者是小团队，可能会关心员工有没有创业精神、产品意识、技术广度、领导能力等。</li><li>开发人员的通用能力都会比较被重视，例如智商、逻辑思维、学习能力、解决问题能力、团队精神、沟通能力等。</li></ul><h2 id="简历内容组成"><a href="#简历内容组成" class="headerlink" title="简历内容组成"></a>简历内容组成</h2><p>关于简历具体的形式（应该写多长，写哪些内容），不同的人有不同的看法，这里主要说一下我的看法。</p><p>根据文章 <a href="https://novoresume.com/career-blog/cv-vs-resume-what-is-the-difference">CV vs Resume - What are the Differences &amp; Definitions [+ Examples]</a> 的介绍，Resume 和 CV 是两个不同的概念，Resume 更加精简，通常只有一页，用于各行各业的求职；而 CV 更加详细，用于学术相关的招生和招聘。</p><p>有很多“江湖传言”说简历只能写一页，理由是 HR 每天要看很多简历，太长了没时间看，这里的简历指的正是 Resume。但是对于开发岗位，最好要用类似 CV 的东西，从技术专业角度对项目做一些更详细的介绍。</p><p>借鉴 Resume 和 CV 的概念，针对社招开发岗位，简历可以分为几部分：</p><p>一、简历 (Resume)，保持精简，最好是一页纸。简历用于<strong>HR筛选</strong>，以及让面试官快速了解你的<strong>基本情况</strong>。</p><ul><li>基本信息：姓名、年龄、联系方式（电话、邮箱、微信），必要时加上居住地、求职意向。</li><li>教育经历：时间、城市、学校、专业、学历，必要时加上英语成绩。</li><li>工作和项目经验：因为要精简，并且通常会有重复内容，这两者可以压缩到一起。<ul><li>每段工作经历，基本信息可包括时间、城市、公司、团队、职位。</li><li>可以采用<strong>总 - 分结构</strong>描述。每段工作先用一句话做简单总结（例如公司、团队、项目规模、个人成长等），然后分几点介绍工作内容和成果。每一点又可以先用一句话概括，再详细介绍。</li><li>关键项目的介绍，说清楚自己<strong>扮演的角色</strong>，是独立完成、项目负责人还是参与者，也可以注明大致的贡献占比。使用技术关键字（例如开发语言、工具），但不用写技术细节。成果要有说服力，多使用<strong>数据展示</strong>（例如开源项目 GitHub Star 2k+，性能提升 30% 等）。重点关键词可加粗，还可以插入相关网址链接（当然电子简历才好用链接，纸质简历就不太方便了）。</li><li>如果项目多，又有博客，可以写“更多项目详见个人博客”并插入链接。</li><li>做到让 HR 这样的非技术人员也能大致看到你的实力，并能根据技术关键字判断你的技能和岗位需求是否匹配。</li></ul></li><li>自我评价：可以列举自己的优点，一定要有<strong>实际案例支撑</strong>（可直接在括号中简要说明），否则就成了没有说服力的空话了。</li><li>个人技能：最擅长的东西应该在项目经验中已经介绍过了，这里列举你用过的所有编程语言、框架等技术关键字，主要作用是<strong>体现技术广度</strong>。使用“入门”、“了解”、“熟练”等描述，<strong>慎用精通</strong>，因为容易翻车。如果写了精通，面试官碰巧有了解这方面，可能会问一些比较难的问题，被问倒了就会让人怀疑你是否诚实了。也可以使用图形例如五角星来描述熟练度。</li></ul><p>二、履历 (CV) 或附录，是简历的补充，内容相对详细，长度可以有多页。</p><ul><li>内容可以包括重点项目经验的技术实现细节和关键点等。可以借鉴 STAR 原则说明，即 Situation（情景）、Task（任务）、Action（行动）和Result（结果），但也要根据实际进行调整，不能生搬硬套。</li><li>面试官如果对你简历中的某个项目感兴趣可以具体看 CV；同时在面试聊项目时也起到提纲的效果，如果担心一时想不起来，可以对照 CV 介绍。</li><li>形式上，建议附在简历末尾。也可以考虑写到个人博客中，在简历里贴链接。</li></ul><p>三、其他。</p><ul><li>个人博客：如果有还不错的个人博客，可以贴到简历里。个人博客如果写的好，<strong>远比简历的参考价值要大</strong>。</li><li>GitHub：如果 GitHub 比较活跃，有个人项目，可以贴到简历里。有一定技术含量、Star 较多的开源项目，通常是个<strong>很大的加分项</strong>。</li><li>Demo：对于客户端 App、网站之类的项目，必要时可以准备好项目、Demo、截图、网址等，面试官可以自行查看，或者现场给面试官演示，帮助进行说明。</li></ul><h2 id="项目经验的整理"><a href="#项目经验的整理" class="headerlink" title="项目经验的整理"></a>项目经验的整理</h2><p>有一定工作经验的人通常会有较多项目经验。为了保持简历的简洁，需要挑选最重点的内容来写。写项目经验时可以按照这样的方式进行：</p><ul><li>使用思维导图，将自己过去所有感觉还可以的项目都列出来，想到什么都写上。</li><li>对每个项目的成果如何展示、能反映什么样的能力特点做思考。例如复杂的业务，说明自己业务能力较好；技术项目，说明自己有一定的技术深度；某些小工具项目，说明自己注重工具的使用；个人开源项目，说明自己热爱技术等。</li><li>挑选几个最有代表性的、比较容易说明和展示的项目，做相对详细的分析，根据项目的重要性，介绍的篇幅也需要有控制。</li><li>最后将选定的项目和介绍压缩到简历上。</li><li>其他没有被选中但是也还不错的项目，可以通过博客或附录的形式展示。</li></ul><h2 id="内容与排版"><a href="#内容与排版" class="headerlink" title="内容与排版"></a>内容与排版</h2><ul><li>整体结构要清晰，避免逻辑混乱和内容冗余，和写文章类似。例如工作经验和项目经验，常会有很多重复内容，可以合并到一起。</li><li>文字表述要简单明了。如果觉得内容较少，不要刻意凑字数，简历字数和个人经验能力没有直接联系。</li><li>排版要整洁，版面要匀称。例如前面很拥挤，但是后面却有大块空白，就会很不匀称。字数较少可以适当加大字体、增加行间距、增加页面距等。字数太多，首先考虑压缩文字，实在没法压缩再从排版上考虑。</li><li>尽量避免错别字和标点符号问题。这会让人觉得你做事情不认真。</li></ul><h2 id="简历编辑工具"><a href="#简历编辑工具" class="headerlink" title="简历编辑工具"></a>简历编辑工具</h2><p>简历有多种编辑工具：</p><ul><li>Word。不太建议使用，想让简历稍微精致一点，Word 不太好实现。</li><li>Markdown。我使用的是这种方式，自己修改了 CSS 调整格式。</li><li>LaTeX。LaTeX 的排版效果很好，但是环境配置相对复杂，LaTeX 语法也需要一点时间掌握。我尝试用了大佬的 <a href="https://github.com/billryan/resume">LaTeX简历模板</a>，但是编译后的效果不对，可能是兼容性问题，一时不好解决，就放弃了。</li><li>PhotoShop 等设计工具，可以制作出画面更加精美的简历。比较耗时并且考验审美能力，对于技术开发岗位没太大必要，更适合设计师类岗位。</li><li>在线简历模板。例如 <a href="https://www.wondercv.com/">超级简历</a> 。</li></ul>]]></content>
+    
+    
+    <summary type="html">转自一位博主的写简历大法</summary>
+    
+    
+    
+    <category term="随笔" scheme="https://blog.felicx.eu.org/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="职场" scheme="https://blog.felicx.eu.org/tags/%E8%81%8C%E5%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>国内外一些免费的云数据库</title>
+    <link href="https://blog.felicx.eu.org/1521393913.html"/>
+    <id>https://blog.felicx.eu.org/1521393913.html</id>
+    <published>2024-09-22T06:01:25.000Z</published>
+    <updated>2024-09-22T07:07:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在折腾用 Vercel 来部署 Typecho 网站，其中项目要用到数据库，这激发起了我寻找免费云数据库的兴趣。</p><h2 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h2><table><thead><tr><th>数据库</th><th>介绍</th></tr></thead><tbody><tr><td><a href="https://tidbcloud.com/">TiDB Cloud</a></td><td>国产之光，5GB 的 MySQL 免费存储和 每月 50M 请求单元，支持每天备份，要 SSL 连接，需下载 CA 证书</td></tr><tr><td><a href="https://azure.microsoft.com/zh-cn/products/mysql/">Azure</a></td><td>面向学生的 Azure 订阅里有免费的数据库服务，按下面教程操作即可；<br>另外也可以在免费 1G1C 的小鸡上自行搭建数据库服务</td></tr><tr><td><a href="https://www.netlify.com/integrations/aiven/?utm_campaign=minimal-starter">Aiven</a></td><td>5GB 存储空间，有 PostgreSQL、MySQL 等其他服务</td></tr><tr><td><a href="https://www.memfiredb.com/">Memfiredb</a></td><td>国产数据库，512MB 存储空间</td></tr><tr><td><a href="https://www.koyeb.com/">Koyeb</a></td><td>免费 4GB 的 PostgreSQL 数据库空间</td></tr><tr><td><a href="https://www.mongodb.com/zh-cn/cloud/atlas/register">MongoDB Atlas</a></td><td>MongoDB 数据库托管服务，免费账户可以永久使用 500MB 的数据库</td></tr><tr><td><a href="https://supabase.com/">Supabase</a></td><td>专用的 PostgreSQL 数据库</td></tr><tr><td><a href="https://render.com/">Render</a></td><td>10GB 数据库空间，有 PostgreSQL、Redis、MySQL 等，好像需要绑卡了</td></tr><tr><td><a href="https://www.freedb.tech/">FreeDB</a></td><td>国外免费的远程 MySQL 数据库，25MB 存储空间，缺点是连接较慢</td></tr><tr><td><a href="https://xata.io/">Xata</a></td><td>PostgreSQL 的无服务器数据平台</td></tr><tr><td><a href="https://www.sqlpub.com/">SQLPub</a></td><td>国内免费的 MySQL 数据库，获得最大 36000 次&#x2F;小时的请求、同时 30 个连接和 500M 存储空间，是测试服务</td></tr><tr><td><a href="https://www.db4free.net/">DB4free</a></td><td>MySQL 服务器测试服务</td></tr><tr><td><a href="https://www.freesqldatabase.com/">FreeSQLdatabase</a></td><td>5MB 存储空间</td></tr><tr><td><a href="serv00.com/">Serv00</a></td><td>支持 10 个 MySQL 8.0、3 个 PostgreSQL 14、3 个 MongoDB 5.0</td></tr><tr><td><a href="https://turso.tech/">Turso</a></td><td>用于生产的 SQLite，500 个数据库，总存储空间 9GB</td></tr><tr><td><a href="https://neon.tech/">Neon</a></td><td>512 MB的 Postgres 数据库空间</td></tr><tr><td><a href="https://www.leancloud.cn/">LeanCloud</a></td><td>云端数据存储服务</td></tr><tr><td><a href="https://www.cloudflare-cn.com/developer-platform/d1/">Cloudflare D1</a></td><td>Cloudflare 的原生无服务器数据库</td></tr><tr><td><a href="https://vercel.com/docs/storage">Vercel Storage</a></td><td>Vercel 本身也有免费数据库服务了，但有限制，每月只有 60hrs&#x2F;0.25cpu&#x3D;240h 的使用时间；<br>可能还会休眠，如果您的数据库在 5 分钟内未被访问，则数据库将被暂停。下次访问时，您将经历长达 1 秒的“冷启动”</td></tr></tbody></table>]]></content>
+    
+    
+    <summary type="html">白嫖使我快乐</summary>
+    
+    
+    
+    <category term="折腾系列" scheme="https://blog.felicx.eu.org/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/"/>
+    
+    
+    <category term="数据库" scheme="https://blog.felicx.eu.org/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>红十字救护员培训之旅</title>
@@ -399,52 +441,6 @@
     
     
     <category term="时间管理" scheme="https://blog.felicx.eu.org/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>终身免费 ORG 顶级域名申请</title>
-    <link href="https://blog.felicx.eu.org/2502663362.html"/>
-    <id>https://blog.felicx.eu.org/2502663362.html</id>
-    <published>2023-11-19T12:24:23.000Z</published>
-    <updated>2023-11-19T12:55:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有时我们在云上搭建一个网站，需要有对应的域名，那怎么办呢，有人说去买一个啊！确实可以去买一个域名，但咱主打的是一个省钱，有永久免费的域名为什么不薅呢。</p><p>说到免费的顶级域名，可能很多人会想到 Freenom 家的 .tk 域名吧，他家太难注册就不推荐了，今天给大家推荐另外一个 .EU.ORG 的免费域名（虽然他们的【<a href="https://nic.eu.org/">官方网站</a>】界面很Low，但是不要怀疑，就是真的官方网站）。</p><p>EU.ORG 是欧盟组织下面的域名（EU 代表欧盟），是 1996 年 9 月 10 日由 Paul Mockapetris 创建的域名，目前个人和组织都是可以免费注册的。虽然 .EU.ORG 看起来本身像个二级域名，但是已被大部分 DNS 服务商（包括谷歌、Cloudflare等）认定为顶级域名，所以我们就放心大胆的使用就好了。</p><h2 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h2><p>1、在浏览器打开 EU.ORG <a href="https://nic.eu.org/">官网</a>；</p><p><img src="/assets/post/20240714_w8FQttMD.webp" alt="img"></p><p>2、由于这个网站服务器是在欧盟（法国），注册账号的个人信息就填写英国那边的，这样容易审核通过。那英国个人信息怎么获取呢，用这个<a href="https://www.meiguodizhi.com/uk-address">随机地址生成器</a>来获取，点一下“随机地址”，需要记录一下全名、街道、城市、电话这四项内容；</p><p><img src="/assets/post/20240714_BMFNRTFI.webp" alt="img"></p><p>3、注册账号填写好，前面填写的邮箱会收到一条激活邮件，把邮件里的链接复制在当前浏览器打开激活即可，同时记住下面这个临时名称，后面要用。</p><p><img src="/assets/post/20240714_Oop0Spp1.webp" alt="img"></p><p>4、点“Validate”验证通过；</p><p><img src="/assets/post/20240714_OqEQKkPv.webp" alt="img"></p><h2 id="注册域名"><a href="#注册域名" class="headerlink" title="注册域名"></a>注册域名</h2><p>1、激活后，登录账号进行注册域名；</p><p><img src="/assets/post/20240714_ghwo6cso.webp" alt="img"></p><p>2、输入上面获取到的临时名称和之前设置的密码，然后点“Login”；</p><p><img src="/assets/post/20240714_n7rgvScw.webp" alt="img"></p><p>3、点“New Domain”，开始注册正式的域名；</p><p><img src="/assets/post/20240714_kOzjHfko.webp" alt="img"></p><p>4、注册域名过程中，需要注意的是：填写的域名要完整、填写域名服务器选择第第一个即可。域名解析提供商可以是阿里云和腾讯云；我这边填写的是 Cloudflare 的 NS，可以直接填写上：<code>sid.ns.cloudflare.com</code>，<code>grannbo.ns.cloudflare.com</code>；</p><p><img src="/assets/post/20240714_YCIoUFAh.webp" alt="img"></p><p><img src="/assets/post/20240714_rhMcHeoh.webp" alt="img"></p><p>5、完成到这里就基本完成了，接下来需要等等网站工作人员的人工审核，快的话1小时左右，慢的话可能要等到第3天（比如遇到非工作日），所以需要耐心等就是了；</p><p><img src="/assets/post/20240714_fXJ4EM1a.webp" alt="img"></p><p>6、注册成功后，你的邮箱会再次收到注册成功的邮件，里面写有.EU.ORG就是你的域名了。</p><p><img src="/assets/post/20240714_M2WpHm6v.webp" alt="img"></p><h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>待 EU.ORG 登入页面出現你注册的域名后</p><p><img src="/assets/post/20240714_YQr4YueP.webp" alt="img"></p><p>就可以使用 <a href="https://blog.felicx.eu.org/1263441363.html">Cloudflare 进行域名解析</a>了。</p>]]></content>
-    
-    
-    <summary type="html">申请免费的顶级域名 eu.org</summary>
-    
-    
-    
-    <category term="折腾系列" scheme="https://blog.felicx.eu.org/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/"/>
-    
-    
-    <category term="建站" scheme="https://blog.felicx.eu.org/tags/%E5%BB%BA%E7%AB%99/"/>
-    
-    <category term="域名" scheme="https://blog.felicx.eu.org/tags/%E5%9F%9F%E5%90%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Cloudflare 解析 ORG 域名</title>
-    <link href="https://blog.felicx.eu.org/1263441363.html"/>
-    <id>https://blog.felicx.eu.org/1263441363.html</id>
-    <published>2023-11-18T13:29:43.000Z</published>
-    <updated>2023-11-18T13:55:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们有了自己的域名，那么怎么让域名与我们的 ip 产生联系呢。 这个时候我们就可以使用 CDN 服务商来进行 DNS 解析。</p><p>但是，我之前申请的是 .org 这种顶级域名，这类域名在国内没有获得国家工信部备案审批，不能在国内备案。对这类不能在国内备案的域名，是不能用阿里云腾讯云这些国内注册服务商进行 DNS 解析的。</p><p>怎么搞，这时就得用上  <a href="https://dash.cloudflare.com/">Cloudflare</a> 这样的 CDN 服务商来进行 DNS 解析了。</p><h2 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h2><p>进入官网，右上角默认的是 English(US)，可以点击 English(US) 切换到简体中文，然后注册一个账号。</p><p><img src="/assets/post/20240714_KiffBgr8.webp" alt="img"></p><h2 id="添加站点"><a href="#添加站点" class="headerlink" title="添加站点"></a>添加站点</h2><p>登录到 Cloudflare 账户后，我们需要添加一个站点，也就是你申请到的域名。</p><p><img src="/assets/post/20240714_7A4cmStV.webp" alt="img"></p><h2 id="选择域名解析方案"><a href="#选择域名解析方案" class="headerlink" title="选择域名解析方案"></a>选择域名解析方案</h2><p>进入选择套餐界面，选择免费的解析套餐，点 Continue；</p><p><img src="/assets/post/20240714_zENw6aO9.webp" alt="img"></p><h2 id="更改名服务器"><a href="#更改名服务器" class="headerlink" title="更改名服务器"></a>更改名服务器</h2><p>Cloudflare 会为你提供两个新的域名服务器（Name Server）地址。</p><p><img src="/assets/post/20240714_asuacyhb.webp" alt="img"></p><p>你需要在你的域名注册商处更新你的域名服务器设置，将现有的域名服务器替换为 Cloudflare 提供的地址。这一步使得你的域名流量经过 Cloudflare 的网络。</p><p>比如我是 <a href="https://nic.eu.org/arf/en/login/">en.org</a> 的。登陆 eu.org 后台，找到Nameservers</p><p><img src="/assets/post/20240714_YzcFubyI.webp" alt="img"></p><p>将上面申请的两组 Nameservers 填入 Name1 和 Name2</p><p><img src="/assets/post/20240714_1d38rZjc.webp" alt="img"></p><p>确认提交，等待 NS 记录生效后，Cloudflare会进行验证。这可能需要一些时间，一般是 24 小时之内会有 Cloudflare 的邮件通知。我们可以先回到Cloudflare界面，点击完成。</p><p><img src="/assets/post/20240714_iRLF7LzK.webp" alt="img"></p><h2 id="安全性设置（可选）"><a href="#安全性设置（可选）" class="headerlink" title="安全性设置（可选）"></a>安全性设置（可选）</h2><h3 id="设置-SSL-安全为-strict"><a href="#设置-SSL-安全为-strict" class="headerlink" title="设置 SSL 安全为 strict"></a>设置 SSL 安全为 strict</h3><p><img src="/assets/post/20240714_iRLF7LzK.webp" alt="img"></p><h3 id="设置自动-https-重写"><a href="#设置自动-https-重写" class="headerlink" title="设置自动 https 重写"></a>设置自动 https 重写</h3><p>在<code>SSL/TLS-&gt;边缘证书</code>中开启“始终使用 HTTPS”。注意，这里的“始终使用 HTTPS”选项不能和 nginx 端同时开启，两端只能开启一个，否则会出错。</p><p><img src="/assets/post/20240714_MAhc1DFs.webp" alt="img"></p><h3 id="打开速度优化"><a href="#打开速度优化" class="headerlink" title="打开速度优化"></a>打开速度优化</h3><p><img src="/assets/post/20240714_dhT8f3by.webp" alt="img"></p><h2 id="设置-DNS-记录"><a href="#设置-DNS-记录" class="headerlink" title="设置 DNS 记录"></a>设置 DNS 记录</h2><p>完成上面的步骤后，点击 DNS ，进行主域名的 ip 解析。通过 A 记录解析我们的 ip 地址。设置好解析记录后，等待 5 分钟，就可以 ping 通这个域名了。</p><p><img src="/assets/post/20240714_55XBeQXE.webp" alt="img"></p><p>记得把代理状态设置为仅限 DNS，即不开启小云朵。</p><p>小云朵开启表示：完全代理，让 Cloudflare 完全代理网站，这样可以避免用户检测到真实的服务器 ip，每次检测都是 Cloudflare 公司的节点 ip；小云朵关闭（灰色）就表示：不使用 Cloudflare 的节点代理，相当于直连到你的服务器。</p><p>特别是如果你使用了 Nginx Proxy Manager 进行域名反代，就不能开启小云朵。</p>]]></content>
-    
-    
-    <summary type="html">eu.org 这种顶级域名无法用国内云服务器解析，这里介绍使用 Cloudflare 解析此类域名</summary>
-    
-    
-    
-    <category term="折腾系列" scheme="https://blog.felicx.eu.org/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/"/>
-    
-    
-    <category term="建站" scheme="https://blog.felicx.eu.org/tags/%E5%BB%BA%E7%AB%99/"/>
-    
-    <category term="域名" scheme="https://blog.felicx.eu.org/tags/%E5%9F%9F%E5%90%8D/"/>
     
   </entry>
   
