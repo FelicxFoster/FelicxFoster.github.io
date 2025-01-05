@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.felicx.eu.org/categories/index.html</loc>
+    
+    <lastmod>2025-01-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/links/index.html</loc>
+    
+    <lastmod>2025-01-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/tags/index.html</loc>
+    
+    <lastmod>2025-01-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.felicx.eu.org/1985364334.html</loc>
     
     <lastmod>2025-01-04</lastmod>
@@ -95,15 +122,6 @@
     <loc>https://blog.felicx.eu.org/4199909915.html</loc>
     
     <lastmod>2024-07-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.felicx.eu.org/links/index.html</loc>
-    
-    <lastmod>2024-07-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -248,24 +266,6 @@
     <loc>https://blog.felicx.eu.org/about/index.html</loc>
     
     <lastmod>2023-12-25</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.felicx.eu.org/tags/index.html</loc>
-    
-    <lastmod>2023-12-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.felicx.eu.org/categories/index.html</loc>
-    
-    <lastmod>2023-12-24</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
