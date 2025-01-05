@@ -16,7 +16,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  
+  <meta name="google-site-verification" content="TzaWonDYKUl6SQpQnx5djnEuDKW3gP4Y98pUh8dFGrg">
+  <meta name="msvalidate.01" content="BC6BE7DC431ACE9BEA4BBDF8DC8190C9">
+
   <title>Opencv 录制多路 camera - YOLOのBLOG</title>
 
   
@@ -35,7 +37,7 @@
 <meta name="twitter:card" content="summary">
   
   
-  
+
   <meta name="keywords" content="python,opencv">
 
   <!-- feed -->
@@ -46,30 +48,32 @@
   <link rel="stylesheet" href="/css/main.css?v=1.29.0">
 
   
+    <link rel="shortcut icon" href="/assets/icon/favicon.ico">
+  
 
   
 
-  <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
+  <link rel="stylesheet" href="https://registry.npmmirror.com/lxgw-wenkai-screen-web/1.321.0/files/lxgwwenkaiscreen/result.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<!-- hexo injector head_end start --><script async defer data-website-id="58512cc5-d76a-47f2-97b2-9540d23a026b" src="https://umami.felicx.eu.org/script.js"></script><!-- hexo injector head_end end --></head>
 <body>
 
 <div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
 
 
-<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://jsd.cdn.zzko.cn/gh/FelicxFoster/PicXImage@master/Icon/head_icon.1jj4q1n854f4.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">YOLOのBLOG</div><div class="sub normal cap">You Only Live Once</div><div class="sub hover cap" style="opacity:0"> Designed by Felicx</div></a></div></header>
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/assets/icon/20240713_rtEVzmVj.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">YOLOのBLOG</div><div class="sub normal cap">You Only Live Once</div><div class="sub hover cap" style="opacity:0"> Designed by Felicx</div></a></div></header>
 
 <div class="nav-area">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
 
 
-<nav class="menu dis-select"><a class="nav-item" title="Wiki" target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.felicx.eu.org/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="朋友圈" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+<nav class="menu dis-select"><a class="nav-item" title="HomePage" target="_blank" rel="noopener external nofollow noreferrer" href="https://felicx.eu.org/" style="color:#FA6400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a><a class="nav-item" title="Wiki" target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.felicx.eu.org/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="友链" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
 </div>
 <div class="widgets">
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/165643616.html"><span class="title">Github Action 自动化部署 Hexo 博客</span></a><a class="item title" href="/4199909915.html"><span class="title">Hexo Stellar 主题装修笔记</span></a><a class="item title" href="/1057849259.html"><span class="title">2024年一波三折的Q2</span></a><a class="item title" href="/4096777957.html"><span class="title">CAN 之 DBC 文件解析（详细版）</span></a><a class="item title" href="/768939725.html"><span class="title">CAN 之 DBC 文件解析（简单版）</span></a><a class="item title" href="/1584988185.html"><span class="title">CAN 之 BLF 文件解析</span></a><a class="item title" href="/2276434991.html"><span class="title">CAN 之报文录制格式</span></a><a class="item title" href="/2483129101.html"><span class="title">Docusaurus 搭建个人知识库</span></a><a class="item title" href="/3164120416.html"><span class="title">Hexo 博客美化</span></a><a class="item title" href="/426584999.html"><span class="title">Hexo 博客搭建</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/1985364334.html"><span class="title">2025年度OKR</span></a><a class="item title" href="/2576624208.html"><span class="title">2024年度OKR</span></a><a class="item title" href="/3315959774.html"><span class="title">我的听歌之路</span></a><a class="item title" href="/9399837.html"><span class="title">Typecho 博客搭建</span></a><a class="item title" href="/1589846811.html"><span class="title">技术岗位如何写简历（转）</span></a><a class="item title" href="/1521393913.html"><span class="title">国内外一些免费的云数据库</span></a><a class="item title" href="/855438526.html"><span class="title">红十字救护员培训之旅</span></a><a class="item title" href="/3001155188.html"><span class="title">职场语录</span></a><a class="item title" href="/940241892.html"><span class="title">天涯神贴 KK 三部曲之第一部</span></a><a class="item title" href="/2224651331.html"><span class="title">零成本部署网站统计系统</span></a></div></widget>
 </div>
-<footer class="footer dis-select"><div class="social-wrap"><a class="social" title="Github" href="https://github.com/FelicxFoster" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-github fa-brands fa-bounce"></i></a><a class="social" title="哔哔广场" href="/bb" rel="noopener noreferrer"><i class="fa-solid fa-globe-asia fa-bounce"></i></a><a class="social" title="留言板" href="/friends/#comments" rel="noopener noreferrer"><i class="fa-solid fa-commenting fa-bounce"></i></a><a class="social" title="RSS订阅" href="/atom.xml" rel="noopener noreferrer"><i class="fa-solid fa-rss fa-bounce"></i></a><a class="social" title="日/夜" onclick="switchTheme()"><i class="fa-solid fa-moon fa-bounce"></i></a></div></footer>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" title="Github" href="https://github.com/FelicxFoster" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-github fa-brands fa-bounce"></i></a><a class="social" title="哔哔广场" href="https://moment.felicx.eu.org" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-paw fa-bounce"></i></a><a class="social" title="留言板" href="/friends/#comments" rel="noopener noreferrer"><i class="fa-solid fa-commenting fa-bounce"></i></a><a class="social" title="RSS订阅" href="/atom.xml" rel="noopener noreferrer"><i class="fa-solid fa-rss fa-bounce"></i></a><a class="social" title="日/夜" onclick="switchTheme()"><i class="fa-solid fa-moon fa-bounce"></i></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
 
@@ -113,6 +117,45 @@
         
       </div>
     </section>
+    
+    <section id="donate">
+      <div class="header"><span>Donate</span></div>
+      <div class="body">
+        <p>请作者喝杯咖啡吧
+          <span class="donate-icon" onclick="showQRCode()" style="display: inline-block;">
+            <i class="fa-solid fa-gift fa-flip" style="font-size: 20px;"></i>
+          </span>
+        </p>
+        
+        <div class="donate-image" id="donate-wechat" style="display:none; position:absolute; z-index:1000; transform: translateY(-100%); left: 50%; transform: translateX(-50%) translateY(-100%);">
+          <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/icon/20240714_r7siFim9.webp" alt="Donate with WeChat" style="width: 150px; height: auto;" />
+        </div>
+        
+      </div>
+    </section>
+    
+    <script>
+      const showQRCode = () => {
+        const qrCode = document.getElementById('donate-wechat');
+        qrCode.style.display = 'block';
+
+        // 添加一个事件监听器来隐藏二维码
+        document.addEventListener('click', hideQRCode);
+      };
+
+      const hideQRCode = (event) => {
+        const qrCode = document.getElementById('donate-wechat');
+        const donateIcon = document.querySelector('.donate-icon');
+
+        // 检查点击的是否是二维码或捐赠图标
+        if (!qrCode.contains(event.target) && !donateIcon.contains(event.target)) {
+          qrCode.style.display = 'none';
+
+          // 移除事件监听器
+          document.removeEventListener('click', hideQRCode);
+        }
+      };
+    </script>
     </div>
 </article>
 <div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/3534901462.html">进程间通信之共享内存</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2819424305.html">动态规划</a></div></section></div>
@@ -135,9 +178,9 @@
 
 
 
-<footer class="page-footer footnote"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs15">Blog</span><a href="/categories/">Categories</a><a href="/tags/">Tags</a><a href="/archives/">Archives</a></div><div class="sitemap-group"><span class="fs15">Project</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster/">GitHub</a></div><div class="sitemap-group"><span class="fs15">Social</span><a href="/friends/rss/">Circle</a><a href="/friends/#comments">Comments</a></div><div class="sitemap-group"><span class="fs15">More</span><a href="/about/">About</a></div></div><div class="text"><center>
+<footer class="page-footer footnote"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs15">Blog</span><a href="/categories/">Categories</a><a href="/tags/">Tags</a><a href="/archives/">Archives</a></div><div class="sitemap-group"><span class="fs15">Project</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster/IMU_Preintegration">IMU_Preintegration</a><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster/LeGO-LOAM">LeGO_LOAM</a></div><div class="sitemap-group"><span class="fs15">Social</span><a href="/friends/rss/">FriendCircle</a><a href="/friends/#comments">Comments</a><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.travellings.cn/go.html">Travelling</a></div><div class="sitemap-group"><span class="fs15">More</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://felicx.eu.org/">HomePage</a><a href="/about/">About</a></div></div><div class="text"><center>
 <span>
-© 2024
+©2018 - <script>document.write(new Date().getFullYear())</script>
 <a style="font-weight: bold;  auto;" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster">Felicx</a>
 使用 <a style="font-weight: bold;  auto;" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FelicxFoster/hexo-theme-stellar">Stellar</a>
 创建
@@ -191,7 +234,7 @@
   });
 </script>
 </center>
-<span class="totalcount">共发表 76 篇Blog · </span><span class="post-count">总计 121.6k 字</span></div></footer>
+<span class="totalcount">共发表 86 篇Blog · </span><span class="post-count">总计 128.7k 字</span></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
@@ -234,8 +277,8 @@
     cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
   };
   const deps = {
-    jquery: `https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js`,
-    marked: `https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js`
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
   }
   
 
@@ -536,7 +579,7 @@
     utils.css('https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline-meta.css');
 
     const path = el.getAttribute('comment_id') ?? decodeURI(window.location.pathname);
-    const waline = init(Object.assign({"js":"https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline.js","css":"https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline.css","meta_css":"https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline-meta.css","serverURL":"https://comment.felicx.eu.org/","commentCount":true,"pageview":false}, {
+    const waline = init(Object.assign({"js":"https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline.js","css":"https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline.css","meta_css":"https://gcore.jsdelivr.net/npm/@waline/client@3.2.1/dist/waline-meta.css","serverURL":"https://comment.felicx.eu.org/","commentCount":true,"pageview":false,"locale":{"placeholder":"😎嗨，朋友，留下脚印再走呗。"},"reaction":true}, {
       el: '#waline_container',
       path: path,
       
@@ -592,7 +635,7 @@
     hoverDelay: 25
   };
 </script>
-<script defer src="https://cdn.bootcdn.net/ajax/libs/flying-pages/2.1.2/flying-pages.min.js"></script><script defer src="https://cdn.bootcdn.net/ajax/libs/vanilla-lazyload/17.8.4/lazyload.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script>
 <script>
   // https://www.npmjs.com/package/vanilla-lazyload
   // Set the options globally
@@ -615,8 +658,8 @@
 </script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
-    css: `https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.min.css`,
-    js: `https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.umd.min.js`
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
   };
   var selector = '[data-fancybox]:not(.error)';
   if (ctx.fancybox.selector) {
