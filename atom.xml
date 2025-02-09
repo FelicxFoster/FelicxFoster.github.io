@@ -6,7 +6,7 @@
   <link href="https://blog.felicx.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.felicx.eu.org/"/>
-  <updated>2025-01-04T01:50:00.000Z</updated>
+  <updated>2025-02-09T08:20:04.000Z</updated>
   <id>https://blog.felicx.eu.org/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决 Git 连接 GitHub 超时问题</title>
+    <link href="https://blog.felicx.eu.org/1049638684.html"/>
+    <id>https://blog.felicx.eu.org/1049638684.html</id>
+    <published>2025-02-09T08:11:04.000Z</published>
+    <updated>2025-02-09T08:20:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在使用 Git 进行代码拉取或推送时，可能会遇到 <code>Failed to connect to github.com port 443: Timed out</code> 的错误提示。这个问题通常与网络连接或代理设置有关。本文将详细介绍几种常见的解决方法，帮助你快速解决这一问题。</p><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 Windows 10 系统中，使用 Git 拉取代码时，突然出现以下错误提示：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to connect to github.com port 443: Timed out</span><br></pre></td></tr></table></figure><p>尽管通过 <code>ping</code> 命令检测 <code>github.com</code> 可以正常连接，且 GitHub 网站也能正常访问，但 Git 操作仍然失败。经过查阅资料，发现该问题可能与代理设置有关。</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="方法一：通过-Git-Config-设置代理"><a href="#方法一：通过-Git-Config-设置代理" class="headerlink" title="方法一：通过 Git Config 设置代理"></a>方法一：通过 Git Config 设置代理</h3><ol><li><p><strong>进入网络设置</strong><br>打开 Windows 的设置 -&gt; 网络和 Internet -&gt; 代理，找到 <code>使用设置脚本</code> 选项，将其打开，并复制脚本地址到浏览器中下载。</p></li><li><p><strong>查看代理文件</strong><br>下载的 PAC 代理文件中，开头通常会有一个 <code>proxy</code> 字段，记录下该字段的值。</p></li><li><p><strong>设置 Git 代理</strong><br>使用以下命令为 Git 设置代理：</p><ul><li>全局设置代理：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy xxxxx</span><br></pre></td></tr></table></figure></li><li>为某个特定项目设置代理：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --<span class="built_in">local</span> http.proxy xxxxx</span><br></pre></td></tr></table></figure>设置完成后，再次尝试拉取代码。</li></ul></li></ol><h3 id="方法二：修改-Hosts-文件（推荐）"><a href="#方法二：修改-Hosts-文件（推荐）" class="headerlink" title="方法二：修改 Hosts 文件（推荐）"></a>方法二：修改 Hosts 文件（推荐）</h3><ol><li><p><strong>查询 GitHub 的 IP 地址</strong><br>访问 <a href="https://www.ipaddress.com/">IPAddress.com</a>，输入 <code>github.com</code> 查询其对应的 IP 地址。</p></li><li><p><strong>修改 Hosts 文件</strong><br>打开 <code>C:\Windows\System32\drivers\etc\hosts</code> 文件，添加以下内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">140.82.112.4 github.com</span><br></pre></td></tr></table></figure></li><li><p><strong>刷新 DNS 缓存</strong><br>在命令提示符中执行以下命令，刷新 DNS 缓存：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /flushdns</span><br></pre></td></tr></table></figure></li></ol><h3 id="方法三：设置-Git-代理端口（推荐）"><a href="#方法三：设置-Git-代理端口（推荐）" class="headerlink" title="方法三：设置 Git 代理端口（推荐）"></a>方法三：设置 Git 代理端口（推荐）</h3><ol><li><p><strong>查看网络代理端口</strong><br>打开网络代理设置页面（Windows 的设置 -&gt; 网络和 Internet -&gt; 代理 -&gt; 手动设置代理），查看当前使用的代理端口号。</p></li><li><p><strong>设置 Git 代理端口</strong><br>使用以下命令设置 Git 的代理端口，确保与网络代理端口一致：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy 127.0.0.1:7890</span><br><span class="line">git config --global https.proxy 127.0.0.1:7890</span><br><span class="line">ipconfig /flushdns</span><br></pre></td></tr></table></figure></li></ol><h3 id="方法四：清除-Git-代理设置"><a href="#方法四：清除-Git-代理设置" class="headerlink" title="方法四：清除 Git 代理设置"></a>方法四：清除 Git 代理设置</h3><p>如果你关闭了代理工具（如梯子），但在拉取代码时仍然报错：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to connect to 127.0.0.1 port 7890 after 2034 ms: Couldn<span class="string">&#x27;t connect to server</span></span><br></pre></td></tr></table></figure><ol><li><p><strong>检查代理设置</strong><br>使用以下命令查看当前 Git 的代理设置：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy</span><br></pre></td></tr></table></figure></li><li><p><strong>清除代理设置</strong><br>如果存在代理设置，使用以下命令清除：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global --<span class="built_in">unset</span> http.proxy</span><br></pre></td></tr></table></figure></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>Failed to connect to github.com port 443: Timed out</code> 错误通常与网络代理设置有关。通过以上几种方法，你可以根据实际情况选择合适的解决方案。推荐优先尝试修改 Hosts 文件或设置 Git 代理端口，这两种方法在大多数情况下都能有效解决问题。</p>]]></content>
+    
+    
+    <summary type="html">Failed to connect to github.com port 443 Timed out</summary>
+    
+    
+    
+    <category term="开发运维" scheme="https://blog.felicx.eu.org/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="git" scheme="https://blog.felicx.eu.org/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>2025年度OKR</title>
@@ -420,27 +441,6 @@
     
     
     <category term="docusaurus" scheme="https://blog.felicx.eu.org/tags/docusaurus/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo 博客美化</title>
-    <link href="https://blog.felicx.eu.org/3164120416.html"/>
-    <id>https://blog.felicx.eu.org/3164120416.html</id>
-    <published>2024-01-13T14:02:07.000Z</published>
-    <updated>2024-01-13T15:02:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hexo 默认的博客主题有点单调，挑来挑去选择了 <a href="https://github.com/XPoet/hexo-theme-keep">keep</a> 主题，下面是我的一些踩坑操作。</p><h2 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h2><p>我的博客使用的是 <a href="https://waline.js.org/">Waline</a> 这款简洁、安全的评论系统。要在博客中使用 Waline，分为三步</p><ul><li>通过 LeanCloud 配置 Waline 评论系统的数据库</li><li>通过 Vercel 部署 Waline 评论系统的服务端</li><li>在主题配置文件中配置 Waline 服务端地址</li></ul><h3 id="LeanCloud-设置"><a href="#LeanCloud-设置" class="headerlink" title="LeanCloud 设置"></a>LeanCloud 设置</h3><ol><li><p><a href="https://console.leancloud.app/login">登录</a> 或 <a href="https://console.leancloud.app/register">注册</a> <code>LeanCloud 国际版</code> 并进入 <a href="https://console.leancloud.app/apps">控制台</a></p></li><li><p>点击左上角 <a href="https://console.leancloud.app/apps">创建应用</a> 并起一个你喜欢的名字 (请选择免费的开发版):<br><img src="/assets/post/20240714_bDiWRPQX.webp" alt="创建应用"></p></li><li><p>进入应用，选择左下角的 <code>设置</code> &gt; <code>应用 Key</code>。你可以看到你的 <code>APP ID</code>，<code>APP Key</code> 和 <code>Master Key</code>。请记录它们，以便后续使用。<br><img src="/assets/post/20240714_jnsC0e9Q.webp" alt="ID 和 Key"></p></li></ol><h3 id="Vercel-部署"><a href="#Vercel-部署" class="headerlink" title="Vercel 部署"></a>Vercel 部署</h3><ol><li><p>点击<a href="https://vercel.com/new/clone?repository-url=https://github.com/walinejs/waline/tree/main/example"><img src="https://vercel.com/button" alt="Vercel"></a>按钮，跳转至 Vercel 进行 Server 端部署。</p></li><li><p>输入一个你喜欢的 Vercel 项目名称并点击 <code>Create</code> 继续:</p></li></ol><p><img src="/assets/post/20240714_11fpDTpH.webp" alt="创建项目"></p><ol start="3"><li>此时 Vercel 会基于 Waline 模板帮助你新建并初始化仓库，仓库名为你之前输入的项目名。</li></ol><p><img src="/assets/post/20240714_GtN64Dxm.webp" alt="deploy"></p><p>一两分钟后，满屏的烟花会庆祝你部署成功。此时点击 <code>Go to Dashboard</code> 可以跳转到应用的控制台。</p><p><img src="/assets/post/20240714_j9sx8y9Y.webp" alt="deploy"></p><ol start="4"><li>点击顶部的 <code>Settings</code> - <code>Environment Variables</code> 进入环境变量配置页，并配置填入三个环境变量 <code>LEAN_ID</code>, <code>LEAN_KEY</code> 和 <code>LEAN_MASTER_KEY</code> 。它们的值分别对应上一步在 LeanCloud 中获得的 <code>APP ID</code>, <code>APP KEY</code>, <code>Master Key</code>。</li></ol><p><img src="/assets/post/20240714_F2CJ69ME.webp" alt="设置环境变量"></p><ol start="5"><li>环境变量配置完成之后点击顶部的 <code>Deployments</code> 点击顶部最新的一次部署右侧的 <code>Redeploy</code> 按钮进行重新部署。该步骤是为了让刚才设置的环境变量生效。</li></ol><p><img src="/assets/post/20240714_tlnlr4m8.webp" alt="redeploy"></p><ol start="6"><li>此时会跳转到 <code>Overview</code> 界面开始部署，等待片刻后 <code>STATUS</code> 会变成 <code>Ready</code>。此时请点击 <code>Visit</code> ，即可跳转到部署好的网站地址，此地址即为你的服务端地址。</li></ol><p><img src="/assets/post/20240714_WeL6ULF0.webp" alt="redeploy success"></p><h3 id="绑定域名-可选"><a href="#绑定域名-可选" class="headerlink" title="绑定域名 (可选)"></a>绑定域名 (可选)</h3><ol><li><p>点击顶部的 <code>Settings</code> - <code>Domains</code> 进入域名配置页</p></li><li><p>输入需要绑定的域名并点击 <code>Add</code></p></li></ol><p><img src="/assets/post/20240714_26Y4fPs1.webp" alt="Add domain"></p><ol start="3"><li>在域名服务器商处添加新的 <code>CNAME</code> 解析记录</li></ol><table><thead><tr><th>Type</th><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>CNAME</td><td>example</td><td>cname.vercel-dns.com</td></tr></tbody></table><ol start="4"><li>等待生效，你可以通过自己的域名来访问了🎉</li></ol><ul><li>评论系统：example.yourdomain.com</li><li>评论管理：example.yourdomain.com&#x2F;ui</li></ul><p><img src="/assets/post/20240714_YGEHCut4.webp" alt="success"></p><h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>keep 主题已经支持 Waline 了，所以只修改主题中的 _config.yml 文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">waline:</span><br><span class="line">  server_url: https://example.yourdomain.com  <span class="comment"># 这里填上面设置的域名</span></span><br></pre></td></tr></table></figure><h2 id="设置文章加密访问"><a href="#设置文章加密访问" class="headerlink" title="设置文章加密访问"></a>设置文章加密访问</h2><p>有时想写一些私密博客，这里推荐一款适用于 Hexo 的静态博客加密插件 <a href="https://github.com/D0n9X1n/hexo-blog-encrypt">hexo-blog-encrypt</a>。</p><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> your-hexo</span><br><span class="line">npm install hexo-blog-encrypt</span><br></pre></td></tr></table></figure><h3 id="文章配置"><a href="#文章配置" class="headerlink" title="文章配置"></a>文章配置</h3><p>在想要加密的文章里添加</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">password: xxx</span><br><span class="line"><span class="comment"># 下面两个可选</span></span><br><span class="line">message: <span class="string">&#x27;Hey, password is required here.&#x27;</span></span><br><span class="line">wrong_pass_message: <span class="string">&#x27;Oh, this is an invalid password. Check and try again, please.&#x27;</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-    <summary type="html">Hexo 博客使用 Keep 主题进行美化</summary>
-    
-    
-    
-    <category term="折腾系列" scheme="https://blog.felicx.eu.org/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/"/>
-    
-    
-    <category term="hexo" scheme="https://blog.felicx.eu.org/tags/hexo/"/>
     
   </entry>
   
