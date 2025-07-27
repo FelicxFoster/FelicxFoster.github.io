@@ -19,25 +19,25 @@
   <meta name="google-site-verification" content="TzaWonDYKUl6SQpQnx5djnEuDKW3gP4Y98pUh8dFGrg">
   <meta name="msvalidate.01" content="BC6BE7DC431ACE9BEA4BBDF8DC8190C9">
 
-  <title>BitTorrent技术解析 - YOLOのBLOG</title>
+  <title>BitTorrent 技术解析 - YOLOのBLOG</title>
 
   
-    <meta name="description" content="深入理解BitTorrent的核心技术">
+    <meta name="description" content="BitTorrent核心技术浅析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BitTorrent技术解析">
-<meta property="og:url" content="https://blog.felicx.eu.org/2535230696.html">
+<meta property="og:title" content="BitTorrent 技术解析">
+<meta property="og:url" content="https://blog.felicx.eu.org/2919340134.html">
 <meta property="og:site_name" content="YOLOのBLOG">
-<meta property="og:description" content="深入理解BitTorrent的核心技术">
+<meta property="og:description" content="BitTorrent核心技术浅析">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-20T07:31:20.000Z">
 <meta property="article:modified_time" content="2025-07-26T09:06:00.000Z">
 <meta property="article:author" content="felicx">
-<meta property="article:tag" content="ROS,机器人,自动驾驶,算法,Linux,Python,LeetCode,建站,云服务器,Docker">
+<meta property="article:tag" content="bt">
 <meta name="twitter:card" content="summary">
   
   
 
-  <meta name="keywords" content="ROS,机器人,自动驾驶,算法,Linux,Python,LeetCode,建站,云服务器,Docker">
+  <meta name="keywords" content="bt">
 
   <!-- feed -->
   
@@ -70,7 +70,7 @@
 <div class="widgets">
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2535230696.html"><span class="title">BitTorrent技术解析</span></a><a class="item title" href="/3761641296.html"><span class="title">VirtualBox 中 Ubuntu 虚拟机扩容指南</span></a><a class="item title" href="/963147591.html"><span class="title">原本只想擦亮星星，却用一生唤醒太阳</span></a><a class="item title" href="/108916185.html"><span class="title">CANoe 常用操作指南</span></a><a class="item title" href="/440314130.html"><span class="title">北京一日游</span></a><a class="item title" href="/339201242.html"><span class="title">使用 GitHub Actions 实现多项目自动化工作流</span></a><a class="item title" href="/1049638684.html"><span class="title">解决 Git 连接 GitHub 超时问题</span></a><a class="item title" href="/3268380856.html"><span class="title">2024年度总结</span></a><a class="item title" href="/1985364334.html"><span class="title">2025年度OKR</span></a><a class="item title" href="/2576624208.html"><span class="title">2024年度OKR</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/1973638083.html"><span class="title">CAN 报文故障注入</span></a><a class="item title" href="/2919340134.html"><span class="title">BitTorrent 技术解析</span></a><a class="item title" href="/3761641296.html"><span class="title">VirtualBox 中 Ubuntu 虚拟机扩容指南</span></a><a class="item title" href="/963147591.html"><span class="title">原本只想擦亮星星，却用一生唤醒太阳</span></a><a class="item title" href="/108916185.html"><span class="title">CANoe 常用操作指南</span></a><a class="item title" href="/440314130.html"><span class="title">北京一日游</span></a><a class="item title" href="/339201242.html"><span class="title">使用 GitHub Actions 实现多项目自动化工作流</span></a><a class="item title" href="/1049638684.html"><span class="title">解决 Git 连接 GitHub 超时问题</span></a><a class="item title" href="/3268380856.html"><span class="title">2024年度总结</span></a><a class="item title" href="/1985364334.html"><span class="title">2025年度OKR</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" title="Github" href="https://github.com/FelicxFoster" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-github fa-brands fa-bounce"></i></a><a class="social" title="哔哔广场" href="https://moment.felicx.eu.org" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-paw fa-bounce"></i></a><a class="social" title="留言板" href="/friends/#comments" rel="noopener noreferrer"><i class="fa-solid fa-commenting fa-bounce"></i></a><a class="social" title="RSS订阅" href="/atom.xml" rel="noopener noreferrer"><i class="fa-solid fa-rss fa-bounce"></i></a><a class="social" title="日/夜" onclick="switchTheme()"><i class="fa-solid fa-moon fa-bounce"></i></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -82,13 +82,13 @@
 <div class="article banner top">
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
-<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-20T07:31:20.000Z">2025-07-20</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-07-26T09:06:00.000Z">2025-07-26</time></span></div><div class="flex-row" id="page-words"><span style="padding: 4px;">本文：2.5k字</span><span class="sep updated" style="padding: 4px;"></span><span class="text updated" style="padding: 4px;">阅读时长：9分</span></div></div></div>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E6%8A%98%E8%85%BE%E7%B3%BB%E5%88%97/">折腾系列</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-20T07:31:20.000Z">2025-07-20</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-07-26T09:06:00.000Z">2025-07-26</time></span></div><div class="flex-row" id="page-words"><span style="padding: 4px;">本文：2.5k字</span><span class="sep updated" style="padding: 4px;"></span><span class="text updated" style="padding: 4px;">阅读时长：9分</span></div><div class="flex-row" id="tag"> <span>&nbsp标签：</span><a class="cap breadcrumb-link" href="/tags/bt/">bt</a>&nbsp</div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>BitTorrent技术解析</span></h1>
+        <h1 class="text title"><span>BitTorrent 技术解析</span></h1>
         
       </div>
     </div>
@@ -172,7 +172,7 @@
 </tbody></table>
 <p>Tracker 接收到 GET 请求后，Tracker服务器就会反连（NatCheck）下载者的IP地址和端口。然后服务器返回现在正在下载这个文件的所有公网用户的IP地址和端口列表，返回给BT客户端。最后如果该用户是公网用户，Tracker服务器会把用户提交的IP地址和端口保存下来，这样其他人就可以找到该用户。</p>
 <p>BT客户端得到这些其他用户IP后，就可以直接连接到这些IP和端口下载资料了。BT客户端会到所有的用户去寻找自己要下载的东西。BT客户端每找到一个用户就建立一个 Socket来下载 ，所以下载的人越多，速度就越快。</p>
-<h3 id="Peer通信协议"><a href="#Peer通信协议" class="headerlink" title="Peer通信协议"></a>Peer通信协议</h3><p>节点间通过TCP（默认端口6881-6889）或μTP（基于UDP的拥塞控制协议）传输数据，消息结构如下：</p>
+<h3 id="Peer通信协议"><a href="#Peer通信协议" class="headerlink" title="Peer通信协议"></a>Peer通信协议</h3><p>节点间通过 TCP（默认端口6881-6889）或 UTP（基于UDP的拥塞控制协议）传输数据，消息结构如下：</p>
 <table>
 <thead>
 <tr>
@@ -234,11 +234,11 @@
     <section id="share">
       <div class="header"><span>Share</span></div>
       <div class="body">
-        <div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://blog.felicx.eu.org/2535230696.html" /></div>
-        <div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img class="lazy"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg" /></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://blog.felicx.eu.org/2535230696.html&title=BitTorrent技术解析 - YOLOのBLOG&summary=深入理解BitTorrent的核心技术"><img class="lazy"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/80c07e4dbb303.svg" /></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;Copied!&quot;)"><img class="lazy"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg" /></a></div>
+        <div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://blog.felicx.eu.org/2919340134.html" /></div>
+        <div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img class="lazy"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg" /></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://blog.felicx.eu.org/2919340134.html&title=BitTorrent 技术解析 - YOLOのBLOG&summary=BitTorrent核心技术浅析"><img class="lazy"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/80c07e4dbb303.svg" /></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;Copied!&quot;)"><img class="lazy"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg" /></a></div>
         
         <div class="qrcode" id="qrcode-wechat" style="opacity:0;height:0">
-          <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://blog.felicx.eu.org/2535230696.html"/>
+          <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://blog.felicx.eu.org/2919340134.html"/>
         </div>
         
       </div>
@@ -284,7 +284,7 @@
     </script>
     </div>
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">Older</div><a href="/3761641296.html">VirtualBox 中 Ubuntu 虚拟机扩容指南</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/1973638083.html">CAN 报文故障注入</a></div><div class="item" id="next"><div class="note">Older</div><a href="/3761641296.html">VirtualBox 中 Ubuntu 虚拟机扩容指南</a></div></section></div>
 
 
 
@@ -360,7 +360,7 @@
   });
 </script>
 </center>
-<span class="totalcount">共发表 94 篇Blog · </span><span class="post-count">总计 137.4k 字</span></div></footer>
+<span class="totalcount">共发表 95 篇Blog · </span><span class="post-count">总计 139k 字</span></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
