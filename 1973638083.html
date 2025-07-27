@@ -53,7 +53,119 @@
   
 
   <link rel="stylesheet" href="https://registry.npmmirror.com/lxgw-wenkai-screen-web/1.321.0/files/lxgwwenkaiscreen/result.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<!-- hexo injector head_end start --><script async defer data-website-id="58512cc5-d76a-47f2-97b2-9540d23a026b" src="https://umami.felicx.eu.org/script.js"></script><!-- hexo injector head_end end --></head>
+<!-- hexo injector head_end start --><script async defer data-website-id="58512cc5-d76a-47f2-97b2-9540d23a026b" src="https://umami.felicx.eu.org/script.js"></script><!-- hexo injector head_end end --><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 <body>
 
 <div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
@@ -108,9 +220,9 @@
 <h2 id="CANoe网关搭建"><a href="#CANoe网关搭建" class="headerlink" title="CANoe网关搭建"></a>CANoe网关搭建</h2><h3 id="硬件连接与工程配置"><a href="#硬件连接与工程配置" class="headerlink" title="硬件连接与工程配置"></a>硬件连接与工程配置</h3><ul>
 <li><p><strong>硬件拓扑</strong>：</p>
 <pre class="mermaid">  graph LR
-  ECU1[ECU1] -->|原CAN线剪断| CANoe_CH1
-  ECU2[ECU2] -->|原CAN线剪断| CANoe_CH2
-  CANoe_CH1 -- 转发逻辑 --> CANoe_CH2</pre>
+  ECU1[ECU1] --&gt;|原CAN线剪断| CANoe_CH1
+  ECU2[ECU2] --&gt;|原CAN线剪断| CANoe_CH2
+  CANoe_CH1 -- 转发逻辑 --&gt; CANoe_CH2</pre>
 <p>使用DB9接口或OBD转接头连接物理CAN线到CANoe硬件通道</p>
 </li>
 <li><p><strong>工程配置</strong>：</p>
@@ -122,11 +234,11 @@
 </li>
 </ul>
 <h3 id="基础透传CAPL脚本"><a href="#基础透传CAPL脚本" class="headerlink" title="基础透传CAPL脚本"></a>基础透传CAPL脚本</h3><p>实现报文双向转发是故障注入的基础：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基础透传示例 */</span></span><br><span class="line">on message CAN1.* &#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DIR == RX) &#123;  <span class="comment">// 仅处理接收帧</span></span><br><span class="line">    message CAN2.* msg = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">output</span>(msg);       <span class="comment">// 转发至CAN2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">on message CAN2.* &#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DIR == RX) &#123;</span><br><span class="line">    message CAN1.* msg = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">output</span>(msg);       <span class="comment">// 转发至CAN1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基础透传示例 */</span></span><br><span class="line">on message CAN1.* {</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DIR == RX) {  <span class="comment">// 仅处理接收帧</span></span><br><span class="line">    message CAN2.* msg = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">output</span>(msg);       <span class="comment">// 转发至CAN2</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">on message CAN2.* {</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DIR == RX) {</span><br><span class="line">    message CAN1.* msg = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">output</span>(msg);       <span class="comment">// 转发至CAN1</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p>此脚本确保非目标报文无损穿透网关</p>
 <hr>
 <h2 id="故障注入类型"><a href="#故障注入类型" class="headerlink" title="故障注入类型"></a>故障注入类型</h2><h3 id="信号篡改攻击"><a href="#信号篡改攻击" class="headerlink" title="信号篡改攻击"></a>信号篡改攻击</h3><p>针对特定ID报文中的信号值修改：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">on message CAN1<span class="number">.0</span>x506 &#123;  <span class="comment">// 截获ID=0x506的报文</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DIR == RX) &#123;</span><br><span class="line">    message CAN2<span class="number">.0</span>x506 msg = <span class="keyword">this</span>;</span><br><span class="line">    msg.SignalA = <span class="number">0x31</span>;    <span class="comment">// 篡改信号值</span></span><br><span class="line">    <span class="comment">// 保留其他信号原始值</span></span><br><span class="line">    <span class="built_in">output</span>(msg);          <span class="comment">// 转发篡改后报文</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">on message CAN1<span class="number">.0</span>x506 {  <span class="comment">// 截获ID=0x506的报文</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DIR == RX) {</span><br><span class="line">    message CAN2<span class="number">.0</span>x506 msg = <span class="keyword">this</span>;</span><br><span class="line">    msg.SignalA = <span class="number">0x31</span>;    <span class="comment">// 篡改信号值</span></span><br><span class="line">    <span class="comment">// 保留其他信号原始值</span></span><br><span class="line">    <span class="built_in">output</span>(msg);          <span class="comment">// 转发篡改后报文</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>应用场景</strong>：模拟传感器数据异常（如车速信号突变）</p>
 </blockquote>
@@ -134,12 +246,12 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改报文长度(DLC)</span></span><br><span class="line"><span class="built_in">TestSetMsgDLC</span>(MessageID_0x200, <span class="number">4</span>);  <span class="comment">// 强制DLC=4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改发送周期</span></span><br><span class="line"><span class="built_in">TestSetMsgCycleTime</span>(MessageID_0x301, <span class="number">300</span>); <span class="comment">// 周期改为300ms</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 禁止报文发送</span></span><br><span class="line"><span class="built_in">TestDisableMsg</span>(MessageID_0x400);    <span class="comment">// 模拟报文丢失</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="高级E2E校验攻击"><a href="#高级E2E校验攻击" class="headerlink" title="高级E2E校验攻击"></a>高级E2E校验攻击</h3><p>在篡改信号后重新计算CRC以绕过接收方校验：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">on message CAN1<span class="number">.0</span>x600 &#123;</span><br><span class="line">  message CAN2<span class="number">.0</span>x600 msg = <span class="keyword">this</span>;</span><br><span class="line">  msg.SafetyCriticalSignal = <span class="number">999</span>; <span class="comment">// 篡改关键信号</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 基于篡改后值重新计算CRC</span></span><br><span class="line">  dword newCRC = <span class="built_in">Calculate_E2ECRC</span>(msg);</span><br><span class="line">  msg.Counter = (msg.Counter + <span class="number">1</span>) % <span class="number">16</span>;  <span class="comment">// 更新计数器</span></span><br><span class="line">  msg.CRC = newCRC;                     <span class="comment">// 更新校验域</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">output</span>(msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">on message CAN1<span class="number">.0</span>x600 {</span><br><span class="line">  message CAN2<span class="number">.0</span>x600 msg = <span class="keyword">this</span>;</span><br><span class="line">  msg.SafetyCriticalSignal = <span class="number">999</span>; <span class="comment">// 篡改关键信号</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 基于篡改后值重新计算CRC</span></span><br><span class="line">  dword newCRC = <span class="built_in">Calculate_E2ECRC</span>(msg);</span><br><span class="line">  msg.Counter = (msg.Counter + <span class="number">1</span>) % <span class="number">16</span>;  <span class="comment">// 更新计数器</span></span><br><span class="line">  msg.CRC = newCRC;                     <span class="comment">// 更新校验域</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">output</span>(msg);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>关键点</strong>：需在DBC中定义E2E协议规则（如AUTOSAR E2E Profile）</p>
 </blockquote>
 <h3 id="定时攻击场景"><a href="#定时攻击场景" class="headerlink" title="定时攻击场景"></a>定时攻击场景</h3><p>控制故障注入的精确时间窗口：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">variables &#123;</span><br><span class="line">  msTimer faultTimer;</span><br><span class="line">  <span class="type">int</span> injectActive = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">on timer faultTimer &#123;</span><br><span class="line">  injectActive = <span class="number">0</span>;  <span class="comment">// 结束注入</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">on key <span class="string">&#x27;a&#x27;</span> &#123;  <span class="comment">// 按键触发注入</span></span><br><span class="line">  injectActive = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">setTimer</span>(faultTimer, <span class="number">5000</span>); <span class="comment">// 5秒后自动停止</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">on message CAN1.* &#123;</span><br><span class="line">  <span class="keyword">if</span>(injectActive &amp;&amp; <span class="keyword">this</span>.id == <span class="number">0x123</span>) &#123;</span><br><span class="line">    <span class="comment">// 执行篡改逻辑</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">variables {</span><br><span class="line">  msTimer faultTimer;</span><br><span class="line">  <span class="type">int</span> injectActive = <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">on timer faultTimer {</span><br><span class="line">  injectActive = <span class="number">0</span>;  <span class="comment">// 结束注入</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">on key <span class="string">'a'</span> {  <span class="comment">// 按键触发注入</span></span><br><span class="line">  injectActive = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">setTimer</span>(faultTimer, <span class="number">5000</span>); <span class="comment">// 5秒后自动停止</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">on message CAN1.* {</span><br><span class="line">  <span class="keyword">if</span>(injectActive &amp;&amp; <span class="keyword">this</span>.id == <span class="number">0x123</span>) {</span><br><span class="line">    <span class="comment">// 执行篡改逻辑</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h2><h3 id="测试环境搭建"><a href="#测试环境搭建" class="headerlink" title="测试环境搭建"></a>测试环境搭建</h3><ul>
@@ -177,20 +289,20 @@
 </tr>
 </tbody></table>
 <h3 id="安全防护验证"><a href="#安全防护验证" class="headerlink" title="安全防护验证"></a>安全防护验证</h3><p>通过报警网关检测注入攻击：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 网关内嵌攻击检测逻辑</span></span><br><span class="line">on message * &#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DLC &gt; <span class="number">8</span>) &#123;  <span class="comment">// 检测DLC超限</span></span><br><span class="line">    <span class="built_in">write</span>(<span class="string">&quot;DoS攻击警报！ID:%x&quot;</span>, <span class="keyword">this</span>.id);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">checkSpoofing</span>(<span class="keyword">this</span>)) &#123;  <span class="comment">// 假扮攻击检测</span></span><br><span class="line">    <span class="built_in">write</span>(<span class="string">&quot;假扮ECU攻击！&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 网关内嵌攻击检测逻辑</span></span><br><span class="line">on message * {</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.DLC &gt; <span class="number">8</span>) {  <span class="comment">// 检测DLC超限</span></span><br><span class="line">    <span class="built_in">write</span>(<span class="string">"DoS攻击警报！ID:%x"</span>, <span class="keyword">this</span>.id);</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">checkSpoofing</span>(<span class="keyword">this</span>)) {  <span class="comment">// 假扮攻击检测</span></span><br><span class="line">    <span class="built_in">write</span>(<span class="string">"假扮ECU攻击！"</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="工程实践技巧"><a href="#工程实践技巧" class="headerlink" title="工程实践技巧"></a>工程实践技巧</h2><h3 id="路由表管理"><a href="#路由表管理" class="headerlink" title="路由表管理"></a>路由表管理</h3><p>使用<code>Database::Lookup</code>动态获取报文属性，避免硬编码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message * msg = &#123;<span class="built_in">DBLookup</span>(<span class="string">&quot;LightStatus&quot;</span>)&#125;;</span><br><span class="line">msg.id = <span class="built_in">getSignal</span>(<span class="string">&quot;TargetID&quot;</span>);  <span class="comment">// 从面板动态获取ID</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message * msg = {<span class="built_in">DBLookup</span>(<span class="string">"LightStatus"</span>)};</span><br><span class="line">msg.id = <span class="built_in">getSignal</span>(<span class="string">"TargetID"</span>);  <span class="comment">// 从面板动态获取ID</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="故障注入面板设计"><a href="#故障注入面板设计" class="headerlink" title="故障注入面板设计"></a>故障注入面板设计</h3><ul>
-<li>通道选择下拉菜单（CAN1→CAN2 &#x2F; CAN2→CAN1）</li>
+<li>通道选择下拉菜单（CAN1→CAN2 / CAN2→CAN1）</li>
 <li>报文ID列表（支持多选）</li>
 <li>信号编辑器（支持表达式如<code>rand()</code>）</li>
 <li>E2E校验使能开关</li>
 </ul>
 <h3 id="自动化测试集成"><a href="#自动化测试集成" class="headerlink" title="自动化测试集成"></a>自动化测试集成</h3><p>结合.vTESTstudio实现全自动故障注入测试：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TEST CASE <span class="string">&quot;Fault Injection&quot;</span> &#123;</span><br><span class="line"><span class="built_in">SET_FAULT_PARAM</span>(ID=<span class="number">0x123</span>, Signal=<span class="string">&quot;Torque&quot;</span>, Value=<span class="number">2000</span>);</span><br><span class="line"><span class="built_in">START_INJECTION</span>();</span><br><span class="line">WAIT <span class="number">5</span> s;</span><br><span class="line"><span class="built_in">CHECK_DTC</span>(DTC_123_1);  <span class="comment">// 验证预期故障码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TEST CASE <span class="string">"Fault Injection"</span> {</span><br><span class="line"><span class="built_in">SET_FAULT_PARAM</span>(ID=<span class="number">0x123</span>, Signal=<span class="string">"Torque"</span>, Value=<span class="number">2000</span>);</span><br><span class="line"><span class="built_in">START_INJECTION</span>();</span><br><span class="line">WAIT <span class="number">5</span> s;</span><br><span class="line"><span class="built_in">CHECK_DTC</span>(DTC_123_1);  <span class="comment">// 验证预期故障码</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="实时性瓶颈"><a href="#实时性瓶颈" class="headerlink" title="实时性瓶颈"></a>实时性瓶颈</h3><p><strong>问题</strong>：高负载总线转发延迟导致丢帧<br><strong>方案</strong>：</p>
@@ -209,11 +321,11 @@
 <li>休眠唤醒协调（集成OSEK NM）</li>
 </ul>
 <hr>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过CANoe构建虚拟网关实现故障注入，工程师能在早期验证系统安全边界与容错机制。随着智能网联汽车复杂度提升，此类技术将成为E&#x2F;E架构开发的标准手段。建议进一步探索：</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过CANoe构建虚拟网关实现故障注入，工程师能在早期验证系统安全边界与容错机制。随着智能网联汽车复杂度提升，此类技术将成为E/E架构开发的标准手段。建议进一步探索：</p>
 <ul>
 <li><strong>AI驱动的自适应故障注入</strong>（基于模型预测异常）</li>
 <li><strong>混合型攻击场景</strong>（如DoS+重放组合攻击）</li>
-<li><strong>与信息安全联动</strong>（基于ISO&#x2F;SAE 21434的渗透测试）</li>
+<li><strong>与信息安全联动</strong>（基于ISO/SAE 21434的渗透测试）</li>
 </ul>
 <blockquote>
 <p><strong>参考</strong>：</p>
@@ -836,6 +948,26 @@
       })
     }
   });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
