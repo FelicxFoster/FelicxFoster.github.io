@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.felicx.eu.org/categories/index.html</loc>
+    <loc>https://blog.felicx.eu.org/links/index.html</loc>
     
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-09-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -13,16 +13,25 @@
   <url>
     <loc>https://blog.felicx.eu.org/tags/index.html</loc>
     
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-09-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.felicx.eu.org/links/index.html</loc>
+    <loc>https://blog.felicx.eu.org/categories/index.html</loc>
     
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.felicx.eu.org/1805880227.html</loc>
+    
+    <lastmod>2025-09-07</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -940,7 +949,7 @@
 
   <url>
     <loc>https://blog.felicx.eu.org/</loc>
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
